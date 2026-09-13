@@ -1,16 +1,138 @@
+# ENTERPRISE AI ANOMALY DETECTION FINANCIAL RISK PLATFORM
 
-# AnomalyX Frontend
+## Project Overview
 
-Admin-only fraud/anomaly monitoring frontend.
+An AI-powered financial fraud and anomaly detection platform designed to identify suspicious transactions, abnormal customer behavior, and emerging fraud patterns.
 
-## Main stack
+The system combines supervised fraud classification, unsupervised anomaly detection, behavioral analytics, network-based risk analysis, and explainable AI to provide a comprehensive financial risk monitoring solution.
+
+The platform consists of an interactive admin dashboard frontend connected with an AI-powered backend risk engine.
+
+---
+
+# Objectives
+
+- Detect known financial fraud patterns
+- Identify unknown and emerging transaction anomalies
+- Analyze customer behavioral changes
+- Detect suspicious device and transaction activities
+- Generate transaction-level risk scores
+- Provide explainable fraud reasoning
+- Enable real-time financial risk monitoring
+
+---
+
+# Key Features
+
+## AI Fraud Detection
+
+- Supervised fraud classification using XGBoost
+- Fraud probability prediction
+- Class imbalance handling
+- Optimized fraud decision threshold
+
+## Anomaly Detection
+
+- Unsupervised anomaly detection using Isolation Forest
+- Detection of unusual transaction behavior
+- Zero-day fraud pattern identification
+
+## Behavioral Risk Analysis
+
+- Customer transaction behavior analysis
+- Transaction velocity monitoring
+- Amount deviation analysis
+- Device-based risk assessment
+
+## Network Risk Analysis
+
+- Transaction relationship analysis
+- Suspicious account behavior detection
+- Network-based fraud indicators
+
+## Explainable AI
+
+- SHAP-based model explanation
+- Feature-level fraud contribution analysis
+- Human-readable fraud reasoning
+
+## Risk Assessment
+
+- Multi-model risk fusion engine
+- Combined fraud probability and anomaly scoring
+- Transaction risk classification:
+
+---
+
+# Technology Stack
+
+## Frontend
+
 - Next.js
 - TypeScript
 - Tailwind CSS
-- Plotly / chart components
-- FastAPI backend connection
+- Plotly / Interactive chart components
 
-## Main pages
+## Backend
+
+- FastAPI
+- Python
+
+## Machine Learning
+
+- Python
+- Scikit-learn
+- XGBoost
+- SHAP
+
+## Data Processing
+
+- Pandas
+- NumPy
+
+## Database
+
+- SQLite
+
+---
+
+# System Workflow
+Financial Transaction Data
+↓
+Data Preprocessing
+↓
+Feature Engineering
+↓
+┌──────────┴──────────┐
+↓ ↓
+Fraud Anomaly
+Classification Detection
+(XGBoost) (Isolation Forest)
+↓ ↓
+└──────────┬──────────┘
+↓
+Behavioral Analysis
+↓
+Network Risk Analysis
+↓
+Risk Fusion Engine
+↓
+Transaction Risk Score
+↓
+Explainable Fraud Reason
+↓
+Database + Dashboard
+
+---
+
+# Frontend Application
+
+## AnomalyX Frontend
+
+Admin-only fraud and anomaly monitoring dashboard.
+
+## Main Pages
+
 - Home
 - Admin Login
 - Dashboard
@@ -24,77 +146,35 @@ Admin-only fraud/anomaly monitoring frontend.
 - Reports
 - Settings
 
-This package contains the frontend structure only.
-=======
-# ENTERPRISE AI ANOMALY DETECTION FINANCIAL RISK PLATFORM
+The frontend provides:
 
-## Project Overview
+- Real-time risk monitoring
+- Transaction investigation interface
+- Fraud alert visualization
+- Customer and device analytics
+- Network relationship visualization
 
-An AI-based financial fraud and anomaly detection platform designed to identify suspicious financial transactions, abnormal customer behavior, and potential fraud patterns.
+---
 
-The system combines supervised fraud classification, unsupervised anomaly detection, behavioral analysis, and explainable risk assessment to provide a comprehensive financial risk detection solution.
+# AI Pipeline
 
-## Objectives
+---
 
-- Detect known financial fraud patterns
-- Identify unknown and unusual transaction anomalies
-- Analyze abnormal customer behavior
-- Generate a financial risk score for transactions
-- Explain why a transaction is considered risky
-- Provide an interactive financial risk monitoring dashboard
+# Current Status
 
-## Key Features
+Implemented:
 
-- Fraud classification
-- Anomaly detection
-- Customer behavioral analysis
-- Risk scoring
-- Explainable AI-based fraud reasoning
-- Transaction and fraud analysis
-- Financial risk visualization
+✅ Data preprocessing pipeline  
+✅ Behavioral feature engineering  
+✅ XGBoost fraud detection  
+✅ Isolation Forest anomaly detection  
+✅ Risk fusion engine  
+✅ Explainable AI preparation  
+✅ Frontend dashboard structure  
 
-## Technology Stack
+Planned:
 
-### Frontend
--- Next.js
-- TypeScript
-- Tailwind CSS
-- Plotly
-
-### Machine Learning
-- Python
-- Scikit-learn
-- XGBoost
-- SHAP
-
-### Database
-- SQLite
-
-### Data Processing
-- Pandas
-- NumPy
-
-## System Workflow
-
-```text
-Financial Transaction Data
-          ↓
-Data Preprocessing
-          ↓
-Feature Engineering
-          ↓
- ┌────────┴─────────┐
- ↓                  ↓
-Fraud             Anomaly
-Classification    Detection
- ↓                  ↓
- └────────┬─────────┘
-          ↓
- Behavioral Analysis
-          ↓
-    Risk Assessment
-          ↓
- Explainable Fraud Reason
-          ↓
- Database + Dashboard
-
+- FastAPI deployment
+- Real-time transaction scoring API
+- Live fraud alert system
+- Advanced graph fraud analytics
