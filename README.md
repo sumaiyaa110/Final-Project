@@ -96,10 +96,6 @@ The platform consists of an interactive admin dashboard frontend connected with 
 
 ---
 
-
-For a more GitHub-friendly architecture diagram, you can also add this below it:
-
-```markdown
 # AI Pipeline Architecture
 
 ```text
