@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # AnomalyX Frontend
 
 Admin-only fraud/anomaly monitoring frontend.
