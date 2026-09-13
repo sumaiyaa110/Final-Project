@@ -56,7 +56,9 @@ The system combines supervised fraud classification, unsupervised anomaly detect
 ## Technology Stack
 
 ### Frontend
-- Streamlit
+-- Next.js
+- TypeScript
+- Tailwind CSS
 - Plotly
 
 ### Machine Learning
