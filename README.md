@@ -96,33 +96,57 @@ The platform consists of an interactive admin dashboard frontend connected with 
 
 ---
 
-# System Workflow
-Financial Transaction Data
-↓
-Data Preprocessing
-↓
-Feature Engineering
-↓
-┌──────────┴──────────┐
-↓ ↓
-Fraud Anomaly
-Classification Detection
-(XGBoost) (Isolation Forest)
-↓ ↓
-└──────────┬──────────┘
-↓
-Behavioral Analysis
-↓
-Network Risk Analysis
-↓
-Risk Fusion Engine
-↓
-Transaction Risk Score
-↓
-Explainable Fraud Reason
-↓
-Database + Dashboard
 
+For a more GitHub-friendly architecture diagram, you can also add this below it:
+
+```markdown
+# AI Pipeline Architecture
+
+```text
+                 Transaction Data
+
+                       ↓
+
+              Data Processing Layer
+
+                       ↓
+
+              Feature Engineering
+
+                       ↓
+
+        ┌──────────────┴──────────────┐
+        ↓                             ↓
+
+   XGBoost Model              Isolation Forest
+   Known Fraud                Unknown Fraud
+   Detection                  Detection
+
+        ↓                             ↓
+
+   Fraud Probability          Anomaly Score
+
+        └──────────────┬──────────────┘
+
+                       ↓
+
+              Risk Fusion Engine
+
+                       ↓
+
+            Final Risk Score (0-100)
+
+                       ↓
+
+        ┌──────────────┴──────────────┐
+        ↓                             ↓
+
+   Risk Category              Explainable AI
+ LOW/MEDIUM/HIGH/CRITICAL      (SHAP)
+
+                       ↓
+
+              Admin Monitoring Dashboard
 ---
 
 # Frontend Application
