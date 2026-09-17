@@ -1,454 +1,567 @@
 "use client";
 
+
+import {
+useEffect,
+useState
+} from "react";
+
+
 import dynamic from "next/dynamic";
 
-const Plot = dynamic(() => import("react-plotly.js"), {
-  ssr: false,
-});
 
-const transactions = [
-  {
-    id: "T-9",
-    amount: 3200,
-    riskScore: 18,
-    riskLevel: "Low",
-    time: "09:14",
-  },
-  {
-    id: "T-8",
-    amount: 4500,
-    riskScore: 21,
-    riskLevel: "Low",
-    time: "10:32",
-  },
-  {
-    id: "T-7",
-    amount: 2800,
-    riskScore: 16,
-    riskLevel: "Low",
-    time: "11:47",
-  },
-  {
-    id: "T-6",
-    amount: 6200,
-    riskScore: 34,
-    riskLevel: "Medium",
-    time: "12:18",
-  },
-  {
-    id: "T-5",
-    amount: 5100,
-    riskScore: 29,
-    riskLevel: "Low",
-    time: "13:05",
-  },
-  {
-    id: "T-4",
-    amount: 8700,
-    riskScore: 48,
-    riskLevel: "Medium",
-    time: "13:42",
-  },
-  {
-    id: "T-3",
-    amount: 5100,
-    riskScore: 36,
-    riskLevel: "Low",
-    time: "13:58",
-  },
-  {
-    id: "T-2",
-    amount: 9200,
-    riskScore: 52,
-    riskLevel: "Medium",
-    time: "14:05",
-  },
-  {
-    id: "T-1",
-    amount: 12800,
-    riskScore: 61,
-    riskLevel: "High",
-    time: "14:17",
-  },
-  {
-    id: "TXN-92831",
-    amount: 85000,
-    riskScore: 98,
-    riskLevel: "Critical",
-    time: "14:32",
-  },
+const Plot =
+dynamic(
+
+()=>import("react-plotly.js"),
+
+{
+ssr:false
+}
+
+);
+
+
+
+import {
+getCustomerBehavior
+}
+from "@/services/api";
+
+
+
+
+
+export default function TransactionBehaviorChart(){
+
+
+
+const [transactions,setTransactions]
+=
+useState<any[]>([]);
+
+
+
+
+const customerId =
+"CUSTOMER-1";
+
+
+
+
+
+useEffect(()=>{
+
+
+async function load(){
+
+
+try{
+
+
+const data =
+await getCustomerBehavior(
+customerId
+);
+
+
+
+setTransactions(
+data
+);
+
+
+
+}
+
+catch(error){
+
+console.log(
+error
+);
+
+}
+
+
+}
+
+
+
+load();
+
+
+
+const interval =
+setInterval(
+
+load,
+
+3000
+
+);
+
+
+
+return()=>clearInterval(interval);
+
+
+
+},[]);
+
+
+
+
+
+
+
+
+
+if(transactions.length===0){
+
+return (
+
+<div className="transaction-behavior-card">
+
+Loading...
+
+</div>
+
+);
+
+}
+
+
+
+
+
+
+const currentTransaction =
+transactions[
+transactions.length-1
 ];
 
-const currentTransaction = transactions[transactions.length - 1];
 
-const historicalTransactions = transactions.slice(0, -1);
+
+const historical =
+transactions.slice(
+0,
+-1
+);
+
+
+
 
 const historicalAverage =
-  historicalTransactions.reduce(
-    (sum, transaction) => sum + transaction.amount,
-    0,
-  ) / historicalTransactions.length;
 
-const increase = currentTransaction.amount / historicalAverage;
+historical.reduce(
 
-const transactionIds = transactions.map((transaction) => transaction.id);
+(sum,t)=>
 
-const amounts = transactions.map((transaction) => transaction.amount);
+sum+t.amount,
 
-const riskColors = transactions.map((transaction) => {
-  switch (transaction.riskLevel) {
-    case "Critical":
-      return "#ef4444";
+0
 
-    case "High":
-      return "#f97316";
+)
 
-    case "Medium":
-      return "#eab308";
+/
 
-    default:
-      return "#22c55e";
-  }
+Math.max(
+historical.length,
+1
+);
+
+
+
+
+const increase =
+
+currentTransaction.amount
+
+/
+
+historicalAverage;
+
+
+
+
+
+const ids =
+
+transactions.map(
+
+t=>t.id
+
+);
+
+
+
+const amounts =
+
+transactions.map(
+
+t=>t.amount
+
+);
+
+
+
+
+
+const colors =
+
+transactions.map(t=>{
+
+
+if(t.riskLevel==="Critical")
+
+return "#ef4444";
+
+
+if(t.riskLevel==="High")
+
+return "#f97316";
+
+
+if(t.riskLevel==="Medium")
+
+return "#eab308";
+
+
+return "#22c55e";
+
+
 });
 
-export default function TransactionBehaviorChart() {
-  return (
-    <div className="transaction-behavior-card">
-      {/* =====================================================
-          HEADER
-          ===================================================== */}
-
-      <div className="transaction-behavior-header">
-        <div>
-          <h2>Transaction Behavior</h2>
-
-          <p>Recent transactions for this customer</p>
-        </div>
-
-        <button className="transaction-history-filter">
-          Last 10 Transactions
-          <span>⌄</span>
-        </button>
-      </div>
-
-      {/* =====================================================
-          MAIN CONTENT
-          ===================================================== */}
-
-      <div className="transaction-behavior-content">
-        {/* ===================================================
-            LEFT — TRANSACTION GRAPH
-            =================================================== */}
-
-        <div className="transaction-behavior-chart">
-          <Plot
-            data={[
-              {
-                x: transactionIds,
-                y: amounts,
-                type: "scatter",
-                mode: "lines+markers",
-                name: "Transaction Amount",
-
-                line: {
-                  color: "#3b82f6",
-                  width: 2.5,
-                },
-
-                marker: {
-                  size: 8,
-                  color: riskColors,
-                  line: {
-                    color: "#0b1728",
-                    width: 2,
-                  },
-                },
-
-                hovertemplate:
-                  "<b>%{x}</b><br>" +
-                  "Amount: ৳%{y:,.0f}<br>" +
-                  "<extra></extra>",
-              },
-
-              {
-                x: transactionIds,
-                y: transactionIds.map(() => historicalAverage),
-                type: "scatter",
-                mode: "lines",
-                name: "Historical Average",
-
-                line: {
-                  color: "#64748b",
-                  width: 2,
-                  dash: "dash",
-                },
-
-                hovertemplate:
-                  "Historical Average: ৳%{y:,.0f}" + "<extra></extra>",
-              },
-
-              {
-                x: ["TXN-92831"],
-                y: [currentTransaction.amount],
-                type: "scatter",
-                mode: "markers",
-                name: "Current",
-
-                marker: {
-                  color: "#ef4444",
-                  size: 15,
-
-                  line: {
-                    color: "#f8fafc",
-                    width: 2,
-                  },
-                },
-
-                hovertemplate:
-                  "<b>TXN-92831</b><br>" +
-                  "Amount: ৳85,000<br>" +
-                  "Risk Score: 98<br>" +
-                  "Risk Level: Critical" +
-                  "<extra></extra>",
-              },
-            ]}
-            layout={{
-              autosize: true,
 
-              height: 300,
 
-              margin: {
-                l: 60,
-                r: 15,
-                t: 30,
-                b: 50,
-              },
 
-              paper_bgcolor: "rgba(0,0,0,0)",
-              plot_bgcolor: "rgba(0,0,0,0)",
 
-              font: {
-                family: "Inter, Arial, sans-serif",
-                color: "#718198",
-                size: 10,
-              },
 
-              xaxis: {
-                title: {
-                  text: "Transactions (Oldest → Newest)",
-                  font: {
-                    color: "#718198",
-                    size: 10,
-                  },
-                },
+return (
 
-                tickfont: {
-                  color: "#718198",
-                  size: 9,
-                },
+<div className="transaction-behavior-card">
 
-                showgrid: false,
 
-                zeroline: false,
 
-                linecolor: "#17273b",
+<div className="transaction-behavior-header">
 
-                fixedrange: true,
-              },
 
-              yaxis: {
-                title: {
-                  text: "Amount (BDT)",
-                  font: {
-                    color: "#718198",
-                    size: 10,
-                  },
-                },
+<div>
 
-                type: "log",
+<h2>
+Transaction Behavior
+</h2>
 
-                tickvals: [3000, 5000, 10000, 20000, 50000, 100000],
 
-                ticktext: ["৳3k", "৳5k", "৳10k", "৳20k", "৳50k", "৳100k"],
+<p>
+Realtime customer transaction pattern
+</p>
 
-                tickfont: {
-                  color: "#718198",
-                  size: 9,
-                },
 
-                gridcolor: "#17273b",
-                gridwidth: 1,
+</div>
 
-                minor: {
-                  showgrid: false,
-                },
 
-                zeroline: false,
-                fixedrange: true,
-              },
 
-              legend: {
-                orientation: "h",
+<button className="transaction-history-filter">
 
-                x: 0,
+Live
 
-                y: 1.12,
+</button>
 
-                xanchor: "left",
 
-                yanchor: "top",
+</div>
 
-                font: {
-                  color: "#718198",
-                  size: 10,
-                },
 
-                bgcolor: "rgba(0,0,0,0)",
-              },
 
-              annotations: [
-                {
-                  x: "TXN-92831",
-                  y: currentTransaction.amount,
 
-                  xref: "x",
-                  yref: "y",
 
-                  text: "<b>TXN-92831</b><br>Amount: ৳85,000<br>Risk Score: 98<br>Risk Level: Critical",
 
-                  showarrow: true,
 
-                  arrowhead: 2,
 
-                  arrowsize: 0.7,
 
-                  arrowwidth: 1,
+<div className="transaction-behavior-content">
 
-                  arrowcolor: "#ef4444",
 
-                  ax: -55,
 
-                  ay: 45,
+<div className="transaction-behavior-chart">
 
-                  bgcolor: "#101d30",
 
-                  bordercolor: "#ef4444",
+<Plot
 
-                  borderwidth: 1,
 
-                  borderpad: 6,
+data={[
 
-                  font: {
-                    color: "#dbe4ef",
-                    size: 9,
-                  },
 
-                  align: "left",
-                },
-              ],
+{
 
-              hoverlabel: {
-                bgcolor: "#0c1729",
+x:ids,
 
-                bordercolor: "#334155",
+y:amounts,
 
-                font: {
-                  color: "#e2e8f0",
-                  size: 9,
-                },
-              },
-            }}
-            config={{
-              responsive: true,
-              displayModeBar: false,
-              displaylogo: false,
-            }}
-            style={{
-              width: "100%",
-              height: "285px",
-            }}
-          />
-        </div>
+type:"scatter",
 
-        {/* ===================================================
-            RIGHT — ACCOUNT RISK SUMMARY
-            =================================================== */}
+mode:"lines+markers",
 
-        <div className="account-risk-summary">
-          {/* Summary Header */}
+name:"Amount",
 
-          <div className="account-risk-header">
-            <div className="account-risk-icon">
-              <span>●</span>
-            </div>
 
-            <div>
-              <h3>Account Risk Summary</h3>
+line:{
+width:2.5
+},
 
-              <p>
-                This transaction is significantly higher than the customer's
-                typical activity.
-              </p>
-            </div>
-          </div>
 
-          {/* Summary Metrics */}
+marker:{
 
-          <div className="account-risk-metrics">
-            <div className="account-risk-metric">
-              <span>Typical Amount (Avg)</span>
+size:9,
 
-              <strong>
-                ৳
-                {historicalAverage.toLocaleString("en-BD", {
-                  maximumFractionDigits: 0,
-                })}
-              </strong>
-            </div>
+color:colors
 
-            <div className="account-risk-metric">
-              <span>Current Amount</span>
+}
 
-              <strong>
-                ৳{currentTransaction.amount.toLocaleString("en-BD")}
-              </strong>
-            </div>
 
-            <div className="account-risk-metric">
-              <span>Increase</span>
+},
 
-              <strong className="risk-increase">{Math.round(increase)}×</strong>
-            </div>
 
-            <div className="account-risk-metric">
-              <span>Risk Score</span>
 
-              <strong>{currentTransaction.riskScore} / 100</strong>
-            </div>
+{
 
-            <div className="account-risk-metric">
-              <span>Risk Level</span>
+x:ids,
 
-              <strong className="risk-level-critical">Critical</strong>
-            </div>
-          </div>
+y:
 
-          {/* AI Insight */}
+ids.map(
+()=>historicalAverage
+),
 
-          <div className="account-risk-insight">
-            <div className="account-risk-insight-icon">💡</div>
+type:"scatter",
 
-            <div>
-              <strong>AI Insight</strong>
+mode:"lines",
 
-              <p>
-                This transaction amount is {Math.round(increase)}× higher than
-                the customer's historical average.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+name:"Average",
+
+
+line:{
+
+dash:"dash"
+
+}
+
+
+}
+
+
+
+]}
+
+
+
+layout={{
+
+
+height:300,
+
+
+paper_bgcolor:
+"rgba(0,0,0,0)",
+
+
+plot_bgcolor:
+"rgba(0,0,0,0)",
+
+
+
+xaxis:{
+
+
+showgrid:false
+
+},
+
+
+
+yaxis:{
+
+
+title:"Amount (BDT)"
+
+},
+
+
+
+legend:{
+
+
+orientation:"h"
+
+}
+
+
+
+}}
+
+
+
+config={{
+
+displayModeBar:false
+
+}}
+
+
+
+style={{
+
+width:"100%",
+
+height:"285px"
+
+}}
+
+
+
+/>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div className="account-risk-summary">
+
+
+<h3>
+Account Risk Summary
+</h3>
+
+
+
+<div className="account-risk-metrics">
+
+
+<p>
+
+Typical Amount:
+
+<strong>
+
+৳
+{Math.round(
+historicalAverage
+)}
+
+</strong>
+
+</p>
+
+
+
+
+<p>
+
+Current Amount:
+
+<strong>
+
+৳
+{currentTransaction.amount}
+
+</strong>
+
+</p>
+
+
+
+
+
+<p>
+
+Increase:
+
+<strong>
+
+{Math.round(increase)}×
+
+</strong>
+
+</p>
+
+
+
+
+
+<p>
+
+Risk Score:
+
+<strong>
+
+{currentTransaction.riskScore}/100
+
+</strong>
+
+</p>
+
+
+
+
+
+<p>
+
+Risk Level:
+
+<strong>
+
+{currentTransaction.riskLevel}
+
+</strong>
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+<div className="account-risk-insight">
+
+
+💡 AI Insight:
+
+This transaction is
+
+{" "}
+
+{Math.round(increase)}×
+
+higher than normal activity.
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+);
+
+
 }
