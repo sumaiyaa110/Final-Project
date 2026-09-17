@@ -1,13 +1,17 @@
-# Python environment
+# Next.js
+.next/
+out/
+
+# Python
 venv/
 backend/venv/
 
-# Large datasets
+# Data
 backend/data/*.csv
 
-# Cache files
+# Cache
 __pycache__/
 *.pyc
 
-# Environment files
+# Environment
 .env
