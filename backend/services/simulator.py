@@ -12,9 +12,11 @@ from services.agent_service import assign_fraud_case
 DATA_PATH = "data/transactions_v4.csv"
 
 
-# Real world fraud rate
-TARGET_FRAUD_RATE = 0.003
+# =====================================================
+# REAL WORLD FRAUD RATE
+# =====================================================
 
+TARGET_FRAUD_RATE = 0.003
 
 
 # =====================================================
@@ -43,8 +45,6 @@ print(
 )
 
 
-
-
 # =====================================================
 # ID GENERATORS
 # =====================================================
@@ -52,19 +52,15 @@ print(
 def generate_device_id():
 
     return "DEV-" + str(
-        random.randint(10000,99999)
+        random.randint(10000, 99999)
     )
-
 
 
 def generate_customer_id():
 
     return "CUST-" + str(
-        random.randint(10000,99999)
+        random.randint(10000, 99999)
     )
-
-
-
 
 
 # =====================================================
@@ -74,13 +70,11 @@ def generate_customer_id():
 def get_existing_customers():
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
 
     cursor.execute(
         """
-
         SELECT DISTINCT customer_id
 
         FROM transactions
@@ -88,7 +82,6 @@ def get_existing_customers():
         WHERE customer_id IS NOT NULL
 
         LIMIT 5000
-
         """
     )
 
@@ -108,9 +101,6 @@ def get_existing_customers():
     return customers
 
 
-
-
-
 # =====================================================
 # EXISTING DEVICES
 # =====================================================
@@ -118,19 +108,16 @@ def get_existing_customers():
 def get_existing_devices():
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
 
     cursor.execute(
         """
-
         SELECT device_id
 
         FROM devices
 
         LIMIT 5000
-
         """
     )
 
@@ -150,37 +137,27 @@ def get_existing_devices():
     return devices
 
 
-
-
-
 # =====================================================
 # DEVICE RISK
 # =====================================================
 
 def calculate_device_risk(accounts):
 
-
     if accounts >= 10:
 
         return "Critical"
-
 
     elif accounts >= 5:
 
         return "High"
 
-
     elif accounts >= 3:
 
         return "Medium"
 
-
     else:
 
         return "Low"
-
-
-
 
 
 # =====================================================
@@ -189,13 +166,15 @@ def calculate_device_risk(accounts):
 
 def generate_transaction():
 
-
+    # =================================================
+    # SELECT RANDOM TRANSACTION DATA
+    # =================================================
 
     index = random.randint(
 
         0,
 
-        len(transactions_df)-1
+        len(transactions_df) - 1
 
     )
 
@@ -203,43 +182,28 @@ def generate_transaction():
     row = transactions_df.iloc[index]
 
 
-
     transaction = {
 
-
         "amount":
-
             float(row["amount"]),
 
-
-
         "channel":
-
             str(row["channel"]),
 
-
-
         "txn_hour":
-
             int(row["txn_hour"]),
 
-
-
         "new_device_flag":
-
             int(row["new_device_flag"])
 
     }
 
 
-
-
-    # =====================================================
+    # =================================================
     # CUSTOMER SELECTION
-    # =====================================================
+    # =================================================
 
     existing_customers = get_existing_customers()
-
 
 
     if (
@@ -250,29 +214,20 @@ def generate_transaction():
 
     ):
 
-
         customer_id = random.choice(
-
             existing_customers
-
         )
 
-
     else:
-
 
         customer_id = generate_customer_id()
 
 
-
-
-
-    # =====================================================
+    # =================================================
     # DEVICE SELECTION
-    # =====================================================
+    # =================================================
 
     existing_devices = get_existing_devices()
-
 
 
     if (
@@ -283,48 +238,36 @@ def generate_transaction():
 
     ):
 
-
         device_id = random.choice(
-
             existing_devices
-
         )
 
-
     else:
-
 
         device_id = generate_device_id()
 
 
-
-
-
-    # =====================================================
+    # =================================================
     # ML PREDICTION
-    # =====================================================
+    # =================================================
 
     result = predict_transaction(
-
         transaction
-
     )
 
 
-
-
-
-
-    # =====================================================
+    # =================================================
     # FRAUD CONTROL
-    # =====================================================
+    # =================================================
 
     is_fraud_case = False
 
 
-
     if random.random() > TARGET_FRAUD_RATE:
 
+        # ---------------------------------------------
+        # NORMAL TRANSACTION
+        # ---------------------------------------------
 
         result["risk_level"] = "LOW"
 
@@ -346,6 +289,9 @@ def generate_transaction():
 
     else:
 
+        # ---------------------------------------------
+        # FRAUD TRANSACTION
+        # ---------------------------------------------
 
         is_fraud_case = True
 
@@ -362,32 +308,36 @@ def generate_transaction():
         )
 
 
+    # =================================================
+    # ALERT STATUS
+    # =================================================
+    # Every newly generated transaction starts as
+    # Pending.
+    #
+    # Only HIGH / CRITICAL transactions will actually
+    # appear on the Fraud Alerts page.
+    # =================================================
+
+    alert_status = "Pending"
 
 
-
-
+    # =================================================
+    # DATABASE CONNECTION
+    # =================================================
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
 
-
-
-
-    # =====================================================
-    # INSERT TRANSACTION (FIXED)
-    # =====================================================
-
+    # =================================================
+    # INSERT TRANSACTION
+    # =================================================
 
     cursor.execute(
 
         """
-
         INSERT INTO transactions
-
         (
-
             timestamp,
 
             amount,
@@ -408,11 +358,25 @@ def generate_transaction():
 
             customer_id,
 
-            device_id
+            device_id,
 
+            alert_status
         )
 
-        VALUES(?,?,?,?,?,?,?,?,?,?,?)
+        VALUES(
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?
+        )
 
         """,
 
@@ -450,36 +414,32 @@ def generate_transaction():
             customer_id,
 
 
-            device_id
+            device_id,
+
+
+            alert_status
 
         )
 
     )
 
 
-
-
-
-
-    # =====================================================
+    # =================================================
     # UPDATE DEVICE
-    # =====================================================
+    # =================================================
 
     cursor.execute(
 
         """
-
         SELECT
 
             linked_accounts,
 
             transaction_count
 
-
         FROM devices
 
-
-        WHERE device_id=?
+        WHERE device_id = ?
 
         """,
 
@@ -491,44 +451,37 @@ def generate_transaction():
     existing = cursor.fetchone()
 
 
-
     if existing:
-
 
         accounts = existing[0] + 1
 
         transactions = existing[1] + 1
 
-
     else:
-
 
         accounts = 1
 
         transactions = 1
 
 
-
-
+    # =================================================
+    # CALCULATE DEVICE RISK
+    # =================================================
 
     device_risk = calculate_device_risk(
-
         accounts
-
     )
 
 
-
-
+    # =================================================
+    # INSERT / UPDATE DEVICE
+    # =================================================
 
     cursor.execute(
 
         """
-
         INSERT OR REPLACE INTO devices
-
         (
-
             device_id,
 
             os_type,
@@ -544,11 +497,18 @@ def generate_transaction():
             last_activity,
 
             status
-
         )
 
-
-        VALUES(?,?,?,?,?,?,?,?)
+        VALUES(
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?
+        )
 
         """,
 
@@ -575,24 +535,15 @@ def generate_transaction():
     )
 
 
-
-
-
-
-
-    # =====================================================
+    # =================================================
     # NETWORK
-    # =====================================================
-
+    # =================================================
 
     cursor.execute(
 
         """
-
         INSERT INTO network_edges
-
         (
-
             source,
 
             target,
@@ -600,11 +551,14 @@ def generate_transaction():
             amount,
 
             transaction_count
-
         )
 
-
-        VALUES(?,?,?,?)
+        VALUES(
+            ?,
+            ?,
+            ?,
+            ?
+        )
 
         """,
 
@@ -623,28 +577,27 @@ def generate_transaction():
     )
 
 
-
-
+    # =================================================
+    # SAVE DATABASE CHANGES
+    # =================================================
 
     conn.commit()
 
     conn.close()
 
 
-
-
-
-    # =====================================================
+    # =================================================
     # FRAUD CASE ASSIGNMENT
-    # =====================================================
+    # =================================================
 
     if is_fraud_case:
 
         assign_fraud_case()
 
 
-
-
+    # =================================================
+    # LOG
+    # =================================================
 
     print(
 
@@ -652,21 +605,22 @@ def generate_transaction():
 
         result,
 
-        "|",
+        "| Customer:",
 
         customer_id,
 
-        "|",
+        "| Device:",
 
-        device_id
+        device_id,
+
+        "| Alert Status:",
+
+        alert_status
 
     )
 
 
     return result
-
-
-
 
 
 # =====================================================
@@ -675,26 +629,19 @@ def generate_transaction():
 
 def start_simulator(interval=5):
 
-
     print(
-
         "Real-time simulator started"
-
     )
 
 
     while True:
 
-
         try:
-
 
             generate_transaction()
 
 
-
         except Exception as e:
-
 
             print(
 
@@ -703,7 +650,6 @@ def start_simulator(interval=5):
                 e
 
             )
-
 
 
         time.sleep(interval)
