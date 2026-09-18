@@ -2,97 +2,144 @@ from services.database import get_connection
 
 
 
-
 def get_transactions():
-
 
     conn = get_connection()
 
     cursor = conn.cursor()
 
 
-
     cursor.execute(
+        """
 
-    """
+        SELECT *
 
-    SELECT
+        FROM transactions
 
+        ORDER BY id DESC
 
-        id,
+        LIMIT 500
 
-        timestamp,
-
-        amount,
-
-        channel,
-
-        risk_score,
-
-        risk_level,
-
-        customer_id,
-
-        device_id
-
-
-    FROM transactions
-
-
-    ORDER BY id DESC
-
-
-    LIMIT 500
-
-
-    """
-
+        """
     )
 
 
-
-
     rows = cursor.fetchall()
-
 
 
     transactions = []
 
 
 
-
-
     for row in rows:
 
 
-
-        risk = row[5]
-
+        txn_id = row[0]
 
 
-        if risk.upper() == "HIGH":
+        timestamp = None
+        amount = 0
+        channel = "Unknown"
+        risk_score = 0
+        risk_level = "LOW"
+        customer_id = None
+        device_id = None
 
+
+
+        # ==========================================
+        # FIND VALUES BY TYPE
+        # ==========================================
+
+
+        for value in row:
+
+
+            # timestamp
+            if isinstance(value, str):
+
+                if "T" in value and ":" in value:
+
+                    timestamp = value
+
+
+
+            # customer
+            if isinstance(value, str):
+
+                if value.startswith("CUST"):
+
+                    customer_id = value
+
+
+
+            # device
+            if isinstance(value, str):
+
+                if value.startswith("DEV"):
+
+                    device_id = value
+
+
+
+            # risk level
+            if isinstance(value, str):
+
+                if value.upper() in [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                ]:
+
+                    risk_level = value.upper()
+
+
+
+            # numeric values
+            if isinstance(value,(int,float)):
+
+
+                if value > 0 and amount == 0:
+
+                    amount = value
+
+
+
+
+        # ==========================================
+        # FIND RISK SCORE
+        # ==========================================
+
+
+        for value in row:
+
+
+            if isinstance(value,(int,float)):
+
+
+                if 0 <= value <= 100:
+
+                    risk_score = value
+
+
+
+
+
+        if risk_level in [
+            "HIGH",
+            "CRITICAL"
+        ]:
 
             status = "Investigate"
 
 
-
-        elif risk.upper() == "MEDIUM":
-
+        elif risk_level == "MEDIUM":
 
             status = "Review"
 
 
-
-        elif risk.upper() == "CRITICAL":
-
-
-            status = "Investigate"
-
-
-
         else:
-
 
             status = "Normal"
 
@@ -100,98 +147,54 @@ def get_transactions():
 
 
 
-
-
         transactions.append({
 
-
-
             "id":
-
-            f"TXN-{row[0]}",
-
-
-
+                f"TXN-{txn_id}",
 
 
             "type":
-
-            row[3],
-
-
-
+                channel,
 
 
             "amount":
-
-            f"৳{float(row[2]):,.0f}",
-
-
-
+                f"৳{float(amount):,.0f}",
 
 
             "score":
-
-            round(float(row[4]),0),
-
-
-
+                round(float(risk_score),0),
 
 
             "level":
-
-            risk.capitalize(),
-
-
-
+                risk_level.capitalize(),
 
 
             "status":
-
-            status,
-
-
-
+                status,
 
 
             "customer":
-
-            row[6]
-
-            if row[6]
-
-            else f"CUST-{row[0]}",
-
-
-
+                customer_id
+                if customer_id
+                else f"CUST-{txn_id}",
 
 
             "device":
-
-            row[7]
-
-            if row[7]
-
-            else f"DEVICE-{row[0]}",
-
-
-
+                device_id
+                if device_id
+                else f"DEV-{txn_id}",
 
 
             "time":
-
-            row[1]
-
-
+                timestamp
+                if timestamp
+                else "Unknown"
 
         })
 
 
 
-
-
     conn.close()
-
 
 
     return transactions
