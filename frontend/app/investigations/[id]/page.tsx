@@ -1,93 +1,47 @@
 "use client";
 
-
-import {
-    useParams,
-    useRouter
-} from "next/navigation";
-
-
-import {
-    useEffect,
-    useState
-} from "react";
-
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 
-
-
-
-
-export default function InvestigationDetailsPage(){
-
+export default function InvestigationDetailPage(){
 
     const params = useParams();
 
-    const router = useRouter();
+    const id = params.id as string;
 
-
-
-    const id =
-
-        typeof params.id === "string"
-
-        ?
-
-        params.id
-
-        :
-
-        "";
-
-
-
-
-
-    const [caseData,setCaseData] =
-        useState<any>(null);
-
-
-
-    const [loading,setLoading] =
-        useState(true);
-
-
-
-
-
+    const [transaction,setTransaction] = useState<any>(null);
+    const [loading,setLoading] = useState(true);
+    const [actionMessage,setActionMessage] = useState("");
 
 
     // ==========================================
-    // REALTIME INVESTIGATION DATA
+    // REAL TIME TRANSACTION FETCH
     // ==========================================
-
 
     useEffect(()=>{
 
 
-        async function loadInvestigation(){
+        async function loadTransaction(){
 
 
             try{
 
 
-                const response =
-                    await fetch(
+                const response = await fetch(
 
-                        `http://localhost:8000/investigation/${id}`,
+                    `http://localhost:8000/transaction/${id}`,
 
-                        {
-                            cache:"no-store"
-                        }
+                    {
+                        cache:"no-store"
+                    }
 
-                    );
-
+                );
 
 
-                const data =
-                    await response.json();
-
+                const data = await response.json();
 
 
                 console.log(
@@ -96,19 +50,20 @@ export default function InvestigationDetailsPage(){
                 );
 
 
+                setTransaction(data);
 
-                setCaseData(data);
+
+                setLoading(false);
 
 
 
             }
 
-
             catch(error){
 
 
                 console.log(
-                    "Investigation API Error:",
+                    "Investigation Error:",
                     error
                 );
 
@@ -116,51 +71,91 @@ export default function InvestigationDetailsPage(){
             }
 
 
-            finally{
-
-
-                setLoading(false);
-
-
-            }
-
-
-
         }
 
 
 
 
-
-        if(id){
-
-            loadInvestigation();
+        loadTransaction();
 
 
-            const interval =
-                setInterval(
 
-                    loadInvestigation,
+        const interval = setInterval(
 
-                    5000
+            loadTransaction,
 
-                );
+            5000
+
+        );
 
 
-            return ()=>clearInterval(interval);
 
-        }
+        return ()=>clearInterval(interval);
 
 
 
     },[id]);
 
+    // ==========================================
+    // UPDATE INVESTIGATION STATUS
+    // ==========================================
+    async function updateStatus(status:string){
+        try{
+            const response = await fetch(
+                `http://localhost:8000/investigation-action/${transaction.id}`,
+
+                {
+
+                    method:"POST",
+                    headers:{
+
+                        "Content-Type":"application/json"
+
+                    },
+
+                    body:JSON.stringify({
+
+                        status:status
+
+                    })
+
+                }
+
+            );
+
+            const data = await response.json();
+            console.log(
+                "Action Response:",
+                data
+            );
+
+            setActionMessage(
+                `Transaction marked as ${status}`
+
+            );
+
+            setTimeout(()=>{
+
+                setActionMessage("");
+
+            },3000);
+
+        }
 
 
+        catch(error){
+            console.log(
+
+                "Action Error:",
+
+                error
+
+            );
 
 
+        }
 
-
+    }
 
 
     if(loading){
@@ -170,7 +165,7 @@ export default function InvestigationDetailsPage(){
 
             <AdminLayout>
 
-                <div className="investigation-page">
+                <div className="transaction-details-page">
 
                     <h2>
                         Loading Investigation...
@@ -178,10 +173,9 @@ export default function InvestigationDetailsPage(){
 
                 </div>
 
-
             </AdminLayout>
 
-        )
+        );
 
 
     }
@@ -192,36 +186,26 @@ export default function InvestigationDetailsPage(){
 
 
 
-
-    if(!caseData){
+    if(!transaction){
 
 
         return(
 
             <AdminLayout>
 
-
-                <div className="investigation-page">
-
+                <div className="transaction-details-page">
 
                     <h2>
-
-                        Investigation Not Found
-
+                        Transaction Not Found
                     </h2>
-
 
                 </div>
 
-
             </AdminLayout>
 
-        )
-
+        );
 
     }
-
-
 
 
 
@@ -232,514 +216,231 @@ export default function InvestigationDetailsPage(){
 
     return(
 
-
         <AdminLayout>
 
 
-            <div className="investigation-page">
+        <div className="transaction-details-page">
+
+
+
+            <Link
+
+                href="/transactions"
+
+                className="transaction-back-button"
+
+            >
+
+                ← Back to Transactions
+
+            </Link>
 
 
 
 
 
-                {/* HEADER */}
+            <div className="transaction-details-header">
 
 
-                <div className="investigation-header">
+                <div>
 
 
-                    <div>
+                    <h1>
+
+                        Investigation: {transaction.id}
+
+                    </h1>
 
 
-                        <button
+                    <p>
 
-                            className="investigation-back"
+                        Fraud investigation details
 
-                            onClick={()=>router.back()}
-
-                        >
-
-                            ← Back
-
-                        </button>
+                    </p>
 
 
+                </div>
 
 
-                        <h1>
-
-                            Investigation Case
-
-                        </h1>
-
-
-                        <p>
-
-                            Customer ID:
-
-                            {" "}
-
-                            <strong>
-
-                                {caseData.customer_id}
-
-                            </strong>
-
-                        </p>
-
-
-                    </div>
+            </div>
 
 
 
 
 
-                    <span className="investigation-status">
 
 
-                        Open
 
+            {/* RISK CARD */}
+
+
+            <div className="transaction-risk-overview">
+
+
+                <div className="transaction-risk-main">
+
+
+                    <span>
+
+                        RISK SCORE
 
                     </span>
 
 
-
-                </div>
-
-
-
-
-
-
-
-
-
-                {/* SUMMARY CARDS */}
-
-
-
-                <div className="investigation-summary-grid">
-
-
-
-                    <div className="investigation-card">
-
-
-                        <span>
-
-                            Total Cases
-
-                        </span>
-
-
-                        <strong>
-
-                            {caseData.total_cases}
-
-                        </strong>
-
-
-                    </div>
-
-
-
-
-
-                    <div className="investigation-card">
-
-
-                        <span>
-
-                            Customer
-
-                        </span>
-
-
-                        <strong>
-
-                            {caseData.customer_id}
-
-                        </strong>
-
-
-                    </div>
-
-
-
-
-
-                    <div className="investigation-card">
-
-
-                        <span>
-
-                            Highest Risk
-
-                        </span>
-
-
-                        <strong>
-
-
-                            {
-
-                            caseData.transactions?.length > 0
-
-                            ?
-
-                            Math.max(
-
-                                ...
-
-                                caseData.transactions.map(
-
-                                    (tx:any)=>
-
-                                    Number(tx.risk_score)
-
-                                )
-
-                            )
-
-                            :
-
-                            0
-
-                            }
-
-
-                        </strong>
-
-
-                    </div>
-
-
-
-
-
-                    <div className="investigation-card">
-
-
-                        <span>
-
-                            Priority
-
-                        </span>
-
-
-                        <strong className="high">
-
-
-                            High
-
-
-                        </strong>
-
-
-                    </div>
-
-
-
-                </div>
-
-
-
-
-
-
-
-
-
-                {/* TRANSACTION TABLE */}
-
-
-
-                <div className="investigation-table-card">
-
-
-
-                    <div className="investigation-title">
-
-
-                        <h2>
-
-                            Suspicious Transactions
-
-                        </h2>
-
-
-                        <p>
-
-                            Transactions requiring investigation.
-
-                        </p>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <table className="investigation-table">
-
-
-                        <thead>
-
-
-                            <tr>
-
-
-                                <th>
-
-                                    Transaction ID
-
-                                </th>
-
-
-                                <th>
-
-                                    Amount
-
-                                </th>
-
-
-                                <th>
-
-                                    Channel
-
-                                </th>
-
-
-                                <th>
-
-                                    Risk Score
-
-                                </th>
-
-
-                                <th>
-
-                                    Risk Level
-
-                                </th>
-
-
-                                <th>
-
-                                    Time
-
-                                </th>
-
-
-                            </tr>
-
-
-                        </thead>
-
-
-
-
-                        <tbody>
-
-
-                        {
-
-
-                        caseData.transactions.length===0
-
-
-                        ?
-
-
-                        <tr>
-
-
-                            <td colSpan={6}>
-
-                                No suspicious transactions found
-
-                            </td>
-
-
-                        </tr>
-
-
-                        :
-
-
-
-                        caseData.transactions.map(
-
-                            (tx:any)=>(
-
-
-                            <tr
-
-                            key={tx.transaction_id}
-
-                            >
-
-
-
-                                <td>
-
-                                    {tx.transaction_id}
-
-                                </td>
-
-
-
-                                <td>
-
-                                    ৳{tx.amount}
-
-                                </td>
-
-
-
-                                <td>
-
-                                    {tx.channel}
-
-                                </td>
-
-
-
-                                <td>
-
-                                    {tx.risk_score}
-
-                                </td>
-
-
-
-                                <td>
-
-
-                                    <span
-
-                                    className={
-
-                                    `risk-badge ${
-
-                                    tx.risk_level.toLowerCase()
-
-                                    }`
-
-                                    }
-
-
-                                    >
-
-                                        {tx.risk_level}
-
-
-                                    </span>
-
-
-                                </td>
-
-
-
-
-                                <td>
-
-                                    {tx.time}
-
-                                </td>
-
-
-
-                            </tr>
-
-
-                            )
-
-
-                        )
-
-
-                        }
-
-
-
-                        </tbody>
-
-
-                    </table>
-
-
-
-                </div>
-
-
-
-
-
-
-
-
-
-                {/* ACTION PANEL */}
-
-
-
-                <div className="investigation-actions">
-
-
-
                     <h2>
 
-                        Investigation Actions
+                        {transaction.score}
+
+                        <small>
+                            /100
+                        </small>
 
                     </h2>
 
 
 
+                    <div className="transaction-large-risk-bar">
+
+                        <span
+
+                        style={{
+
+                            width:`${transaction.score}%`
+
+                        }}
+
+                        />
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div className="transaction-risk-status">
+
+
+                    <div className="risk-status-icon">
+
+                        ⚠
+
+                    </div>
+
 
                     <div>
 
 
-                        <button
+                        <span>
 
-                        className="assign-agent"
+                            Risk Level
 
-                        >
-
-                            Assign Agent
-
-                        </button>
+                        </span>
 
 
+                        <h3>
+
+                            {transaction.level}
+
+                        </h3>
 
 
-                        <button
+                    </div>
 
-                        className="review-case"
 
-                        >
-
-                            Mark Under Review
-
-                        </button>
+                </div>
 
 
 
-
-                        <button
-
-                        className="resolve-case"
-
-                        >
-
-                            Resolve Case
-
-                        </button>
+            </div>
 
 
+
+
+
+
+
+
+
+            {/* TRANSACTION INFORMATION */}
+
+
+
+            <div className="transaction-info-card">
+
+
+                <div className="transaction-info-header">
+
+
+                    <h2>
+
+                        Transaction Information
+
+                    </h2>
+
+
+                </div>
+
+
+
+
+                <div className="transaction-info-grid">
+
+
+
+                    <div>
+
+                        <label>
+                            Transaction ID
+                        </label>
+
+                        <strong>
+                            {transaction.id}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label>
+                            Amount
+                        </label>
+
+                        <strong>
+                            {transaction.amount}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label>
+                            Channel
+                        </label>
+
+                        <strong>
+                            {transaction.type}
+                        </strong>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label>
+                            Time
+                        </label>
+
+                        <strong>
+                            {transaction.time}
+                        </strong>
 
                     </div>
 
@@ -747,6 +448,152 @@ export default function InvestigationDetailsPage(){
 
                 </div>
 
+
+            </div>
+
+
+            {/* CUSTOMER & DEVICE INFORMATION */}
+
+            <div className="transaction-details-grid">
+
+                {/* CUSTOMER */}
+
+                <div className="transaction-info-card">
+
+
+                    <div className="transaction-info-header">
+
+                        <h2>
+                            Customer Information
+                        </h2>
+
+                    </div>
+
+
+
+                    <div className="entity-profile">
+
+
+                        <div className="entity-avatar">
+
+                            C
+
+                        </div>
+
+
+
+                        <div>
+
+                            <strong>
+
+                                {transaction.customer}
+
+                            </strong>
+
+
+                            <span>
+
+                                Customer Account
+
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <Link
+
+                        href={`/customers/${transaction.customer}`}
+
+                        className="entity-view-link"
+
+                    >
+
+                        View Customer →
+
+                    </Link>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                {/* DEVICE */}
+
+
+                <div className="transaction-info-card">
+
+
+                    <div className="transaction-info-header">
+
+                        <h2>
+                            Device Information
+                        </h2>
+
+                    </div>
+
+
+
+                    <div className="entity-profile">
+
+
+                        <div className="entity-avatar">
+
+                            D
+
+                        </div>
+
+
+
+                        <div>
+
+                            <strong>
+
+                                {transaction.device}
+
+                            </strong>
+
+
+                            <span>
+
+                                Registered Device
+
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <Link
+
+                        href="/devices"
+
+                        className="entity-view-link"
+
+                    >
+
+                        View Device →
+
+                    </Link>
+
+
+
+                </div>
 
 
 
@@ -755,8 +602,179 @@ export default function InvestigationDetailsPage(){
 
 
 
-        </AdminLayout>
 
+            {/* AI EXPLANATION */}
+
+
+
+            <div className="transaction-ai-card">
+
+
+                <h2>
+
+                    AI Risk Explanation
+
+                </h2>
+
+                <div className="transaction-ai-grid">
+
+                    {/* AI REASONS */}
+
+                    <div className="transaction-ai-item critical">
+
+
+                        <h3>
+                            Detection Reasons
+                        </h3>
+
+
+
+                        <ul className="ai-reason-list">
+
+
+                            {
+                                transaction.reasons &&
+
+                                transaction.reasons.map(
+
+                                    (reason:string,index:number)=>(
+
+                                        <li key={index}>
+
+                                            ✓ {reason}
+
+                                        </li>
+
+                                    )
+
+                                )
+                            }
+
+
+                        </ul>
+
+
+                    </div>
+
+                    {/* FRAUD PROBABILITY */}
+
+                    <div className="transaction-ai-item">
+
+
+                        <h3>
+                            Fraud Probability
+                        </h3>
+
+
+                        <p>
+
+                            {transaction.fraud_probability}
+
+                        </p>
+
+
+                    </div>
+
+                    {/* ANOMALY SCORE */}
+
+                    <div className="transaction-ai-item">
+
+
+                        <h3>
+                            Anomaly Score
+                        </h3>
+
+
+                        <p>
+
+                            {transaction.anomaly_score}
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+                </div>
+
+            </div>
+
+            {/* ACTIONS */}
+
+            <div className="transaction-investigation-card">
+
+
+                <h2>
+
+                    Investigation Actions
+
+                </h2>
+
+
+                <p>
+
+                    Take action based on AI assessment.
+
+                </p>
+                {
+
+                actionMessage &&
+
+                <div className="investigation-success">
+
+                ✓ {actionMessage}
+
+                </div>
+
+                }
+
+                <div className="investigation-buttons">
+
+                    <button
+
+                    className="investigation-review"
+
+                    onClick={()=>updateStatus("Safe")}
+
+                    >
+
+                    ✓ Mark Safe
+
+                    </button>
+
+                    <button
+
+                    className="investigation-escalate"
+
+                    onClick={()=>updateStatus("Escalated")}
+
+                    >
+
+                    ⚠ Escalate
+
+                    </button>
+
+
+                    <button
+
+                    className="investigation-block"
+
+                    onClick={()=>updateStatus("Blocked")}
+
+                    >
+
+                    Block Transaction
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </AdminLayout>
 
     );
 

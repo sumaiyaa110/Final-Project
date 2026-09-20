@@ -2,20 +2,14 @@ from services.database import get_connection
 
 from datetime import datetime
 
-
-
 # ==========================================
 # Transaction Trend
 # ==========================================
-
 def get_transaction_trend():
-
 
     conn = get_connection()
 
     cursor = conn.cursor()
-
-
 
     cursor.execute(
         """
@@ -36,37 +30,24 @@ def get_transaction_trend():
 
         FROM transactions
 
-
         GROUP BY DATE(timestamp)
 
-
         ORDER BY date DESC
-
 
         LIMIT 30
 
         """
     )
 
-
-
     rows = cursor.fetchall()
 
-
-
     conn.close()
-
-
 
     # reverse order for chart
 
     rows = rows[::-1]
 
-
-
     result = []
-
-
 
     for row in rows:
 
@@ -81,27 +62,15 @@ def get_transaction_trend():
 
         })
 
-
-
     return result
-
-
-
-
-
 
 # ==========================================
 # Transaction Channel Distribution
 # ==========================================
-
 def get_channel_distribution():
 
-
     conn = get_connection()
-
     cursor = conn.cursor()
-
-
 
     cursor.execute(
 
@@ -124,15 +93,9 @@ def get_channel_distribution():
 
     )
 
-
-
     rows = cursor.fetchall()
 
-
-
     conn.close()
-
-
 
     return [
 
@@ -148,24 +111,13 @@ def get_channel_distribution():
 
     ]
 
-
-
-
-
-
-
 # ==========================================
 # Fraud Types
 # ==========================================
-
 def get_fraud_types():
 
-
     conn = get_connection()
-
     cursor = conn.cursor()
-
-
 
     cursor.execute(
 
@@ -173,59 +125,54 @@ def get_fraud_types():
 
         SELECT
 
-        COUNT(*)
+            channel,
+
+            COUNT(*) as count
+
 
         FROM transactions
 
+
         WHERE risk_level IN ('HIGH','CRITICAL')
+
+
+        GROUP BY channel
+
+
+        ORDER BY count DESC
+
 
         """
 
     )
 
-
-    fraud_count = cursor.fetchone()[0]
-
-
+    rows = cursor.fetchall()
 
     conn.close()
 
+    fraud_types = []
 
+    for row in rows:
 
-    return [
+        fraud_types.append({
 
-        {
+            "type": row[0],
 
-            "type":"High Risk Transaction",
+            "count": row[1]
 
-            "count":fraud_count
+        })
 
-        }
-
-    ]
-
-
-
-
-
-
+    return fraud_types
 
 # ==========================================
 # AI Insights
 # ==========================================
-
 def get_ai_insights():
 
-
     conn = get_connection()
-
     cursor = conn.cursor()
 
-
-
     insights = []
-
-
 
     cursor.execute(
 
@@ -241,23 +188,15 @@ def get_ai_insights():
 
     )
 
-
     high_risk = cursor.fetchone()[0]
 
-
-
     if high_risk > 0:
-
 
         insights.append(
 
             f"{high_risk} high risk transactions detected."
 
         )
-
-
-
-
 
     cursor.execute(
 
@@ -277,14 +216,9 @@ def get_ai_insights():
 
     )
 
-
-
     result = cursor.fetchone()
 
-
-
     if result:
-
 
         insights.append(
 
@@ -292,12 +226,7 @@ def get_ai_insights():
 
         )
 
-
-
-
     conn.close()
-
-
 
     return {
 

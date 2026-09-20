@@ -18,10 +18,9 @@ import AdminLayout from "@/components/layout/AdminLayout";
 
 import {
   getDevices,
-  getTransactions
+  getTransactions,
+  getInvestigations
 } from "@/services/api";
-
-
 
 
 
@@ -205,99 +204,27 @@ const deviceData =
 await getDevices();
 
 
-
 const transactionData =
 await getTransactions();
 
 
+const investigationData =
+await getInvestigations();
 
 
 
 setDevices(
-deviceData
+    deviceData
 );
-
 
 
 setTransactions(
-transactionData
+    transactionData
 );
-
-
-
-
-
-// Create investigations dynamically
-
-const investigationData =
-deviceData
-
-.filter(
-(device:any)=>
-
-device.risk==="High"
-
-||
-
-device.risk==="Critical"
-
-)
-
-.map(
-(device:any,index:number)=>({
-
-
-id:
-`INV-${String(index+1).padStart(3,"0")}`,
-
-
-
-device:
-device.id,
-
-
-
-risk:
-device.risk,
-
-
-
-accounts:
-device.accounts,
-
-
-
-transactions:
-device.transactions,
-
-
-
-status:
-
-device.risk==="Critical"
-
-?
-
-"Investigating"
-
-:
-
-"Open",
-
-
-
-updated:
-device.lastActivity
-
-
-})
-
-);
-
 
 
 setInvestigations(
-investigationData
+    investigationData
 );
 
 

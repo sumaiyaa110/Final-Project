@@ -17866,3 +17866,2960 @@ td {
     padding: 0 13px;
   }
 }
+/* =========================================================
+   ANOMALYX - INDIVIDUAL TRANSACTION DETAILS
+   ========================================================= */
+
+.transaction-details-page {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 24px 28px 50px;
+
+  color: #e8eef7;
+}
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.transaction-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 18px;
+
+  color: #7690ad;
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.transaction-back-button:hover {
+  color: #b9c9dc;
+  transform: translateX(-2px);
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.transaction-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 18px;
+}
+
+.transaction-details-id-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.transaction-details-id-row h1 {
+  margin: 0;
+
+  color: #f3f6fb;
+
+  font-size: 22px;
+  font-weight: 750;
+
+  letter-spacing: -0.4px;
+}
+
+.transaction-details-header p {
+  margin: 7px 0 0;
+
+  color: #7086a2;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RISK LEVEL BADGE
+   ========================================================= */
+
+.transaction-details-level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 58px;
+  height: 25px;
+
+  padding: 0 10px;
+
+  border-radius: 6px;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.transaction-details-level.high {
+  background: rgba(244, 63, 94, 0.13);
+  border: 1px solid rgba(244, 63, 94, 0.28);
+  color: #fb7185;
+}
+
+.transaction-details-level.medium {
+  background: rgba(245, 158, 11, 0.13);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  color: #fbbf24;
+}
+
+.transaction-details-level.low {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #34d399;
+}
+
+.transaction-details-level.critical {
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.transaction-details-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+.transaction-secondary-button,
+.transaction-primary-button {
+  height: 36px;
+
+  padding: 0 14px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.transaction-secondary-button {
+  border: 1px solid #29415d;
+
+  background: #0b1a2d;
+
+  color: #9eb2c9;
+}
+
+.transaction-secondary-button:hover {
+  background: #12263e;
+  border-color: #3b5877;
+  color: #ffffff;
+}
+
+.transaction-primary-button {
+  border: 1px solid #3f62d7;
+
+  background: #365cdb;
+
+  color: #ffffff;
+
+  box-shadow: 0 5px 16px rgba(54, 92, 219, 0.18);
+}
+
+.transaction-primary-button:hover {
+  background: #4268e6;
+  border-color: #5275ed;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   RISK OVERVIEW
+   ========================================================= */
+
+.transaction-risk-overview {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.55fr)
+    minmax(300px, 0.85fr);
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.transaction-risk-main,
+.transaction-risk-status {
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+}
+
+/* =========================================================
+   RISK SCORE CARD
+   ========================================================= */
+
+.transaction-risk-main {
+  padding: 20px 22px;
+}
+
+.transaction-risk-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.transaction-risk-heading span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #7087a3;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.transaction-risk-heading h2 {
+  margin: 0;
+
+  color: #f3f6fb;
+
+  font-size: 30px;
+  font-weight: 750;
+
+  letter-spacing: -1px;
+}
+
+.transaction-risk-heading h2 small {
+  margin-left: 3px;
+
+  color: #7187a2;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   RISK CIRCLE
+   ========================================================= */
+
+.transaction-risk-circle {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 3px solid #365cdb;
+
+  background: radial-gradient(circle, #102747 0%, #0a1b2e 70%);
+
+  color: #dce7ff;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  box-shadow: 0 0 0 5px rgba(54, 92, 219, 0.06);
+}
+
+/* =========================================================
+   LARGE RISK BAR
+   ========================================================= */
+
+.transaction-large-risk-bar {
+  width: 100%;
+  height: 7px;
+
+  margin-top: 20px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #162b42;
+}
+
+.transaction-large-risk-bar span {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: linear-gradient(90deg, #365cdb 0%, #6366f1 55%, #f43f5e 100%);
+
+  transition: width 0.4s ease;
+}
+
+/* =========================================================
+   RISK FOOTER
+   ========================================================= */
+
+.transaction-risk-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 10px;
+}
+
+.transaction-risk-footer span {
+  color: #667d99;
+
+  font-size: 9px;
+}
+
+.transaction-risk-footer strong {
+  color: #a9bbd0;
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+/* =========================================================
+   CURRENT STATUS
+   ========================================================= */
+
+.transaction-risk-status {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 20px;
+}
+
+.risk-status-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: rgba(245, 158, 11, 0.1);
+
+  border: 1px solid rgba(245, 158, 11, 0.18);
+
+  color: #fbbf24;
+
+  font-size: 17px;
+}
+
+.transaction-risk-status span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #7188a3;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.transaction-risk-status h3 {
+  margin: 0;
+
+  color: #f1f5f9;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.transaction-risk-status p {
+  margin: 5px 0 0;
+
+  color: #6f849f;
+
+  font-size: 9.5px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.transaction-details-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(280px, 0.85fr);
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.transaction-info-card {
+  min-width: 0;
+
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   CARD HEADERS
+   ========================================================= */
+
+.transaction-info-header {
+  min-height: 51px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  border-bottom: 1px solid #1b3047;
+}
+
+.transaction-info-header h2 {
+  margin: 0;
+
+  color: #e8eef7;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.transaction-info-header span {
+  color: #58708d;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+}
+
+/* =========================================================
+   TRANSACTION INFORMATION
+   ========================================================= */
+
+.transaction-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.transaction-info-grid > div {
+  min-height: 66px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 12px 18px;
+
+  border-bottom: 1px solid #172c43;
+}
+
+.transaction-info-grid > div:nth-child(odd) {
+  border-right: 1px solid #172c43;
+}
+
+.transaction-info-grid > div:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.transaction-info-grid label {
+  margin-bottom: 5px;
+
+  color: #657c98;
+
+  font-size: 9px;
+  font-weight: 550;
+}
+
+.transaction-info-grid strong {
+  overflow: hidden;
+
+  color: #dce5f0;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction-info-grid .detail-amount {
+  color: #f1f5f9;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+/* =========================================================
+   CUSTOMER CARD
+   ========================================================= */
+
+.transaction-info-card:has(.entity-profile) {
+  display: flex;
+  flex-direction: column;
+}
+
+.entity-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 18px;
+}
+
+.entity-avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: linear-gradient(135deg, #365cdb, #7057e8);
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.entity-profile strong {
+  display: block;
+
+  color: #eaf0f7;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.entity-profile span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #667e9a;
+
+  font-size: 9px;
+}
+
+.entity-view-link {
+  display: flex;
+  align-items: center;
+
+  margin: auto 18px 17px;
+
+  color: #6f91e8;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  text-decoration: none;
+}
+
+.entity-view-link:hover {
+  color: #9ab4ff;
+}
+
+/* =========================================================
+   DEVICE CARD
+   ========================================================= */
+
+.transaction-device-card {
+  margin-bottom: 14px;
+}
+
+.device-detail-layout {
+  min-height: 82px;
+
+  display: grid;
+
+  grid-template-columns: auto minmax(0, 1fr) 180px;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 15px 18px;
+}
+
+.device-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #111f3d;
+
+  border: 1px solid #263c62;
+
+  color: #8b7cff;
+
+  font-size: 15px;
+}
+
+.device-main-info strong {
+  display: block;
+
+  color: #e7edf6;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.device-main-info span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #667d98;
+
+  font-size: 9px;
+}
+
+.device-stat {
+  padding-left: 18px;
+
+  border-left: 1px solid #1b3047;
+}
+
+.device-stat label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #657d99;
+
+  font-size: 8.5px;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.device-stat strong {
+  color: #dfe8f4;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   TRANSACTION BEHAVIOR AREA
+   ========================================================= */
+
+.transaction-details-page .transaction-behavior-card {
+  margin-bottom: 14px;
+}
+
+/*
+   These selectors also help if the chart component
+   uses the original Transaction Behavior classes.
+*/
+
+.transaction-behavior-card,
+.transaction-chart-card,
+.transaction-behavior {
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   AI RISK EXPLANATION
+   ========================================================= */
+
+.transaction-ai-card {
+  margin-top: 14px;
+
+  padding: 20px 22px;
+
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+}
+
+.transaction-ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid #1b3047;
+}
+
+.transaction-ai-header h2 {
+  margin: 0;
+
+  color: #eef3f9;
+
+  font-size: 15px;
+  font-weight: 720;
+}
+
+.transaction-ai-header p {
+  margin: 5px 0 0;
+
+  color: #6f86a1;
+
+  font-size: 9.5px;
+}
+
+.transaction-ai-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 14px;
+}
+
+.transaction-ai-item {
+  padding: 15px;
+
+  border: 1px solid #20374f;
+
+  border-radius: 8px;
+
+  background: #0b1c30;
+}
+
+.transaction-ai-item.critical {
+  border-color: rgba(244, 63, 94, 0.24);
+
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.07), #0b1c30);
+}
+
+.transaction-ai-item h3 {
+  margin: 0 0 7px;
+
+  color: #dce6f2;
+
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.transaction-ai-item p {
+  margin: 0;
+
+  color: #7188a3;
+
+  font-size: 9.5px;
+
+  line-height: 1.55;
+}
+
+/* =========================================================
+   INVESTIGATION ACTIONS
+   ========================================================= */
+
+.transaction-investigation-card {
+  margin-top: 14px;
+
+  padding: 20px 22px;
+
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+}
+
+.transaction-investigation-card h2 {
+  margin: 0;
+
+  color: #eef3f9;
+
+  font-size: 14px;
+  font-weight: 720;
+}
+
+.transaction-investigation-card > p {
+  margin: 5px 0 15px;
+
+  color: #6d849f;
+
+  font-size: 9.5px;
+}
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.investigation-success {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 12px;
+
+  padding: 10px 12px;
+
+  border: 1px solid rgba(16, 185, 129, 0.24);
+
+  border-radius: 7px;
+
+  background: rgba(16, 185, 129, 0.07);
+
+  color: #35d6a5;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   INVESTIGATION BUTTONS
+   ========================================================= */
+
+.investigation-buttons {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.investigation-buttons button {
+  min-height: 35px;
+
+  padding: 0 13px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.investigation-buttons button:hover {
+  transform: translateY(-1px);
+}
+
+/* Review */
+
+.investigation-review {
+  border: 1px solid #28506a;
+
+  background: #0b2132;
+
+  color: #66d3ba;
+}
+
+.investigation-review:hover {
+  background: #103044;
+
+  border-color: #34718d;
+}
+
+/* Escalate */
+
+.investigation-escalate {
+  border: 1px solid rgba(245, 158, 11, 0.28);
+
+  background: rgba(245, 158, 11, 0.08);
+
+  color: #fbbf24;
+}
+
+.investigation-escalate:hover {
+  background: rgba(245, 158, 11, 0.14);
+
+  border-color: rgba(245, 158, 11, 0.42);
+}
+
+/* Block */
+
+.investigation-block {
+  border: 1px solid rgba(244, 63, 94, 0.28);
+
+  background: rgba(244, 63, 94, 0.08);
+
+  color: #fb7185;
+}
+
+.investigation-block:hover {
+  background: rgba(244, 63, 94, 0.14);
+
+  border-color: rgba(244, 63, 94, 0.42);
+}
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.transaction-details-page > h2 {
+  margin: 80px auto;
+
+  text-align: center;
+
+  color: #91a6bf;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .transaction-details-page {
+    padding: 20px 20px 40px;
+  }
+
+  .transaction-risk-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .device-detail-layout {
+    grid-template-columns: auto minmax(0, 1fr) 150px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+  .transaction-details-page {
+    padding: 16px 14px 35px;
+  }
+
+  .transaction-details-header {
+    flex-direction: column;
+  }
+
+  .transaction-details-actions {
+    width: 100%;
+  }
+
+  .transaction-details-actions button {
+    flex: 1;
+  }
+
+  .transaction-details-id-row h1 {
+    font-size: 18px;
+  }
+
+  .transaction-risk-main {
+    padding: 17px;
+  }
+
+  .transaction-risk-status {
+    padding: 17px;
+  }
+
+  .transaction-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-info-grid > div:nth-child(odd) {
+    border-right: none;
+  }
+
+  .transaction-info-grid > div:nth-last-child(-n + 2) {
+    border-bottom: 1px solid #172c43;
+  }
+
+  .transaction-info-grid > div:last-child {
+    border-bottom: none;
+  }
+
+  .device-detail-layout {
+    grid-template-columns: auto 1fr;
+  }
+
+  .device-stat {
+    grid-column: 1 / -1;
+
+    padding: 10px 0 0;
+
+    border-left: none;
+
+    border-top: 1px solid #1b3047;
+  }
+
+  .transaction-ai-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .investigation-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .investigation-buttons button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .transaction-details-actions {
+    flex-direction: column;
+  }
+
+  .transaction-details-actions button {
+    width: 100%;
+  }
+
+  .transaction-risk-heading h2 {
+    font-size: 26px;
+  }
+
+  .transaction-risk-circle {
+    width: 50px;
+    height: 50px;
+
+    font-size: 12px;
+  }
+
+  .transaction-risk-footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 4px;
+  }
+}
+
+/* =========================================================
+   TRANSACTION BEHAVIOR
+   ========================================================= */
+
+.transaction-behavior-card {
+  width: 100%;
+
+  margin-top: 14px;
+
+  background: #091829;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 11px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.transaction-behavior-header {
+  min-height: 62px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 13px 18px;
+
+  border-bottom: 1px solid #1b3047;
+}
+
+.transaction-behavior-header h2 {
+  margin: 0;
+
+  color: #eaf0f7;
+
+  font-size: 14px;
+
+  font-weight: 720;
+
+  letter-spacing: -0.2px;
+}
+
+.transaction-behavior-header p {
+  margin: 4px 0 0;
+
+  color: #657e9a;
+
+  font-size: 9px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   LIVE BADGE
+   ========================================================= */
+
+.transaction-behavior-live {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  height: 30px;
+
+  padding: 0 10px;
+
+  border: 1px solid #29425d;
+
+  border-radius: 7px;
+
+  background: #0b1a2d;
+
+  color: #7891ac;
+
+  font-size: 9px;
+
+  font-weight: 600;
+}
+
+.transaction-behavior-live span {
+  width: 6px;
+
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 7px rgba(34, 197, 94, 0.65);
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.transaction-behavior-content {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.7fr)
+    minmax(300px, 0.75fr);
+
+  gap: 14px;
+
+  padding: 14px;
+}
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+.transaction-behavior-chart {
+  min-width: 0;
+
+  min-height: 355px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 4px 4px 0;
+
+  border: 1px solid #172d45;
+
+  border-radius: 9px;
+
+  background: #081728;
+
+  overflow: hidden;
+}
+
+/* Remove Plotly's white focus/outline */
+
+.transaction-behavior-chart .js-plotly-plot,
+.transaction-behavior-chart .plot-container {
+  width: 100% !important;
+
+  max-width: 100% !important;
+}
+
+/* =========================================================
+   ACCOUNT RISK SUMMARY
+   ========================================================= */
+
+.account-risk-summary {
+  min-width: 0;
+
+  padding: 18px;
+
+  border: 1px solid #1d344d;
+
+  border-radius: 9px;
+
+  background: linear-gradient(145deg, #0d1d31 0%, #091829 100%);
+}
+
+/* =========================================================
+   SUMMARY HEADER
+   ========================================================= */
+
+.account-risk-summary-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid #1a3047;
+}
+
+.account-risk-summary-header h3 {
+  margin: 0;
+
+  color: #edf3fa;
+
+  font-size: 15px;
+
+  font-weight: 720;
+
+  letter-spacing: -0.2px;
+}
+
+.account-risk-summary-header p {
+  margin: 5px 0 0;
+
+  color: #637c98;
+
+  font-size: 8.5px;
+
+  line-height: 1.45;
+}
+
+.risk-summary-icon {
+  width: 30px;
+
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 7px;
+
+  background: rgba(54, 92, 219, 0.1);
+
+  border: 1px solid rgba(54, 92, 219, 0.2);
+
+  color: #718ff1;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   METRICS
+   ========================================================= */
+
+.account-risk-metrics {
+  display: flex;
+
+  flex-direction: column;
+
+  margin-top: 4px;
+}
+
+.account-risk-metric {
+  min-height: 51px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid #172c43;
+}
+
+.account-risk-metric:last-child {
+  border-bottom: none;
+}
+
+.account-risk-metric span {
+  color: #7188a3;
+
+  font-size: 9px;
+
+  font-weight: 550;
+}
+
+.account-risk-metric strong {
+  color: #e4ebf4;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-align: right;
+
+  white-space: nowrap;
+}
+
+.account-risk-metric strong.current-amount {
+  color: #f2f6fb;
+
+  font-size: 12px;
+}
+
+.account-risk-metric strong small {
+  margin-left: 2px;
+
+  color: #667e9a;
+
+  font-size: 8px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   RISK LEVEL COLORS
+   ========================================================= */
+
+.risk-level-low {
+  color: #34d399 !important;
+}
+
+.risk-level-medium {
+  color: #fbbf24 !important;
+}
+
+.risk-level-high {
+  color: #fb7185 !important;
+}
+
+.risk-level-critical {
+  color: #f87171 !important;
+}
+
+/* =========================================================
+   AI INSIGHT
+   ========================================================= */
+
+.account-risk-insight {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 13px;
+
+  padding: 11px;
+
+  border: 1px solid rgba(245, 158, 11, 0.17);
+
+  border-radius: 7px;
+
+  background: rgba(245, 158, 11, 0.055);
+}
+
+.account-risk-insight-icon {
+  flex-shrink: 0;
+
+  font-size: 13px;
+
+  line-height: 1.2;
+}
+
+.account-risk-insight span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #d6a83c;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+.account-risk-insight p {
+  margin: 0;
+
+  color: #9aaec4;
+
+  font-size: 9px;
+
+  line-height: 1.45;
+}
+
+.account-risk-insight strong {
+  color: #f4c95d;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.transaction-behavior-loading {
+  min-height: 180px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #6f86a1;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .transaction-behavior-content {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-behavior-chart {
+    min-height: 340px;
+  }
+
+  .account-risk-summary {
+    width: 100%;
+  }
+
+  .account-risk-metrics {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 20px;
+  }
+
+  .account-risk-metric {
+    min-height: 55px;
+  }
+}
+
+@media (max-width: 650px) {
+  .transaction-behavior-header {
+    padding: 12px 14px;
+  }
+
+  .transaction-behavior-content {
+    padding: 10px;
+  }
+
+  .transaction-behavior-chart {
+    min-height: 310px;
+  }
+
+  .account-risk-summary {
+    padding: 15px;
+  }
+
+  .account-risk-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-behavior-header h2 {
+    font-size: 13px;
+  }
+
+  .transaction-behavior-header p {
+    font-size: 8px;
+  }
+}
+
+/* =========================================================
+   CUSTOMER DETAILS PAGE
+   ========================================================= */
+
+.customer-details-page {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 28px 34px 50px;
+  color: #e8eef8;
+}
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.customer-details-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  border: 1px solid #1d3554;
+  background: #0b1a2e;
+  color: #8fb0d7;
+
+  padding: 8px 13px;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  margin-bottom: 20px;
+}
+
+.customer-details-back:hover {
+  background: #102641;
+  color: #dceaff;
+  border-color: #315783;
+}
+
+/* =========================================================
+   CUSTOMER HEADER
+   ========================================================= */
+
+.customer-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  background: #08182c;
+  border: 1px solid #183554;
+  border-radius: 14px;
+
+  margin-bottom: 16px;
+}
+
+.customer-details-identity {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.customer-details-avatar {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #6755f5, #884cf4);
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  box-shadow: 0 8px 24px rgba(104, 82, 245, 0.18);
+}
+
+.customer-details-id {
+  color: #6888ae;
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+.customer-details-header h1 {
+  margin: 0;
+
+  color: #f5f8ff;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.customer-details-header p {
+  margin: 4px 0 0;
+
+  color: #7693b7;
+
+  font-size: 12px;
+}
+
+.customer-details-header-right {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* =========================================================
+   RISK / STATUS BADGES
+   ========================================================= */
+
+.customer-details-risk-badge,
+.customer-details-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.customer-risk-low {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+}
+
+.customer-risk-medium {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+}
+
+.customer-risk-high {
+  background: rgba(244, 63, 94, 0.1);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.22);
+}
+
+.customer-status-active {
+  background: rgba(16, 185, 129, 0.08);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.18);
+}
+
+.customer-status-suspended {
+  background: rgba(244, 63, 94, 0.08);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.18);
+}
+
+/* =========================================================
+   BASIC INFORMATION
+   ========================================================= */
+
+.customer-details-info-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  background: #08182c;
+  border: 1px solid #183554;
+  border-radius: 14px;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+}
+
+.customer-details-info-item {
+  padding: 16px 20px;
+
+  border-right: 1px solid #152d49;
+}
+
+.customer-details-info-item:last-child {
+  border-right: none;
+}
+
+.customer-details-info-item span {
+  display: block;
+
+  color: #6888ae;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  margin-bottom: 6px;
+}
+
+.customer-details-info-item strong {
+  color: #dce8f7;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.customer-details-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.customer-summary-card {
+  position: relative;
+
+  min-height: 96px;
+
+  padding: 17px 18px;
+
+  background: #0a1c31;
+  border: 1px solid #193756;
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.customer-summary-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: #536dff;
+}
+
+.customer-summary-card span {
+  display: block;
+
+  color: #7d9cc1;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  margin-bottom: 9px;
+}
+
+.customer-summary-card strong {
+  color: #f2f6fd;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.customer-summary-card small {
+  color: #7189aa;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.summary-alert-value {
+  color: #fb7185 !important;
+}
+
+.summary-risk-value {
+  color: #fbbf24 !important;
+}
+
+/* =========================================================
+   COMMON CARD HEADER
+   ========================================================= */
+
+.customer-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 17px;
+}
+
+.customer-card-header h2 {
+  margin: 0;
+
+  color: #f2f6fd;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.customer-card-header p {
+  margin: 5px 0 0;
+
+  color: #7191b7;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   LIVE INDICATOR
+   ========================================================= */
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #22d3a7;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.live-indicator::first-letter {
+  color: #22d3a7;
+}
+
+/* =========================================================
+   RECENT TRANSACTIONS
+   ========================================================= */
+
+.customer-transactions-card {
+  background: #07172b;
+
+  border: 1px solid #183655;
+  border-radius: 14px;
+
+  margin-bottom: 18px;
+
+  overflow: hidden;
+}
+
+.customer-transactions-card .customer-card-header {
+  padding: 20px 22px 0;
+}
+
+.customer-transactions-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.customer-transactions-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 900px;
+}
+
+.customer-transactions-table thead {
+  background: #0b2038;
+}
+
+.customer-transactions-table th {
+  padding: 12px 17px;
+
+  text-align: left;
+
+  color: #80a4d1;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #193856;
+}
+
+.customer-transactions-table td {
+  padding: 13px 17px;
+
+  color: #c8d8eb;
+
+  font-size: 11px;
+
+  border-bottom: 1px solid #132c47;
+
+  white-space: nowrap;
+}
+
+.customer-transactions-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.customer-transactions-table tbody tr:hover {
+  background: rgba(31, 73, 116, 0.18);
+}
+
+.customer-transactions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.transaction-id {
+  color: #7fb0ff !important;
+  font-weight: 600;
+}
+
+.transaction-amount {
+  color: #e5edf8 !important;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RISK SCORE
+   ========================================================= */
+
+.customer-risk-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.risk-score-bar {
+  width: 42px;
+  height: 5px;
+
+  background: #172d47;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.risk-score-bar span {
+  display: block;
+
+  height: 100%;
+
+  background: #f05b83;
+
+  border-radius: 999px;
+}
+
+.customer-risk-score strong {
+  color: #dce8f8;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   TRANSACTION STATUS
+   ========================================================= */
+
+.customer-transaction-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.customer-transaction-status::before {
+  content: "";
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #22d3a7;
+}
+
+.status-normal {
+  color: #72dcbf;
+}
+
+.status-high {
+  color: #fb7185;
+}
+
+.status-critical {
+  color: #ff6b81;
+}
+
+.status-medium {
+  color: #fbbf24;
+}
+
+/* =========================================================
+   VIEW TRANSACTION BUTTON
+   ========================================================= */
+
+.customer-view-transaction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 62px;
+
+  padding: 6px 12px;
+
+  border: 1px solid #284665;
+
+  border-radius: 7px;
+
+  background: #10253e;
+
+  color: #dce9fa;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.customer-view-transaction:hover {
+  background: #173553;
+
+  border-color: #3d6c9d;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
+}
+
+.customer-view-transaction:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+  padding: 35px !important;
+
+  text-align: center;
+
+  color: #6885a8 !important;
+}
+
+/* =========================================================
+   RISK PROFILE
+   ========================================================= */
+
+.customer-risk-profile-card {
+  position: relative;
+
+  background: linear-gradient(
+    135deg,
+    rgba(18, 43, 75, 0.96),
+    rgba(8, 24, 45, 0.98)
+  );
+
+  border: 1px solid #28517b;
+
+  border-radius: 15px;
+
+  padding: 22px;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+}
+
+.customer-risk-profile-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 2px;
+
+  background: linear-gradient(90deg, #6c5ce7, #3b82f6, #22d3a7);
+}
+
+.customer-risk-profile-card .customer-card-header {
+  margin-bottom: 16px;
+}
+
+.customer-risk-profile-card .customer-card-header h2 {
+  font-size: 18px;
+}
+
+.customer-risk-profile-card .customer-card-header p {
+  font-size: 11px;
+}
+
+/* =========================================================
+   RISK PROFILE GRID
+   ========================================================= */
+
+.risk-profile-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+.risk-profile-item {
+  position: relative;
+
+  min-height: 96px;
+
+  padding: 16px;
+
+  background: rgba(10, 30, 53, 0.82);
+
+  border: 1px solid #1c3b5e;
+
+  border-radius: 11px;
+
+  transition: all 0.2s ease;
+}
+
+.risk-profile-item:hover {
+  border-color: #315c88;
+
+  background: rgba(13, 38, 66, 0.92);
+}
+
+.risk-profile-item > span {
+  display: block;
+
+  color: #7ca0c9;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  margin-bottom: 9px;
+}
+
+.risk-profile-item > strong {
+  display: block;
+
+  color: #f3f7fd;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.risk-profile-item > strong span {
+  display: inline;
+
+  color: #6d89ab;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Risk score card */
+
+.risk-profile-item:first-child {
+  border-color: rgba(59, 130, 246, 0.38);
+}
+
+.risk-profile-item:first-child::after {
+  content: "";
+
+  position: absolute;
+
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+
+  height: 4px;
+
+  background: #193551;
+
+  border-radius: 999px;
+}
+
+.risk-profile-item:first-child::before {
+  content: "";
+
+  position: absolute;
+
+  left: 16px;
+  bottom: 12px;
+
+  width: 35%;
+
+  height: 4px;
+
+  background: #3b82f6;
+
+  border-radius: 999px;
+
+  z-index: 1;
+}
+
+/* Risk category */
+
+.risk-profile-item:nth-child(2) {
+  border-color: rgba(99, 80, 235, 0.35);
+}
+
+.risk-profile-item:nth-child(2) strong {
+  color: #b6a9ff;
+}
+
+/* Fraud alerts */
+
+.risk-profile-item:nth-child(3) {
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+.risk-profile-item:nth-child(3) strong {
+  color: #fb7185;
+}
+
+/* Monitoring */
+
+.risk-profile-item:nth-child(4) {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.risk-profile-item:nth-child(4) strong {
+  color: #34d399;
+}
+
+/* =========================================================
+   AI CUSTOMER INSIGHT
+   ========================================================= */
+
+.customer-ai-card {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 13px;
+
+  padding: 18px 20px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(24, 31, 76, 0.95),
+    rgba(11, 24, 51, 0.98)
+  );
+
+  border: 1px solid #4b48b7;
+
+  border-radius: 13px;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+}
+
+.customer-ai-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: #7967ff;
+}
+
+.customer-ai-icon {
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: rgba(124, 92, 255, 0.18);
+
+  color: #9a8cff;
+
+  font-size: 19px;
+}
+
+.customer-ai-card h2 {
+  margin: 0 0 7px;
+
+  color: #f3f5ff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.customer-ai-card p {
+  margin: 0;
+
+  color: #c0cae1;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   INVESTIGATION ACTION CARD
+   ========================================================= */
+
+.customer-action-card {
+  background: #08192e;
+
+  border: 1px solid #1b3b5c;
+
+  border-radius: 13px;
+
+  padding: 19px 20px;
+
+  margin-bottom: 18px;
+}
+
+.customer-action-card h2 {
+  margin: 0 0 5px;
+
+  color: #f0f5fc;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.customer-action-card > p {
+  margin: 0 0 15px;
+
+  color: #728fb2;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.customer-action-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.customer-review-button,
+.customer-investigate-button,
+.customer-block-button {
+  min-height: 36px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* Reviewed */
+
+.customer-review-button {
+  background: #14365c;
+
+  border: 1px solid #2e6da5;
+
+  color: #cfe6ff;
+}
+
+.customer-review-button:hover {
+  background: #1a4774;
+
+  border-color: #4388c7;
+
+  transform: translateY(-1px);
+}
+
+/* Investigate */
+
+.customer-investigate-button {
+  background: #f59e0b;
+
+  border: 1px solid #f7b638;
+
+  color: #17100a;
+}
+
+.customer-investigate-button:hover {
+  background: #ffb52d;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.18);
+}
+
+/* Block */
+
+.customer-block-button {
+  background: #f04468;
+
+  border: 1px solid #ff6684;
+
+  color: white;
+}
+
+.customer-block-button:hover {
+  background: #ff5578;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 6px 18px rgba(244, 63, 94, 0.18);
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.customer-details-page h2 {
+  color: #f2f6fc;
+}
+
+.customer-details-page > h2 {
+  font-size: 18px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .customer-details-page {
+    padding: 24px 24px 40px;
+  }
+
+  .customer-details-summary-grid,
+  .risk-profile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .customer-details-info-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .customer-details-info-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .customer-details-info-item:nth-child(1),
+  .customer-details-info-item:nth-child(2) {
+    border-bottom: 1px solid #152d49;
+  }
+}
+
+@media (max-width: 700px) {
+  .customer-details-page {
+    padding: 18px 14px 30px;
+  }
+
+  .customer-details-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    padding: 18px;
+  }
+
+  .customer-details-header-right {
+    width: 100%;
+  }
+
+  .customer-details-summary-grid,
+  .risk-profile-grid,
+  .customer-details-info-card {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-details-info-item {
+    border-right: none !important;
+
+    border-bottom: 1px solid #152d49;
+  }
+
+  .customer-details-info-item:last-child {
+    border-bottom: none;
+  }
+
+  .customer-risk-profile-card {
+    padding: 17px;
+  }
+
+  .customer-action-buttons {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .customer-review-button,
+  .customer-investigate-button,
+  .customer-block-button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   CLICKABLE DASHBOARD KPI CARDS
+   ========================================================= */
+
+.dashboard-kpi-clickable {
+  width: 100%;
+  cursor: pointer;
+
+  border-radius: 12px;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* Hover */
+
+.dashboard-kpi-clickable:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+}
+
+/* Make the card itself respond */
+
+.dashboard-kpi-clickable:hover .kpi-card {
+  border-color: #315b86;
+}
+
+/* Click */
+
+.dashboard-kpi-clickable:active {
+  transform: translateY(-1px);
+}
+
+/* Keyboard focus */
+
+.dashboard-kpi-clickable:focus-visible {
+  outline: 2px solid #6d5dfc;
+  outline-offset: 3px;
+}
+
+/* Small visual indication */
+
+.dashboard-kpi-clickable {
+  position: relative;
+}
+
+/* Optional arrow indicator */
+
+.dashboard-kpi-clickable::after {
+  content: "→";
+
+  position: absolute;
+
+  right: 15px;
+  bottom: 12px;
+
+  color: #6e8caf;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  opacity: 0;
+
+  transform: translateX(-4px);
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.dashboard-kpi-clickable:hover::after {
+  opacity: 1;
+
+  transform: translateX(0);
+}
+
+.ai-reason-list{
+
+    list-style:none;
+
+    padding:0;
+
+    margin-top:15px;
+
+}
+
+.ai-reason-list li{
+
+    background:#1f2937;
+
+    padding:10px 12px;
+
+    margin-bottom:8px;
+
+    border-radius:8px;
+
+    color:#f87171;
+
+    font-size:14px;
+
+}
+
+.investigation-queue-card{
+
+    background:#081426;
+
+    border:1px solid #20344f;
+
+    border-radius:14px;
+
+    padding:22px;
+
+}
+
+
+
+.investigation-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.investigation-header h2{
+
+    color:#f1f5f9;
+
+    font-size:18px;
+
+}
+
+
+
+.investigation-header p{
+
+    color:#718198;
+
+    font-size:13px;
+
+}
+
+
+
+.investigation-header a{
+
+    color:#60a5fa;
+
+    font-size:13px;
+
+}
+
+
+
+.investigation-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #17263a;
+
+}
+
+
+
+.investigation-item strong{
+
+    display:block;
+
+    color:#e2e8f0;
+
+}
+
+
+
+.investigation-item span{
+
+    color:#718198;
+
+    font-size:12px;
+
+}
+
+
+
+.investigation-item b{
+
+    color:#ef476f;
+
+    font-size:18px;
+
+}
+
+
+
+.investigation-item small{
+
+    display:block;
+
+    color:#718198;
+
+}
+
+.dashboard-investigation-bottom{
+    margin-top:20px;
+}
+
+
+
+.investigation-queue-card{
+
+    background:#081426;
+
+    border:1px solid #20344f;
+
+    border-radius:14px;
+
+    padding:20px;
+
+}
+
+
+
+.investigation-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.investigation-header h2{
+
+    color:#f1f5f9;
+
+    font-size:18px;
+
+    margin:0;
+
+}
+
+
+
+.investigation-header p{
+
+    color:#718198;
+
+    font-size:13px;
+
+    margin-top:5px;
+
+}
+
+
+
+.investigation-header a{
+
+    color:#60a5fa;
+
+    font-size:13px;
+
+}
+
+
+
+
+.investigation-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+
+
+.investigation-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #17263a;
+
+}
+
+
+
+.investigation-item:last-child{
+
+    border-bottom:none;
+
+}
+
+
+
+.investigation-item strong{
+
+    display:block;
+
+    color:#e2e8f0;
+
+    font-size:14px;
+
+}
+
+
+
+.investigation-item span{
+
+    display:block;
+
+    color:#718198;
+
+    font-size:12px;
+
+    margin-top:3px;
+
+}
+
+
+
+.investigation-item b{
+
+    color:#ff4d88;
+
+    font-size:18px;
+
+}
+
+
+
+.investigation-item small{
+
+    display:block;
+
+    color:#718198;
+
+    font-size:11px;
+
+}

@@ -768,10 +768,6 @@ export default function NetworkAnalysisPage() {
                     STATUS
                   </th>
 
-                  <th>
-                    ACTION
-                  </th>
-
                 </tr>
 
               </thead>
@@ -784,7 +780,7 @@ export default function NetworkAnalysisPage() {
 
                   <tr>
 
-                    <td colSpan={6}>
+                    <td colSpan={5}>
                       Loading...
                     </td>
 
@@ -796,7 +792,7 @@ export default function NetworkAnalysisPage() {
 
                   <tr>
 
-                    <td colSpan={6}>
+                    <td colSpan={5}>
                       No suspicious networks
                       detected.
                     </td>
@@ -852,27 +848,6 @@ export default function NetworkAnalysisPage() {
                             {network.status}
 
                           </span>
-
-                        </td>
-
-
-                        <td>
-
-                          <button
-                            className="network-view-button"
-                            onClick={() => {
-
-                              console.log(
-                                "Network:",
-                                network.entity_id,
-                              );
-
-                            }}
-                          >
-
-                            View Network
-
-                          </button>
 
                         </td>
 

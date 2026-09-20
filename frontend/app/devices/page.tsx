@@ -181,15 +181,6 @@ export default function DevicesPage() {
   // =========================================================
   // ACTION HANDLERS
   // =========================================================
-
-  const handleViewDevice = (deviceId: string) => {
-    setOpenMenu(null);
-
-    router.push(
-      `/devices/${encodeURIComponent(deviceId)}`,
-    );
-  };
-
   const handleViewCustomers = (deviceId: string) => {
     setOpenMenu(null);
 
@@ -498,15 +489,9 @@ export default function DevicesPage() {
                       {/* DEVICE ID */}
 
                       <td>
-                        <button
-                          type="button"
-                          className="device-id-link"
-                          onClick={() =>
-                            handleViewDevice(device.id)
-                          }
-                        >
+                        <span className="device-id-link">
                           {device.id}
-                        </button>
+                        </span>
                       </td>
 
                       {/* DEVICE */}
@@ -628,17 +613,6 @@ export default function DevicesPage() {
                                 event.stopPropagation();
                               }}
                             >
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handleViewDevice(
-                                    device.id,
-                                  )
-                                }
-                              >
-                                View Device
-                              </button>
-
                               <button
                                 type="button"
                                 onClick={() =>

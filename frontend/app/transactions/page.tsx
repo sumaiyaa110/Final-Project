@@ -1396,7 +1396,7 @@ View Customer
 
 
 <Link
-href={`/investigations?transaction=${transaction.id}`}
+href={`/investigations/${transaction.id}`}
 >
 Investigate
 </Link>

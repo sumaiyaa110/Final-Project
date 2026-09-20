@@ -1,39 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
 import { useRouter } from "next/navigation";
 
-import { getDashboardData } from "@/services/api";
+import { getAlertSummary } from "@/services/api";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
 
   const [fraudAlerts, setFraudAlerts] = useState(0);
-  const [hasNewAlert, setHasNewAlert] = useState(false);
 
-  const previousAlertsRef = useRef(0);
+  const [previousAlerts, setPreviousAlerts] = useState(0);
+
+  const [hasNewAlert, setHasNewAlert] = useState(false);
 
   const router = useRouter();
 
-  // ==========================================
-  // LIVE FRAUD ALERT COUNT
-  // ==========================================
+  // =====================================================
+  // LIVE NOTIFICATION COUNT
+  // =====================================================
 
   useEffect(() => {
-    async function loadFraudAlerts() {
+    async function loadNotificationCount() {
       try {
-        const data = await getDashboardData();
+        const data = await getAlertSummary();
 
-        const currentAlerts = Number(data.fraud_alerts) || 0;
+        const currentAlerts = Number(data.pending) || 0;
 
-        setFraudAlerts(currentAlerts);
+        // ==========================================
+        // DETECT NEW ALERT
+        // ==========================================
 
-        // Detect increase in fraud alerts
-        if (
-          previousAlertsRef.current !== 0 &&
-          currentAlerts > previousAlertsRef.current
-        ) {
+        if (previousAlerts !== 0 && currentAlerts > previousAlerts) {
           setHasNewAlert(true);
 
           setTimeout(() => {
@@ -41,24 +40,24 @@ export default function Header() {
           }, 1000);
         }
 
-        previousAlertsRef.current = currentAlerts;
+        setFraudAlerts(currentAlerts);
+
+        setPreviousAlerts(currentAlerts);
       } catch (error) {
         console.log("Notification API Error:", error);
       }
     }
 
-    // First load
-    loadFraudAlerts();
+    loadNotificationCount();
 
-    // Refresh every 5 seconds
-    const interval = setInterval(loadFraudAlerts, 5000);
+    const interval = setInterval(loadNotificationCount, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [previousAlerts]);
 
-  // ==========================================
+  // =====================================================
   // LOGOUT
-  // ==========================================
+  // =====================================================
 
   async function handleLogout() {
     await fetch("/api/auth/logout", {
@@ -68,105 +67,65 @@ export default function Header() {
     window.location.href = "/";
   }
 
-  // ==========================================
+  // =====================================================
   // PROFILE
-  // ==========================================
+  // =====================================================
 
   function handleProfile() {
     setShowMenu(false);
+
     router.push("/profile");
   }
 
-  // ==========================================
+  // =====================================================
   // SETTINGS
-  // ==========================================
+  // =====================================================
 
   function handleSettings() {
     setShowMenu(false);
+
     router.push("/settings");
   }
 
-  // ==========================================
+  // =====================================================
   // NOTIFICATIONS
-  // ==========================================
+  // =====================================================
 
   function handleNotifications() {
-    setShowNotifications(!showNotifications);
-    setShowMenu(false);
-  }
-
-  function handleViewAlerts() {
-    setShowNotifications(false);
     router.push("/alerts");
   }
 
   return (
     <header className="admin-header">
       <div className="header-actions">
-        {/* =====================================
-            SYSTEM STATUS
-        ====================================== */}
+        {/* SYSTEM STATUS */}
+
         <div className="header-status">
           <span className="status-dot"></span>
+
           <span>System Online</span>
         </div>
 
-        {/* =====================================
-            NOTIFICATIONS
-        ====================================== */}
-        <div className="notification-container">
-          <button
-            className={`header-icon-button ${
-              hasNewAlert ? "notification-new" : ""
-            }`}
-            aria-label={`Fraud alerts: ${fraudAlerts}`}
-            onClick={handleNotifications}
-          >
-            ♢<span className="notification-badge">{fraudAlerts}</span>
-          </button>
+        {/* NOTIFICATIONS */}
 
-          {/* Notification Dropdown */}
-          {showNotifications && (
-            <div className="notification-panel">
-              {/* Header */}
-              <div className="notification-panel-header">
-                <div>
-                  <h3>Fraud Alerts</h3>
-                  <p>Live monitoring notifications</p>
-                </div>
-
-                <span className="notification-count">{fraudAlerts}</span>
-              </div>
-
-              {/* Notification Content */}
-              <div className="notification-panel-body">
-                <div className="notification-alert-icon">⚠</div>
-
-                <div className="notification-alert-content">
-                  <h4>High-Risk Alerts</h4>
-
-                  <p>
-                    You currently have <strong>{fraudAlerts}</strong> high-risk
-                    or critical transactions requiring monitoring.
-                  </p>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <button
-                className="notification-view-button"
-                onClick={handleViewAlerts}
-              >
-                View all fraud alerts
-                <span>→</span>
-              </button>
-            </div>
+        <button
+          className={`header-icon-button ${
+            hasNewAlert ? "notification-new" : ""
+          }`}
+          onClick={handleNotifications}
+          aria-label={`Pending fraud alerts: ${fraudAlerts}`}
+          title="View fraud alerts"
+        >
+          ♢
+          {fraudAlerts > 0 && (
+            <span className="notification-badge">
+              {fraudAlerts > 99 ? "99+" : fraudAlerts}
+            </span>
           )}
-        </div>
+        </button>
 
-        {/* =====================================
-            ADMIN PROFILE
-        ====================================== */}
+        {/* ADMIN PROFILE */}
+
         <div className="profile-container">
           <button
             className="admin-profile"
@@ -183,20 +142,14 @@ export default function Header() {
             <span className="profile-arrow">▾</span>
           </button>
 
-          {/* =================================
-              PROFILE DROPDOWN
-          ================================== */}
           {showMenu && (
             <div className="profile-menu">
-              {/* My Profile */}
               <button onClick={handleProfile}>My Profile</button>
 
-              {/* Settings */}
               <button onClick={handleSettings}>Settings</button>
 
               <div className="profile-divider"></div>
 
-              {/* Logout */}
               <button className="logout-button" onClick={handleLogout}>
                 Logout
               </button>

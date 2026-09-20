@@ -236,3 +236,102 @@ def get_customer_investigation(customer_id: str):
 
 
     }
+
+def get_investigations():
+
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+
+    cursor.execute(
+        """
+
+        SELECT
+
+            device_id,
+
+            risk,
+
+            linked_accounts,
+
+            transaction_count,
+
+            status,
+
+            last_activity
+
+
+        FROM devices
+
+
+        WHERE UPPER(risk)
+
+        IN ('HIGH','CRITICAL')
+
+
+        ORDER BY last_activity DESC
+
+
+        """
+    )
+
+
+    rows = cursor.fetchall()
+
+
+    investigations = []
+
+
+    for index,row in enumerate(rows):
+
+
+        risk = row[1].capitalize()
+
+
+        if risk == "Critical":
+
+            status = "Investigating"
+
+        else:
+
+            status = "Open"
+
+
+
+        investigations.append({
+
+            "id":
+                f"INV-{str(index+1).zfill(3)}",
+
+
+            "device":
+                row[0],
+
+
+            "risk":
+                risk,
+
+
+            "accounts":
+                row[2],
+
+
+            "transactions":
+                row[3],
+
+
+            "status":
+                status,
+
+
+            "updated":
+                row[5]
+
+        })
+
+
+    conn.close()
+
+
+    return investigations

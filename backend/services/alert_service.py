@@ -2,6 +2,9 @@ from services.database import get_connection
 from datetime import datetime
 
 
+# =====================================================
+# GET ACTIVE FRAUD ALERTS
+# =====================================================
 
 def get_fraud_alerts():
 
@@ -10,89 +13,129 @@ def get_fraud_alerts():
 
 
     cursor.execute(
-    """
-    SELECT
+        """
+        SELECT
 
-        id,
-        timestamp,
-        amount,
-        channel,
-        risk_score,
-        risk_level
+            id,
 
-    FROM transactions
+            timestamp,
 
-    WHERE risk_level IN ('HIGH','Critical','MEDIUM')
+            amount,
 
-    ORDER BY id DESC
+            channel,
 
-    LIMIT 100
+            risk_score,
 
-    """
+            risk_level,
+
+            customer_id,
+
+            alert_status
+
+        FROM transactions
+
+        WHERE risk_level IN ('HIGH', 'CRITICAL')
+
+        AND (
+            alert_status IS NULL
+            OR alert_status != 'Resolved'
+        )
+
+        ORDER BY id DESC
+
+        LIMIT 100
+
+        """
     )
 
 
     rows = cursor.fetchall()
 
 
-    alerts=[]
+    alerts = []
 
 
     for row in rows:
 
-
         txn_id = row[0]
-
 
         risk = row[5]
 
+        customer_id = row[6]
 
-        if risk.lower()=="critical":
-
-            alert_type="Critical Transaction"
-
-            icon="⚠"
+        alert_status = row[7] or "Pending"
 
 
-        elif risk.lower()=="high":
+        # =============================================
+        # ALERT TYPE
+        # =============================================
 
-            alert_type="High Risk Transaction"
+        if risk.lower() == "critical":
 
-            icon="▲"
+            alert_type = "Critical Transaction"
+
+            icon = "⚠"
+
+
+        elif risk.lower() == "high":
+
+            alert_type = "High Risk Transaction"
+
+            icon = "▲"
 
 
         else:
 
-            alert_type="Suspicious Activity"
+            alert_type = "Suspicious Activity"
 
-            icon="◉"
+            icon = "◉"
 
 
+        # =============================================
+        # CUSTOMER ID
+        # =============================================
+
+        if customer_id:
+
+            customer = customer_id
+
+        else:
+
+            customer = "CUSTOMER-" + str(txn_id)
+
+
+        # =============================================
+        # ALERT OBJECT
+        # =============================================
 
         alerts.append({
 
-            "id":f"ALT-{txn_id}",
+            "id":
+                f"ALT-{txn_id}",
 
-            "type":alert_type,
+            "type":
+                alert_type,
 
             "description":
-            f"{row[2]} amount transaction detected",
+                f"{row[2]} amount transaction detected",
 
-            "icon":icon,
+            "icon":
+                icon,
 
-            "risk":risk.capitalize(),
+            "risk":
+                risk.capitalize(),
 
             "transaction":
-            f"TXN-{txn_id}",
+                f"TXN-{txn_id}",
 
             "customer":
-            "CUSTOMER-"+str(txn_id),
+                customer,
 
             "detected":
-            row[1],
+                row[1],
 
             "status":
-            "Pending"
+                alert_status
 
         })
 
@@ -103,63 +146,269 @@ def get_fraud_alerts():
     return alerts
 
 
-
-
+# =====================================================
+# GET ALERT SUMMARY
+# =====================================================
 
 def get_alert_summary():
 
-
-    conn=get_connection()
-
-    cursor=conn.cursor()
+    conn = get_connection()
+    cursor = conn.cursor()
 
 
-    cursor.execute(
-    """
-    SELECT COUNT(*)
-    FROM transactions
-    """
-    )
-
-    total=cursor.fetchone()[0]
-
-
+    # =============================================
+    # TOTAL ACTIVE FRAUD ALERTS
+    # =============================================
 
     cursor.execute(
-    """
-    SELECT COUNT(*)
-    FROM transactions
-    WHERE risk_level='HIGH'
-    """
+        """
+        SELECT COUNT(*)
+
+        FROM transactions
+
+        WHERE risk_level IN ('HIGH', 'CRITICAL')
+
+        AND (
+            alert_status IS NULL
+            OR alert_status != 'Resolved'
+        )
+
+        """
     )
 
-    high=cursor.fetchone()[0]
+
+    total = cursor.fetchone()[0]
 
 
+    # =============================================
+    # HIGH RISK ACTIVE ALERTS
+    # =============================================
 
     cursor.execute(
-    """
-    SELECT COUNT(*)
-    FROM transactions
-    WHERE risk_level='Critical'
-    """
+        """
+        SELECT COUNT(*)
+
+        FROM transactions
+
+        WHERE risk_level = 'HIGH'
+
+        AND (
+            alert_status IS NULL
+            OR alert_status != 'Resolved'
+        )
+
+        """
     )
 
-    critical=cursor.fetchone()[0]
+
+    high = cursor.fetchone()[0]
+
+
+    # =============================================
+    # CRITICAL ACTIVE ALERTS
+    # =============================================
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+
+        FROM transactions
+
+        WHERE risk_level = 'CRITICAL'
+
+        AND (
+            alert_status IS NULL
+            OR alert_status != 'Resolved'
+        )
+
+        """
+    )
+
+
+    critical = cursor.fetchone()[0]
+
+
+    # =============================================
+    # PENDING ALERTS
+    # =============================================
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+
+        FROM transactions
+
+        WHERE risk_level IN ('HIGH', 'CRITICAL')
+
+        AND (
+            alert_status IS NULL
+            OR alert_status != 'Resolved'
+        )
+
+        """
+    )
+
+
+    pending = cursor.fetchone()[0]
 
 
     conn.close()
 
 
+    return {
+
+        "total_alerts":
+            total,
+
+        "critical":
+            critical,
+
+        "high_risk":
+            high,
+
+        "pending":
+            pending
+
+    }
+
+
+# =====================================================
+# RESOLVE FRAUD ALERT
+# =====================================================
+
+def resolve_alert(alert_id: str):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+
+    # =============================================
+    # CONVERT ALERT ID
+    # ALT-123 → 123
+    # =============================================
+
+    if alert_id.startswith("ALT-"):
+
+        transaction_id = alert_id.replace(
+            "ALT-",
+            "",
+            1
+        )
+
+    else:
+
+        transaction_id = alert_id
+
+
+    # =============================================
+    # CHECK ALERT
+    # =============================================
+
+    cursor.execute(
+        """
+        SELECT
+
+            id,
+
+            risk_level,
+
+            alert_status
+
+        FROM transactions
+
+        WHERE id = ?
+
+        AND risk_level IN ('HIGH', 'CRITICAL')
+
+        """,
+
+        (transaction_id,)
+
+    )
+
+
+    row = cursor.fetchone()
+
+
+    if not row:
+
+        conn.close()
+
+
+        return {
+
+            "success":
+                False,
+
+            "message":
+                "Alert not found"
+
+        }
+
+
+    # =============================================
+    # ALREADY RESOLVED
+    # =============================================
+
+    if row[2] == "Resolved":
+
+        conn.close()
+
+
+        return {
+
+            "success":
+                False,
+
+            "message":
+                "Alert is already resolved"
+
+        }
+
+
+    # =============================================
+    # MARK ALERT AS RESOLVED
+    # =============================================
+
+    cursor.execute(
+        """
+        UPDATE transactions
+
+        SET alert_status = 'Resolved'
+
+        WHERE id = ?
+
+        """,
+
+        (transaction_id,)
+
+    )
+
+
+    conn.commit()
+
+    conn.close()
+
+
+    # =============================================
+    # RESPONSE
+    # =============================================
 
     return {
 
-        "total_alerts":total,
+        "success":
+            True,
 
-        "critical":critical,
+        "alert_id":
+            f"ALT-{transaction_id}",
 
-        "high_risk":high,
+        "transaction_id":
+            f"TXN-{transaction_id}",
 
-        "pending":critical+high
+        "status":
+            "Resolved",
+
+        "message":
+            "Alert resolved successfully"
 
     }

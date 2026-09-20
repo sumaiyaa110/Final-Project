@@ -60,7 +60,66 @@ def get_transaction_detail(transaction_id):
     else:
         status="Normal"
 
+    # ======================================
+    # AI EXPLANATION ENGINE
+    # ======================================
 
+    reasons = []
+
+
+    # High risk score
+
+    if float(row[4]) >= 70:
+
+        reasons.append(
+            "High risk score detected"
+        )
+
+
+    # New device
+
+    if row[8] == 1:
+
+        reasons.append(
+            "New device used for transaction"
+        )
+
+
+    # High amount
+
+    if float(row[2]) > 50000:
+
+        reasons.append(
+            "Unusually high transaction amount"
+        )
+
+
+    # Risk channel
+
+    if row[3] in [
+        "Cash-Out",
+        "Transfer"
+    ]:
+
+        reasons.append(
+            "High risk transaction channel"
+        )
+
+
+    # Anomaly score
+
+    if float(row[7]) > 0.4:
+
+        reasons.append(
+            "Abnormal transaction behaviour detected"
+        )
+
+
+    if len(reasons) == 0:
+
+        reasons.append(
+            "No major suspicious pattern detected"
+        )
 
     return {
 
@@ -110,7 +169,11 @@ def get_transaction_detail(transaction_id):
 
 
         "new_device":
-            row[8]
+            row[8],
+
+
+        "reasons":
+            reasons
 
 
     }
