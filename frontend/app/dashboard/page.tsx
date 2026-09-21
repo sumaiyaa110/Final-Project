@@ -71,13 +71,29 @@ export default function DashboardPage() {
         {/* ================================
             HEADER
         ================================= */}
-
         <div className="dashboard-title">
-          <div>
-            <h1>Dashboard</h1>
+            <div>
+                <h1>
+                    Dashboard
+                </h1>
 
-            <p>Real-time overview of your financial monitoring system.</p>
-          </div>
+                <p>
+                    Real-time overview of your financial monitoring system.
+                </p>
+
+                <div className="system-status">
+
+                    <span className="status-dot"></span>
+
+                    System Online
+
+                    <small>
+                        • Live Monitoring Active
+                    </small>
+
+                </div>
+
+            </div>
 
           <div className="dashboard-date">
             {new Date().toLocaleDateString("en-US", {
@@ -110,7 +126,7 @@ export default function DashboardPage() {
               title="Total Transactions"
               value={
                 dashboard
-                  ? dashboard.total_transactions.toLocaleString()
+                  ? dashboard.total_transactions
                   : "Loading..."
               }
               change="Live"
@@ -138,7 +154,7 @@ export default function DashboardPage() {
               title="Fraud Alerts"
               value={
                 dashboard
-                  ? dashboard.fraud_alerts.toLocaleString()
+                  ? dashboard.fraud_alerts
                   : "Loading..."
               }
               change="Live"
@@ -166,7 +182,7 @@ export default function DashboardPage() {
               title="High Risk Entities"
               value={
                 dashboard
-                  ? dashboard.high_risk_entities.toLocaleString()
+                  ? dashboard.high_risk_entities
                   : "Loading..."
               }
               change="Live"

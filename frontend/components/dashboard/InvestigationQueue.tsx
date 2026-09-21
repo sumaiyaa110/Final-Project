@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 
 export default function InvestigationQueue(){
+    const router = useRouter();
 
     const [cases,setCases] = useState<any[]>([]);
 
@@ -105,12 +106,15 @@ export default function InvestigationQueue(){
             {
                 cases.map((item,index)=>(
 
+                        <div
 
-                    <div
-                    className="investigation-item"
-                    key={index}
-                    >
+                        className="investigation-item"
 
+                        key={index}
+
+                        onClick={()=>router.push(`/investigations/${item.id}`)}
+
+                        >
 
                         <div>
 

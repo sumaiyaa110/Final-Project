@@ -579,33 +579,66 @@ export default function InvestigationsPage() {
                   DEVICE INFORMATION
               ================================================= */}
 
-              <div className="device-info-card">
-                <h3>Device Information</h3>
+            <div className="device-info-card">
 
-                <div className="device-info-row">
-                  <span>Device ID</span>
+              <h3>
+                Device Information
+              </h3>
 
-                  <strong>{device.id}</strong>
+
+              <div className="device-info-grid">
+
+
+                <div className="device-info-item">
+                  <span>
+                    Device ID
+                  </span>
+
+                  <strong>
+                    {device.id}
+                  </strong>
                 </div>
 
-                <div className="device-info-row">
-                  <span>Type</span>
 
-                  <strong>{device.type}</strong>
+
+                <div className="device-info-item">
+                  <span>
+                    Type
+                  </span>
+
+                  <strong>
+                    {device.type}
+                  </strong>
                 </div>
 
-                <div className="device-info-row">
-                  <span>Model</span>
 
-                  <strong>{device.model}</strong>
+
+                <div className="device-info-item">
+                  <span>
+                    Model
+                  </span>
+
+                  <strong>
+                    {device.model}
+                  </strong>
                 </div>
 
-                <div className="device-info-row">
-                  <span>Status</span>
 
-                  <strong>{device.status}</strong>
+
+                <div className="device-info-item">
+                  <span>
+                    Status
+                  </span>
+
+                  <strong>
+                    {device.status}
+                  </strong>
                 </div>
+
+
               </div>
+
+            </div>
 
               {/* =================================================
                   RISK ASSESSMENT

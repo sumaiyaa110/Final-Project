@@ -1178,13 +1178,11 @@ key={transaction.id}
 
 
 
+<td className="transaction-type-cell">
 
-<td>
-
-{transaction.type}
+    {transaction.type}
 
 </td>
-
 
 
 

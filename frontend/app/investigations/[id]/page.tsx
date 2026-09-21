@@ -15,6 +15,19 @@ export default function InvestigationDetailPage(){
     const [transaction,setTransaction] = useState<any>(null);
     const [loading,setLoading] = useState(true);
     const [actionMessage,setActionMessage] = useState("");
+    const [confirmAction,setConfirmAction] = useState<string | null>(null);
+
+    function confirmStatusUpdate(){
+
+        if(confirmAction){
+
+            updateStatus(confirmAction);
+
+            setConfirmAction(null);
+
+        }
+
+    }
 
 
     // ==========================================
@@ -23,12 +36,9 @@ export default function InvestigationDetailPage(){
 
     useEffect(()=>{
 
-
         async function loadTransaction(){
 
-
             try{
-
 
                 const response = await fetch(
 
@@ -40,45 +50,31 @@ export default function InvestigationDetailPage(){
 
                 );
 
-
                 const data = await response.json();
-
 
                 console.log(
                     "Investigation Data:",
                     data
                 );
 
-
                 setTransaction(data);
 
-
                 setLoading(false);
-
-
 
             }
 
             catch(error){
-
 
                 console.log(
                     "Investigation Error:",
                     error
                 );
 
-
             }
-
 
         }
 
-
-
-
         loadTransaction();
-
-
 
         const interval = setInterval(
 
@@ -88,11 +84,7 @@ export default function InvestigationDetailPage(){
 
         );
 
-
-
         return ()=>clearInterval(interval);
-
-
 
     },[id]);
 
@@ -142,7 +134,6 @@ export default function InvestigationDetailPage(){
 
         }
 
-
         catch(error){
             console.log(
 
@@ -152,14 +143,11 @@ export default function InvestigationDetailPage(){
 
             );
 
-
         }
 
     }
 
-
     if(loading){
-
 
         return(
 
@@ -177,17 +165,9 @@ export default function InvestigationDetailPage(){
 
         );
 
-
     }
 
-
-
-
-
-
-
     if(!transaction){
-
 
         return(
 
@@ -207,21 +187,11 @@ export default function InvestigationDetailPage(){
 
     }
 
-
-
-
-
-
-
-
     return(
 
         <AdminLayout>
 
-
         <div className="transaction-details-page">
-
-
 
             <Link
 
@@ -235,15 +205,9 @@ export default function InvestigationDetailPage(){
 
             </Link>
 
-
-
-
-
             <div className="transaction-details-header">
 
-
                 <div>
-
 
                     <h1>
 
@@ -251,41 +215,27 @@ export default function InvestigationDetailPage(){
 
                     </h1>
 
-
                     <p>
 
                         Fraud investigation details
 
                     </p>
 
-
                 </div>
-
 
             </div>
 
-
-
-
-
-
-
-
             {/* RISK CARD */}
-
 
             <div className="transaction-risk-overview">
 
-
                 <div className="transaction-risk-main">
-
 
                     <span>
 
                         RISK SCORE
 
                     </span>
-
 
                     <h2>
 
@@ -296,8 +246,6 @@ export default function InvestigationDetailPage(){
                         </small>
 
                     </h2>
-
-
 
                     <div className="transaction-large-risk-bar">
 
@@ -313,15 +261,9 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
                 </div>
 
-
-
-
-
                 <div className="transaction-risk-status">
-
 
                     <div className="risk-status-icon">
 
@@ -329,9 +271,7 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
                     <div>
-
 
                         <span>
 
@@ -339,40 +279,23 @@ export default function InvestigationDetailPage(){
 
                         </span>
 
-
                         <h3>
 
                             {transaction.level}
 
                         </h3>
 
-
                     </div>
-
 
                 </div>
 
-
-
             </div>
-
-
-
-
-
-
-
-
 
             {/* TRANSACTION INFORMATION */}
 
-
-
             <div className="transaction-info-card">
 
-
                 <div className="transaction-info-header">
-
 
                     <h2>
 
@@ -380,15 +303,9 @@ export default function InvestigationDetailPage(){
 
                     </h2>
 
-
                 </div>
 
-
-
-
                 <div className="transaction-info-grid">
-
-
 
                     <div>
 
@@ -402,8 +319,6 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
-
                     <div>
 
                         <label>
@@ -415,8 +330,6 @@ export default function InvestigationDetailPage(){
                         </strong>
 
                     </div>
-
-
 
                     <div>
 
@@ -430,8 +343,6 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
-
                     <div>
 
                         <label>
@@ -444,13 +355,9 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
-
                 </div>
 
-
             </div>
-
 
             {/* CUSTOMER & DEVICE INFORMATION */}
 
@@ -460,7 +367,6 @@ export default function InvestigationDetailPage(){
 
                 <div className="transaction-info-card">
 
-
                     <div className="transaction-info-header">
 
                         <h2>
@@ -469,18 +375,13 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
-
                     <div className="entity-profile">
-
 
                         <div className="entity-avatar">
 
                             C
 
                         </div>
-
-
 
                         <div>
 
@@ -490,21 +391,15 @@ export default function InvestigationDetailPage(){
 
                             </strong>
 
-
                             <span>
 
                                 Customer Account
 
                             </span>
 
-
                         </div>
 
-
                     </div>
-
-
-
 
                     <Link
 
@@ -518,21 +413,11 @@ export default function InvestigationDetailPage(){
 
                     </Link>
 
-
-
                 </div>
-
-
-
-
-
-
 
                 {/* DEVICE */}
 
-
                 <div className="transaction-info-card">
-
 
                     <div className="transaction-info-header">
 
@@ -542,18 +427,13 @@ export default function InvestigationDetailPage(){
 
                     </div>
 
-
-
                     <div className="entity-profile">
-
 
                         <div className="entity-avatar">
 
                             D
 
                         </div>
-
-
 
                         <div>
 
@@ -563,58 +443,33 @@ export default function InvestigationDetailPage(){
 
                             </strong>
 
-
                             <span>
 
                                 Registered Device
 
                             </span>
 
-
                         </div>
-
 
                     </div>
 
-
-
-
-                    <Link
-
-                        href="/devices"
-
-                        className="entity-view-link"
-
-                    >
-
-                        View Device →
-
-                    </Link>
-
-
-
                 </div>
-
-
-
 
             </div>
 
-
-
-
             {/* AI EXPLANATION */}
-
-
 
             <div className="transaction-ai-card">
 
-
                 <h2>
-
-                    AI Risk Explanation
-
+                AI Risk Explanation
                 </h2>
+
+                <p className="ai-description">
+
+                Explainable signals contributing to the fraud decision.
+
+                </p>
 
                 <div className="transaction-ai-grid">
 
@@ -622,15 +477,11 @@ export default function InvestigationDetailPage(){
 
                     <div className="transaction-ai-item critical">
 
-
                         <h3>
                             Detection Reasons
                         </h3>
 
-
-
                         <ul className="ai-reason-list">
-
 
                             {
                                 transaction.reasons &&
@@ -650,9 +501,7 @@ export default function InvestigationDetailPage(){
                                 )
                             }
 
-
                         </ul>
-
 
                     </div>
 
@@ -660,11 +509,9 @@ export default function InvestigationDetailPage(){
 
                     <div className="transaction-ai-item">
 
-
                         <h3>
                             Fraud Probability
                         </h3>
-
 
                         <p>
 
@@ -672,18 +519,15 @@ export default function InvestigationDetailPage(){
 
                         </p>
 
-
                     </div>
 
                     {/* ANOMALY SCORE */}
 
                     <div className="transaction-ai-item">
 
-
                         <h3>
                             Anomaly Score
                         </h3>
-
 
                         <p>
 
@@ -691,28 +535,82 @@ export default function InvestigationDetailPage(){
 
                         </p>
 
-
                     </div>
 
-
                 </div>
-
 
                 </div>
 
             </div>
 
+            {
+                confirmAction &&
+
+                <div className="confirmation-overlay">
+
+                    <div className="confirmation-box">
+
+                        <h2>
+                            Confirm Action
+                        </h2>
+
+
+                        <p>
+                            Are you sure you want to
+                            <strong> {confirmAction} </strong>
+                            this transaction?
+                        </p>
+
+
+                        <div className="confirmation-buttons">
+
+
+                            <button
+
+                            className="cancel-button"
+
+                            onClick={()=>setConfirmAction(null)}
+
+                            >
+
+                                Cancel
+
+                            </button>
+
+
+
+                            <button
+
+                            className="confirm-button"
+
+                            onClick={confirmStatusUpdate}
+
+                            >
+
+                                Confirm
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            }
+
+
             {/* ACTIONS */}
 
             <div className="transaction-investigation-card">
-
 
                 <h2>
 
                     Investigation Actions
 
                 </h2>
-
 
                 <p>
 
@@ -749,7 +647,7 @@ export default function InvestigationDetailPage(){
 
                     className="investigation-escalate"
 
-                    onClick={()=>updateStatus("Escalated")}
+                    onClick={()=>setConfirmAction("Escalated")}
 
                     >
 
@@ -757,12 +655,11 @@ export default function InvestigationDetailPage(){
 
                     </button>
 
-
                     <button
 
                     className="investigation-block"
 
-                    onClick={()=>updateStatus("Blocked")}
+                    onClick={()=>setConfirmAction("Blocked")}
 
                     >
 
@@ -777,6 +674,5 @@ export default function InvestigationDetailPage(){
         </AdminLayout>
 
     );
-
 
 }
