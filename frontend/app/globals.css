@@ -20536,290 +20536,1531 @@ td {
   transform: translateX(0);
 }
 
-.ai-reason-list{
+.ai-reason-list {
+  list-style: none;
 
-    list-style:none;
+  padding: 0;
 
-    padding:0;
-
-    margin-top:15px;
-
+  margin-top: 15px;
 }
 
-.ai-reason-list li{
+.ai-reason-list li {
+  background: #1f2937;
 
-    background:#1f2937;
+  padding: 10px 12px;
 
-    padding:10px 12px;
+  margin-bottom: 8px;
 
-    margin-bottom:8px;
+  border-radius: 8px;
 
-    border-radius:8px;
+  color: #f87171;
 
-    color:#f87171;
-
-    font-size:14px;
-
+  font-size: 14px;
 }
 
-.investigation-queue-card{
+.investigation-queue-card {
+  background: #081426;
 
-    background:#081426;
+  border: 1px solid #20344f;
 
-    border:1px solid #20344f;
+  border-radius: 14px;
 
-    border-radius:14px;
-
-    padding:22px;
-
+  padding: 22px;
 }
 
+.investigation-header {
+  display: flex;
 
+  justify-content: space-between;
 
-.investigation-header{
+  align-items: center;
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
+  margin-bottom: 20px;
 }
 
+.investigation-header h2 {
+  color: #f1f5f9;
 
-
-.investigation-header h2{
-
-    color:#f1f5f9;
-
-    font-size:18px;
-
+  font-size: 18px;
 }
 
+.investigation-header p {
+  color: #718198;
 
-
-.investigation-header p{
-
-    color:#718198;
-
-    font-size:13px;
-
+  font-size: 13px;
 }
 
+.investigation-header a {
+  color: #60a5fa;
 
-
-.investigation-header a{
-
-    color:#60a5fa;
-
-    font-size:13px;
-
+  font-size: 13px;
 }
 
+.investigation-item {
+  display: flex;
 
+  justify-content: space-between;
 
-.investigation-item{
+  align-items: center;
 
-    display:flex;
+  padding: 15px 0;
 
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:15px 0;
-
-    border-bottom:1px solid #17263a;
-
+  border-bottom: 1px solid #17263a;
 }
 
+.investigation-item strong {
+  display: block;
 
-
-.investigation-item strong{
-
-    display:block;
-
-    color:#e2e8f0;
-
+  color: #e2e8f0;
 }
 
+.investigation-item span {
+  color: #718198;
 
-
-.investigation-item span{
-
-    color:#718198;
-
-    font-size:12px;
-
+  font-size: 12px;
 }
 
+.investigation-item b {
+  color: #ef476f;
 
-
-.investigation-item b{
-
-    color:#ef476f;
-
-    font-size:18px;
-
+  font-size: 18px;
 }
 
+.investigation-item small {
+  display: block;
 
-
-.investigation-item small{
-
-    display:block;
-
-    color:#718198;
-
+  color: #718198;
 }
 
-.dashboard-investigation-bottom{
-    margin-top:20px;
+.dashboard-investigation-bottom {
+  margin-top: 20px;
 }
 
+.investigation-queue-card {
+  background: #081426;
 
+  border: 1px solid #20344f;
 
-.investigation-queue-card{
+  border-radius: 14px;
 
-    background:#081426;
-
-    border:1px solid #20344f;
-
-    border-radius:14px;
-
-    padding:20px;
-
+  padding: 20px;
 }
 
+.investigation-header {
+  display: flex;
 
+  justify-content: space-between;
 
-.investigation-header{
+  align-items: center;
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:15px;
-
+  margin-bottom: 15px;
 }
 
+.investigation-header h2 {
+  color: #f1f5f9;
 
+  font-size: 18px;
 
-.investigation-header h2{
-
-    color:#f1f5f9;
-
-    font-size:18px;
-
-    margin:0;
-
+  margin: 0;
 }
 
+.investigation-header p {
+  color: #718198;
 
+  font-size: 13px;
 
-.investigation-header p{
-
-    color:#718198;
-
-    font-size:13px;
-
-    margin-top:5px;
-
+  margin-top: 5px;
 }
 
+.investigation-header a {
+  color: #60a5fa;
 
-
-.investigation-header a{
-
-    color:#60a5fa;
-
-    font-size:13px;
-
+  font-size: 13px;
 }
 
+.investigation-list {
+  display: flex;
 
-
-
-.investigation-list{
-
-    display:flex;
-
-    flex-direction:column;
-
+  flex-direction: column;
 }
 
+.investigation-item {
+  display: flex;
 
+  justify-content: space-between;
 
+  align-items: center;
 
-.investigation-item{
+  padding: 12px 0;
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:12px 0;
-
-    border-bottom:1px solid #17263a;
-
+  border-bottom: 1px solid #17263a;
 }
 
-
-
-.investigation-item:last-child{
-
-    border-bottom:none;
-
+.investigation-item:last-child {
+  border-bottom: none;
 }
 
+.investigation-item strong {
+  display: block;
 
+  color: #e2e8f0;
 
-.investigation-item strong{
-
-    display:block;
-
-    color:#e2e8f0;
-
-    font-size:14px;
-
+  font-size: 14px;
 }
 
+.investigation-item span {
+  display: block;
 
+  color: #718198;
 
-.investigation-item span{
+  font-size: 12px;
 
-    display:block;
-
-    color:#718198;
-
-    font-size:12px;
-
-    margin-top:3px;
-
+  margin-top: 3px;
 }
 
+.investigation-item b {
+  color: #ff4d88;
 
-
-.investigation-item b{
-
-    color:#ff4d88;
-
-    font-size:18px;
-
+  font-size: 18px;
 }
 
+.investigation-item small {
+  display: block;
 
+  color: #718198;
 
-.investigation-item small{
+  font-size: 11px;
+}
+/* =========================================================
+   DEVICE INVESTIGATION PAGE
+   ========================================================= */
 
-    display:block;
+.investigations-page {
+  width: 100%;
+  padding: 32px 34px 50px;
+  box-sizing: border-box;
+  color: #e8eef8;
+}
 
-    color:#718198;
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
 
-    font-size:11px;
+.investigations-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 26px;
+}
 
+.investigations-page-header > div:first-child {
+  min-width: 0;
+}
+
+.investigations-page-header h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: #f5f7fb;
+}
+
+.investigations-page-header p {
+  margin: 7px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #7186a3;
+}
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.investigation-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-width: 82px;
+  height: 36px;
+
+  padding: 0 15px;
+
+  border: 1px solid #263a54;
+  border-radius: 8px;
+
+  background: #101e30;
+  color: #b9c9dc;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.investigation-back-button:hover {
+  background: #16283e;
+  border-color: #3a5574;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   DEVICE SUMMARY
+   ========================================================= */
+
+.device-investigation-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   COMMON DEVICE CARD
+   ========================================================= */
+
+.device-info-card,
+.device-risk-card {
+  background: #0d1b2c;
+  border: 1px solid #20354d;
+  border-radius: 12px;
+  padding: 22px 24px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.device-info-card:hover,
+.device-risk-card:hover {
+  border-color: #2d4865;
+}
+
+/* =========================================================
+   CARD HEADINGS
+   ========================================================= */
+
+.device-info-card h3,
+.device-risk-card h3 {
+  margin: 0 0 20px;
+
+  color: #f1f5fb;
+
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* =========================================================
+   DEVICE INFORMATION ROWS
+   ========================================================= */
+
+.device-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 42px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #1b2d42;
+
+  gap: 25px;
+}
+
+.device-info-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.device-info-row span {
+  flex: 0 0 auto;
+
+  color: #7187a3;
+
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+.device-info-row strong {
+  min-width: 0;
+
+  color: #dce6f2;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-align: right;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   RISK CARD
+   ========================================================= */
+
+.device-risk-card {
+  background: linear-gradient(145deg, #0e1d2e 0%, #0b1828 100%);
+}
+
+.device-risk-value {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   RISK BADGES
+   ========================================================= */
+
+.investigation-risk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 48px;
+  height: 24px;
+
+  padding: 0 9px;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.investigation-risk.critical {
+  background: rgba(239, 68, 68, 0.14);
+  color: #ff6b6b;
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+.investigation-risk.high {
+  background: rgba(249, 115, 22, 0.14);
+  color: #ff9a45;
+  border: 1px solid rgba(249, 115, 22, 0.22);
+}
+
+.investigation-risk.medium {
+  background: rgba(234, 179, 8, 0.13);
+  color: #f1c84b;
+  border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.investigation-risk.low {
+  background: rgba(20, 184, 166, 0.12);
+  color: #26c6b0;
+  border: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+/* =========================================================
+   RELATED TRANSACTIONS CARD
+   ========================================================= */
+
+.investigations-table-card {
+  width: 100%;
+
+  background: #0d1b2c;
+
+  border: 1px solid #20354d;
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.investigations-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 19px 20px;
+
+  border-bottom: 1px solid #1d3046;
+}
+
+.investigations-table-header h2 {
+  margin: 0;
+
+  color: #edf3fa;
+
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.investigations-table-header p {
+  margin: 5px 0 0;
+
+  color: #7187a3;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.investigations-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* =========================================================
+   INVESTIGATION TABLE
+   ========================================================= */
+
+.investigations-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.investigations-table thead {
+  background: #0a1727;
+}
+
+.investigations-table th {
+  height: 38px;
+
+  padding: 0 15px;
+
+  border-bottom: 1px solid #1d3046;
+
+  color: #7187a3;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 700;
+  letter-spacing: 0.6px;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.investigations-table td {
+  height: 48px;
+
+  padding: 0 15px;
+
+  border-bottom: 1px solid #17283b;
+
+  color: #c9d5e4;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.investigations-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.investigations-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.investigations-table tbody tr:hover {
+  background: rgba(41, 72, 105, 0.12);
+}
+
+/* =========================================================
+   TRANSACTION ID
+   ========================================================= */
+
+.transaction-id {
+  color: #72a9e8 !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   RISK SCORE
+   ========================================================= */
+
+.transaction-risk {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  min-width: 105px;
+}
+
+.transaction-risk-bar {
+  position: relative;
+
+  width: 60px;
+  height: 6px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #24374d;
+}
+
+.transaction-risk-bar span {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #ef6674;
+}
+
+.transaction-risk strong {
+  color: #dce5ef;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   LOADING / EMPTY STATE
+   ========================================================= */
+
+.investigation-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+
+  background: #0d1b2c;
+
+  border: 1px solid #20354d;
+  border-radius: 12px;
+
+  color: #7890ac;
+
+  font-size: 12px;
+}
+
+.investigations-empty {
+  padding: 45px 20px !important;
+
+  text-align: center !important;
+
+  color: #687e99 !important;
+
+  font-size: 12px !important;
+}
+
+/* =========================================================
+   MAIN INVESTIGATION LIST
+   ========================================================= */
+
+.investigations-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.investigation-summary-card {
+  padding: 17px 18px;
+
+  background: #0d1b2c;
+
+  border: 1px solid #20354d;
+  border-radius: 10px;
+}
+
+.investigation-summary-card span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #7086a2;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.investigation-summary-card strong {
+  color: #eaf0f8;
+
+  font-size: 22px;
+  line-height: 1;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   FILTER AREA
+   ========================================================= */
+
+.investigations-filter-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding: 13px;
+
+  background: #0d1b2c;
+
+  border: 1px solid #20354d;
+  border-radius: 10px;
+}
+
+.investigations-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex: 1;
+
+  height: 36px;
+
+  padding: 0 11px;
+
+  background: #091625;
+
+  border: 1px solid #1e334b;
+  border-radius: 7px;
+}
+
+.investigations-search span {
+  color: #627995;
+
+  font-size: 16px;
+}
+
+.investigations-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #dce6f2;
+
+  font-size: 11px;
+}
+
+.investigations-search input::placeholder {
+  color: #60758f;
+}
+
+.investigations-filter-card select {
+  height: 36px;
+
+  padding: 0 30px 0 11px;
+
+  background: #091625;
+
+  border: 1px solid #1e334b;
+  border-radius: 7px;
+
+  color: #aebed1;
+
+  font-size: 11px;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.investigations-filter-card select:focus {
+  border-color: #466487;
+}
+
+.investigations-reset {
+  height: 36px;
+
+  padding: 0 15px;
+
+  background: #16283d;
+
+  border: 1px solid #29425e;
+  border-radius: 7px;
+
+  color: #aebfd2;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.investigations-reset:hover {
+  background: #20364f;
+  color: #ffffff;
+}
+
+/* =========================================================
+   INVESTIGATION LIST STATUS
+   ========================================================= */
+
+.investigation-status {
+  display: inline-flex;
+  align-items: center;
+
+  height: 23px;
+
+  padding: 0 8px;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.investigation-status.open {
+  background: rgba(59, 130, 246, 0.12);
+  color: #6ea8ff;
+}
+
+.investigation-status.investigating {
+  background: rgba(234, 179, 8, 0.12);
+  color: #e8c34d;
+}
+
+.investigation-status.escalated {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ff7373;
+}
+
+.investigation-status.resolved {
+  background: rgba(20, 184, 166, 0.12);
+  color: #39c7b3;
+}
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.investigation-view-button {
+  height: 28px;
+
+  padding: 0 12px;
+
+  background: #172b43;
+
+  border: 1px solid #294764;
+  border-radius: 6px;
+
+  color: #8db8e8;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.investigation-view-button:hover {
+  background: #203b5a;
+  border-color: #3c6289;
+  color: #c8e1ff;
+}
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.investigations-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 46px;
+
+  padding: 0 18px;
+
+  border-top: 1px solid #172a3e;
+
+  color: #657b96;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .device-investigation-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .investigations-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .investigations-page {
+    padding: 24px 20px 40px;
+  }
+
+  .investigations-page-header {
+    flex-direction: column;
+  }
+
+  .investigations-filter-card {
+    flex-wrap: wrap;
+  }
+
+  .investigations-search {
+    flex-basis: 100%;
+  }
+
+  .investigations-filter-card select {
+    flex: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .investigations-page {
+    padding: 20px 14px 30px;
+  }
+
+  .investigations-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .device-info-card,
+  .device-risk-card {
+    padding: 18px;
+  }
+
+  .device-info-row {
+    gap: 12px;
+  }
+
+  .device-info-row strong {
+    max-width: 55%;
+  }
+
+  .investigations-filter-card select,
+  .investigations-reset {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+} /* =========================================================
+   ANOMALYX - DEVICE INVESTIGATION PAGE
+   ========================================================= */
+
+.investigations-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 34px 50px;
+  box-sizing: border-box;
+  color: #e8eef8;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.investigations-page-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.investigations-page-header h1 {
+  margin: 0;
+  color: #f4f7fb;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.investigations-page-header p {
+  margin: 7px 0 0;
+  color: #7186a2;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.investigation-back-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 38px;
+  min-width: 88px;
+
+  padding: 0 16px;
+
+  border: 1px solid #29415d !important;
+  border-radius: 8px !important;
+
+  background: #102036 !important;
+  color: #c4d2e2 !important;
+
+  font-size: 12px !important;
+  font-weight: 600 !important;
+
+  cursor: pointer;
+
+  transition: all 0.18s ease;
+}
+
+.investigation-back-button:hover {
+  background: #172b43 !important;
+  border-color: #3c5d7e !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   DEVICE SUMMARY
+   ========================================================= */
+
+.device-investigation-summary {
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(0, 0.75fr);
+
+  gap: 16px;
+
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   DEVICE INFORMATION CARD
+   ========================================================= */
+
+.device-info-card {
+  display: block !important;
+
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding: 22px 26px;
+
+  background: #0d1b2c !important;
+
+  border: 1px solid #203850 !important;
+  border-radius: 12px !important;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.device-info-card h3 {
+  display: block !important;
+
+  margin: 0 0 22px !important;
+
+  color: #f0f4f9 !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   DEVICE INFORMATION ROWS
+   ========================================================= */
+
+.device-info-card .device-info-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  width: 100%;
+  min-height: 44px;
+
+  padding: 10px 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid #1b2e43 !important;
+}
+
+.device-info-card .device-info-row:last-child {
+  border-bottom: none !important;
+  padding-bottom: 2px;
+}
+
+.device-info-card .device-info-row span {
+  flex: 0 0 auto;
+
+  color: #7590ad !important;
+
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+
+.device-info-card .device-info-row strong {
+  flex: 0 1 auto;
+
+  max-width: 65%;
+
+  color: #e1e9f3 !important;
+
+  font-size: 12px !important;
+  font-weight: 650 !important;
+
+  text-align: right;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   RISK ASSESSMENT CARD
+   IMPORTANT: FORCE BLOCK LAYOUT
+   ========================================================= */
+
+.device-risk-card {
+  display: block !important;
+  position: relative !important;
+
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding: 22px 26px;
+
+  background: linear-gradient(145deg, #0e1d2e 0%, #0c1a2a 100%) !important;
+
+  border: 1px solid #203850 !important;
+  border-radius: 12px !important;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   RISK CARD TITLE
+   ========================================================= */
+
+.device-risk-card h3 {
+  display: block !important;
+
+  width: 100%;
+
+  margin: 0 0 18px !important;
+
+  color: #f0f4f9 !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+
+/* =========================================================
+   RISK VALUE
+   ========================================================= */
+
+.device-risk-card .device-risk-value {
+  display: block !important;
+
+  width: 100%;
+
+  margin: 0 0 10px !important;
+}
+
+.device-risk-card .device-risk-value .investigation-risk {
+  display: inline-flex !important;
+}
+
+/* =========================================================
+   RISK BADGES
+   ========================================================= */
+
+.investigation-risk {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 25px;
+
+  min-width: 48px;
+
+  padding: 0 10px;
+
+  box-sizing: border-box;
+
+  border-radius: 6px !important;
+
+  font-size: 10px !important;
+  font-weight: 700 !important;
+
+  line-height: 1;
+}
+
+.investigation-risk.critical {
+  background: rgba(239, 68, 68, 0.14) !important;
+  color: #ff6b6b !important;
+  border: 1px solid rgba(239, 68, 68, 0.22) !important;
+}
+
+.investigation-risk.high {
+  background: rgba(249, 115, 22, 0.14) !important;
+  color: #ff9945 !important;
+  border: 1px solid rgba(249, 115, 22, 0.22) !important;
+}
+
+.investigation-risk.medium {
+  background: rgba(234, 179, 8, 0.13) !important;
+  color: #efc94d !important;
+  border: 1px solid rgba(234, 179, 8, 0.2) !important;
+}
+
+.investigation-risk.low {
+  background: rgba(20, 184, 166, 0.12) !important;
+  color: #2bc4b0 !important;
+  border: 1px solid rgba(20, 184, 166, 0.2) !important;
+}
+
+/* =========================================================
+   RISK CARD INFORMATION
+   ========================================================= */
+
+.device-risk-card .device-info-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  width: 100%;
+
+  min-height: 42px;
+
+  padding: 9px 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid #1b2e43 !important;
+
+  gap: 15px;
+}
+
+.device-risk-card .device-info-row:last-child {
+  border-bottom: none !important;
+}
+
+.device-risk-card .device-info-row span {
+  flex: 0 1 auto;
+
+  min-width: 0;
+
+  color: #7590ad !important;
+
+  font-size: 11px !important;
+  font-weight: 500 !important;
+
+  white-space: nowrap;
+}
+
+.device-risk-card .device-info-row strong {
+  flex: 0 1 auto;
+
+  min-width: 0;
+  max-width: 70%;
+
+  color: #e1e9f3 !important;
+
+  font-size: 11px !important;
+  font-weight: 650 !important;
+
+  text-align: right;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   RELATED TRANSACTIONS
+   ========================================================= */
+
+.investigations-table-card {
+  display: block !important;
+
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  background: #0d1b2c !important;
+
+  border: 1px solid #203850 !important;
+  border-radius: 12px !important;
+
+  overflow: hidden;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.investigations-table-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  padding: 19px 21px !important;
+
+  border-bottom: 1px solid #1c3045 !important;
+}
+
+.investigations-table-header h2 {
+  margin: 0 !important;
+
+  color: #edf3fa !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.investigations-table-header p {
+  margin: 5px 0 0 !important;
+
+  color: #7187a3 !important;
+
+  font-size: 11px !important;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.investigations-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: auto;
+}
+
+.investigations-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: auto;
+}
+
+.investigations-table thead {
+  background: #091727 !important;
+}
+
+.investigations-table th {
+  height: 38px;
+
+  padding: 0 16px;
+
+  border-bottom: 1px solid #1c3045 !important;
+
+  color: #7187a3 !important;
+
+  font-size: 9px !important;
+  font-weight: 700 !important;
+
+  letter-spacing: 0.55px;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.investigations-table td {
+  height: 48px;
+
+  padding: 0 16px;
+
+  border-bottom: 1px solid #17293d !important;
+
+  color: #cbd7e5 !important;
+
+  font-size: 11px !important;
+  font-weight: 500 !important;
+
+  white-space: nowrap;
+}
+
+.investigations-table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.investigations-table tbody tr:hover {
+  background: rgba(37, 69, 101, 0.12);
+}
+
+/* =========================================================
+   TRANSACTION ID
+   ========================================================= */
+
+.transaction-id {
+  color: #75a9e4 !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   RISK SCORE
+   ========================================================= */
+
+.transaction-risk {
+  display: flex !important;
+  align-items: center !important;
+
+  gap: 9px;
+
+  min-width: 100px;
+}
+
+.transaction-risk-bar {
+  width: 62px;
+  height: 6px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #24384e;
+}
+
+.transaction-risk-bar span {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #ed6373;
+}
+
+.transaction-risk strong {
+  color: #dce6f1 !important;
+
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   EMPTY / LOADING
+   ========================================================= */
+
+.investigation-loading {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  min-height: 180px;
+
+  background: #0d1b2c;
+
+  border: 1px solid #203850;
+  border-radius: 12px;
+
+  color: #7288a3;
+
+  font-size: 12px;
+}
+
+.investigations-empty {
+  padding: 45px 20px !important;
+
+  color: #7186a2 !important;
+
+  text-align: center !important;
+
+  font-size: 12px !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .device-investigation-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .device-risk-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  .investigations-page {
+    padding: 24px 20px 40px;
+  }
+
+  .investigations-page-header {
+    align-items: flex-start !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .investigations-page {
+    padding: 20px 14px 35px;
+  }
+
+  .investigations-page-header {
+    flex-direction: column !important;
+    gap: 15px;
+  }
+
+  .investigation-back-button {
+    align-self: flex-start;
+  }
+
+  .device-info-card,
+  .device-risk-card {
+    padding: 19px;
+  }
+
+  .device-info-card .device-info-row strong,
+  .device-risk-card .device-info-row strong {
+    max-width: 55%;
+  }
 }

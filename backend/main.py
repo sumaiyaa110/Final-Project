@@ -2,26 +2,67 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+
 # ==========================================
 # SERVICES
 # ==========================================
 
 from services.database import create_tables
-from services.investigation_queue_service import get_investigation_queue
-from services.transaction_service import get_transactions
-from services.predictor import predict_transaction
-from services.report_service import get_reports
 
-from services.device_service import get_devices
-from services.customer_detail_service import get_customer_detail
-from services.network_service import get_network_data
-from services.transaction_detail_service import get_transaction_detail
-from services.agent_dashboard_service import get_agents
-from services.customer_txn_service import get_customer_transactions
-from services.background_simulator import start_background_simulator
+from services.investigation_queue_service import (
+    get_investigation_queue
+)
 
-from services.customer_behavior_service import get_customer_behavior
-from services.customer_service import get_customers
+from services.transaction_service import (
+    get_transactions
+)
+
+from services.predictor import (
+    predict_transaction
+)
+
+from services.report_service import (
+    get_reports
+)
+
+from services.device_service import (
+    get_devices,
+    get_device_detail,
+    get_device_transactions
+)
+
+from services.customer_detail_service import (
+    get_customer_detail
+)
+
+from services.network_service import (
+    get_network_data
+)
+
+from services.transaction_detail_service import (
+    get_transaction_detail
+)
+
+from services.agent_dashboard_service import (
+    get_agents
+)
+
+from services.customer_txn_service import (
+    get_customer_transactions
+)
+
+from services.background_simulator import (
+    start_background_simulator
+)
+
+from services.customer_behavior_service import (
+    get_customer_behavior
+)
+
+from services.customer_service import (
+    get_customers
+)
+
 from services.investigation_service import (
     get_customer_investigation,
     get_investigations
@@ -49,7 +90,11 @@ from services.analytics_service import (
     get_ai_insights
 )
 
-from services.investigation_action_service import update_investigation_status
+from services.investigation_action_service import (
+    update_investigation_status
+)
+
+
 # ==========================================
 # STARTUP / SHUTDOWN
 # ==========================================
@@ -205,6 +250,35 @@ def devices():
     return get_devices()
 
 
+# ------------------------------------------
+# SINGLE DEVICE DETAILS
+# ------------------------------------------
+
+@app.get("/device/{device_id}")
+def device_detail(device_id: str):
+
+    device = get_device_detail(device_id)
+
+    if not device:
+        return {
+            "success": False,
+            "message": "Device not found"
+        }
+
+    return {
+        "success": True,
+        "device": device
+    }
+
+
+@app.get("/device/{device_id}/transactions")
+def device_transactions(device_id: str):
+
+    return {
+        "success": True,
+        "transactions": get_device_transactions(device_id)
+    }
+
 # ==========================================
 # NETWORK
 # ==========================================
@@ -310,29 +384,43 @@ def investigation(customer_id: str):
 
     return get_customer_investigation(customer_id)
 
+
+# ------------------------------------------
+# INVESTIGATION CASES
+# ------------------------------------------
+
 @app.get("/investigations")
 def investigations():
 
     return get_investigations()
 
+
+# ------------------------------------------
+# INVESTIGATION ACTION
+# ------------------------------------------
+
 @app.post("/investigation-action/{transaction_id}")
 def investigation_action(
-    transaction_id:str,
-    data:dict
+    transaction_id: str,
+    data: dict
 ):
 
     return update_investigation_status(
-
         transaction_id,
-
         data["status"]
-
     )
+
+
+# ------------------------------------------
+# INVESTIGATION QUEUE
+# ------------------------------------------
 
 @app.get("/investigation-queue")
 def investigation_queue():
 
     return get_investigation_queue()
+
+
 # ==========================================
 # REPORTS
 # ==========================================
