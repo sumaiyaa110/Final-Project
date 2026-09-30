@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:8000";
-
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 // ================================
 // Dashboard Summary
 // ================================
@@ -65,7 +65,7 @@ export async function getNetworkData() {
 }
 
 export async function getAgents() {
-  const response = await fetch("http://localhost:8000/agents", {
+  const response = await fetch(`${API_URL}/agents`, {
     cache: "no-store",
   });
 
@@ -77,7 +77,7 @@ export async function getAgents() {
 }
 
 export async function getAlerts() {
-  const response = await fetch("http://localhost:8000/alerts", {
+  const response = await fetch(`${API_URL}/alerts`, {
     cache: "no-store",
   });
 
@@ -89,7 +89,7 @@ export async function getAlerts() {
 }
 
 export async function getAlertSummary() {
-  const response = await fetch("http://localhost:8000/alert-summary", {
+  const response = await fetch(`${API_URL}/alert-summary`, {
     cache: "no-store",
   });
 
@@ -102,7 +102,7 @@ export async function getAlertSummary() {
 
 export async function getTransactions() {
   const response = await fetch(
-    `http://localhost:8000/transactions?_=${Date.now()}`,
+    `${API_URL}/transactions?_=${Date.now()}`,
     {
       cache: "no-store",
     },
@@ -117,7 +117,7 @@ export async function getTransactions() {
 
 export async function getCustomerBehavior(customerId: string) {
   const response = await fetch(
-    `http://localhost:8000/customer-behavior/${customerId}?t=${Date.now()}`,
+    `${API_URL}/customer-behavior/${customerId}?t=${Date.now()}`,
 
     {
       cache: "no-store",
@@ -133,7 +133,7 @@ export async function getCustomerBehavior(customerId: string) {
 
 export async function getTransactionSummary() {
   const response = await fetch(
-    `http://localhost:8000/transaction-summary?t=${Date.now()}`,
+    `${API_URL}/transaction-summary?t=${Date.now()}`,
 
     {
       cache: "no-store",
@@ -148,7 +148,7 @@ export async function getTransactionSummary() {
 }
 
 export async function getReports() {
-  const response = await fetch("http://localhost:8000/reports", {
+  const response = await fetch(`${API_URL}/reports`, {
     cache: "no-store",
   });
 
@@ -160,7 +160,7 @@ export async function getReports() {
 }
 
 export async function getCustomers() {
-  const response = await fetch("http://localhost:8000/customers");
+  const response = await fetch(`${API_URL}/customers`);
 
   return response.json();
 }
@@ -171,7 +171,7 @@ export async function getCustomers() {
 
 export async function resolveAlert(alertId: string) {
   const response = await fetch(
-    `http://localhost:8000/alerts/${alertId}/resolve`,
+    `${API_URL}/alerts/${alertId}/resolve`,
     {
       method: "POST",
       cache: "no-store",
@@ -189,7 +189,7 @@ export async function getInvestigations(){
 
     const response = await fetch(
 
-        "http://localhost:8000/investigations",
+        `${API_URL}/investigations`,
 
         {
             cache:"no-store"

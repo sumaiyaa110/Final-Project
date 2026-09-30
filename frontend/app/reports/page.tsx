@@ -166,25 +166,25 @@ export default function ReportsPage() {
     // COLORS
     // -------------------------------------------------
 
-    const navy = [7, 18, 35];
+    const navy: [number, number, number] = [7, 18, 35];
 
-    const blue = [54, 92, 219];
+    const blue: [number, number, number] = [54, 92, 219];
 
-    const red = [244, 63, 94];
+    const red: [number, number, number] = [244, 63, 94];
 
-    const yellow = [245, 158, 11];
+    const yellow: [number, number, number] = [245, 158, 11];
 
-    const green = [16, 185, 129];
+    const green: [number, number, number] = [16, 185, 129];
 
-    const darkText = [15, 23, 42];
+    const darkText: [number, number, number] = [15, 23, 42];
 
-    const secondaryText = [91, 112, 140];
+    const secondaryText: [number, number, number] = [91, 112, 140];
 
-    const background = [241, 245, 249];
+    const background: [number, number, number] = [241, 245, 249];
 
-    const white = [255, 255, 255];
+    const white: [number, number, number] = [255, 255, 255];
 
-    const border = [220, 226, 235];
+    const border: [number, number, number] = [220, 226, 235];
 
     // -------------------------------------------------
     // PAGE BACKGROUND

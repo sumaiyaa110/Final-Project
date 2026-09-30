@@ -94,6 +94,9 @@ from services.investigation_action_service import (
     update_investigation_status
 )
 
+from services.ai_explanation_service import (
+    generate_risk_explanation
+)
 
 # ==========================================
 # STARTUP / SHUTDOWN
@@ -429,3 +432,19 @@ def investigation_queue():
 def reports():
 
     return get_reports()
+
+@app.get(
+    "/transaction/{transaction_id}/explanation"
+)
+def transaction_explanation(
+    transaction_id:str
+):
+
+    transaction = get_transaction_detail(
+        transaction_id
+    )
+
+
+    return generate_risk_explanation(
+        transaction
+    )

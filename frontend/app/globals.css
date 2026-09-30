@@ -21525,3 +21525,238 @@ td {
     justify-content:center;
 
 }
+
+.ai-explanation-card{
+
+background:#0b1728;
+
+border:1px solid #24364d;
+
+border-radius:12px;
+
+padding:20px;
+
+margin-top:20px;
+
+}
+
+
+.ai-risk-score{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#ef4444;
+
+}
+
+
+.ai-explanation-card li{
+
+color:#cbd5e1;
+
+margin:8px 0;
+
+}
+
+/* ================================
+   SIDEBAR CLEAN STYLE
+================================= */
+
+.admin-sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #071221;
+
+  /* Remove the unwanted line */
+  border-right: none !important;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+
+  /* hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+
+/* Chrome / Edge scrollbar */
+.admin-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Sidebar brand area */
+.sidebar-brand {
+  height: 88px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 24px;
+
+  border-bottom: none !important;
+}
+
+
+/* Navigation area */
+.sidebar-navigation {
+  flex: 1;
+
+  padding: 20px 14px;
+}
+
+
+/* Section title */
+.sidebar-section-title {
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  margin: 18px 14px;
+
+}
+
+
+/* Menu item */
+.sidebar-item {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+
+  height: 44px;
+
+  padding: 0 16px;
+
+  margin-bottom: 6px;
+
+
+  color: #94a3b8;
+
+  text-decoration: none;
+
+
+  border-radius: 8px;
+
+  transition: all 0.2s ease;
+
+}
+
+
+/* Hover */
+.sidebar-item:hover {
+
+  background: rgba(99,102,241,0.12);
+
+  color:white;
+
+}
+
+
+/* Active item */
+.sidebar-item-active {
+
+  background:
+  linear-gradient(
+    90deg,
+    rgba(124,58,237,0.45),
+    rgba(79,70,229,0.25)
+  );
+
+
+  color:white;
+
+}
+
+
+/* Icons */
+.sidebar-icon {
+
+  width:22px;
+
+  display:flex;
+
+  justify-content:center;
+
+  font-size:18px;
+
+}
+
+
+/* Bottom system area */
+.sidebar-footer {
+
+  padding:16px;
+
+  border-top:none !important;
+
+}
+
+
+/* System card */
+.system-status {
+
+  background:#0f1d33;
+
+  padding:14px;
+
+  border-radius:10px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+
+/* Green status dot */
+.status-dot {
+
+  width:9px;
+
+  height:9px;
+
+  border-radius:50%;
+
+  background:#22c55e;
+
+}
+
+
+/* Text */
+.status-title {
+
+  color:#e2e8f0;
+
+  font-size:13px;
+
+  font-weight:600;
+
+}
+
+
+.status-subtitle {
+
+  color:#64748b;
+
+  font-size:11px;
+
+}
