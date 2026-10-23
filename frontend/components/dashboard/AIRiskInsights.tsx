@@ -193,22 +193,9 @@ export default function AIRiskInsights() {
 
 
 
-      <div className="ai-insight-strip-icon">
-
-        ✦
-
-      </div>
-
-
-
-
-
-
-
-
       <div className="ai-insight-strip-label">
 
-        AI Insight
+        Summary
 
       </div>
 
@@ -286,32 +273,6 @@ export default function AIRiskInsights() {
 
 
       </button>
-
-
-
-
-
-
-
-
-
-      <div className="ai-insight-system">
-
-
-
-        <span className="ai-status-dot" />
-
-
-
-        <span>
-
-          System Online
-
-        </span>
-
-
-
-      </div>
 
 
 

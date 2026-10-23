@@ -201,7 +201,7 @@ export default function FraudByType(){
               textfont:{
 
 
-                color:"#f1f5f9",
+                color:"#1e2025",
 
                 size:11
 
@@ -213,17 +213,7 @@ export default function FraudByType(){
               marker:{
 
 
-                color:[
-
-                  "#ef476f",
-
-                  "#8b5cf6",
-
-                  "#3b82f6",
-
-                  "#22d3ee"
-
-                ],
+                color:"#3d5a80",
 
 
 
@@ -284,11 +274,11 @@ export default function FraudByType(){
 
 
 
-            paper_bgcolor:"rgba(0,0,0,0)",
+            paper_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
-            plot_bgcolor:"rgba(0,0,0,0)",
+            plot_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
@@ -310,7 +300,7 @@ export default function FraudByType(){
 
 
 
-              gridcolor:"#17263a",
+              gridcolor:"#e3e5e8",
 
 
 
@@ -321,7 +311,7 @@ export default function FraudByType(){
               tickfont:{
 
 
-                color:"#718198",
+                color:"#606776",
 
                 size:10
 
@@ -361,7 +351,7 @@ export default function FraudByType(){
               tickfont:{
 
 
-                color:"#718198",
+                color:"#606776",
 
                 size:10
 
@@ -380,18 +370,18 @@ export default function FraudByType(){
 
 
 
-              bgcolor:"#0c1729",
+              bgcolor:"#ffffff",
 
 
 
-              bordercolor:"#334155",
+              bordercolor:"#dfe1e5",
 
 
 
               font:{
 
 
-                color:"#e2e8f0",
+                color:"#272a2f",
 
                 size:10
 

@@ -833,7 +833,7 @@ Risk Score
         background:
           customer.risk === "High" ? "#fee2e2" : customer.risk === "Medium" ? "#fef3c7" : "#dcfce7",
         color:
-          customer.risk === "High" ? "#991b1b" : customer.risk === "Medium" ? "#92400e" : "#166534",
+          customer.risk === "High" ? "#a82824" : customer.risk === "Medium" ? "#b85014" : "#2e9e5d",
       }}
     >
       {customer.risk.toUpperCase()} RISK PROFILE
@@ -850,28 +850,28 @@ Risk Score
     }}
   >
     <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>AVERAGE TRANSACTION</span>
+      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>Average transaction</span>
       <strong style={{ fontSize: "1.1rem" }}>
         ৳{((customer as any).behavior?.amount?.average || (customer.totalTransactions > 0 ? (customer.totalAmount / customer.totalTransactions).toFixed(0) : 0)).toLocaleString()}
       </strong>
     </div>
 
     <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>COMMON CHANNEL</span>
+      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>Common channel</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.channels?.usual?.[0] || "P2P")}
       </strong>
     </div>
 
     <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>TYPICAL TIME WINDOW</span>
+      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>Typical time window</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.timeOfDay?.usual?.[0] || "Afternoon (12-17)")}
       </strong>
     </div>
 
     <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>TRUSTED DEVICES</span>
+      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>Trusted devices</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.devices?.trusted?.length ?? 0)} Verified
       </strong>
@@ -931,7 +931,7 @@ Risk Score
             <div>
               Current Amount: <strong>৳{Number((customer as any).behavior?.current?.amount || 0).toLocaleString()}</strong>
               {(customer as any).behavior?.amount?.ratioToAverage ? (
-                <span style={{ color: "#e11d48", fontWeight: 700, marginLeft: "6px" }}>
+                <span style={{ color: "#a82824", fontWeight: 700, marginLeft: "6px" }}>
                   ({(customer as any).behavior?.amount?.ratioToAverage}× normal)
                 </span>
               ) : null}
@@ -1317,7 +1317,7 @@ Risk Profile
 
 <p>
 
-AI-generated customer risk assessment.
+Based on this customer's transaction history.
 
 </p>
 
@@ -1488,21 +1488,12 @@ customer.status==="Active"
 
 
 
-<div className="customer-ai-icon">
-
-✦
-
-</div>
-
-
-
-
 <div>
 
 
 <h2>
 
-AI Customer Insight
+Assessment
 
 </h2>
 
@@ -1619,7 +1610,7 @@ onClick={() => {
   }
 }}
 >
-⚠ Investigate Customer
+Investigate Customer
 </button>
 
 

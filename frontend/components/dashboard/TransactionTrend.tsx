@@ -325,16 +325,16 @@ export default function TransactionTrend() {
 
 
 
-            paper_bgcolor:"rgba(0,0,0,0)",
+            paper_bgcolor:"rgba(245, 246, 248, 0)",
 
 
-            plot_bgcolor:"rgba(0,0,0,0)",
+            plot_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
             font:{
 
-              color:"#718198",
+              color:"#606776",
 
               family:"Arial"
 
@@ -349,7 +349,7 @@ export default function TransactionTrend() {
               },
 
 
-              gridcolor:"#152338",
+              gridcolor:"#e3e5e8",
 
               zeroline:false
 
