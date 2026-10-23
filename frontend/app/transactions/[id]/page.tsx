@@ -17,6 +17,10 @@ import AdminLayout from "@/components/layout/AdminLayout";
 
 import TransactionBehaviorChart from "@/components/transactions/TransactionBehaviorChart";
 import { API_URL } from "@/services/api";
+import {
+  LuSmartphone,
+  LuTriangleAlert,
+} from "react-icons/lu";
 
 
 
@@ -451,7 +455,7 @@ transaction.score >=80
 
 <div className="risk-status-icon">
 
-⚠
+<LuTriangleAlert aria-hidden="true" />
 
 </div>
 
@@ -835,7 +839,7 @@ DEVICE
 
 <div className="device-icon">
 
-◉
+<LuSmartphone aria-hidden="true" />
 
 </div>
 
@@ -955,10 +959,10 @@ transaction.new_device
               : "#dcfce7",
           color:
             transaction.score >= 70
-              ? "#b91c1c"
+              ? "#a82824"
               : transaction.score >= 40
-              ? "#b45309"
-              : "#15803d",
+              ? "#b85014"
+              : "#2e9e5d",
         }}
       >
         OVERALL: {String(transaction.level).toUpperCase()} ({transaction.score}/100)
@@ -1002,7 +1006,7 @@ transaction.new_device
                 </span>
                 <strong
                   style={{
-                    color: item.contribution > 0 ? "#ef4444" : "#10b981",
+                    color: item.contribution > 0 ? "#a82824" : "#2e9e5d",
                   }}
                 >
                   {item.contribution > 0 ? "+" : ""}
@@ -1130,10 +1134,10 @@ transaction.new_device
               width: `${item.value}%`,
               background:
                 item.value >= 70
-                  ? "#ef4444"
+                  ? "#a82824"
                   : item.value >= 40
-                  ? "#f59e0b"
-                  : "#10b981",
+                  ? "#b85014"
+                  : "#2e9e5d",
               borderRadius: "4px",
             }}
           />
@@ -1150,10 +1154,10 @@ transaction.new_device
     marginTop: "20px",
     borderLeft: `4px solid ${
       transaction.score >= 70
-        ? "#ef4444"
+        ? "#a82824"
         : transaction.score >= 40
-        ? "#f59e0b"
-        : "#10b981"
+        ? "#b85014"
+        : "#2e9e5d"
     }`,
   }}
 >
@@ -1164,10 +1168,10 @@ transaction.new_device
         fontWeight: 600,
         color:
           transaction.score >= 70
-            ? "#b91c1c"
+            ? "#a82824"
             : transaction.score >= 40
-            ? "#b45309"
-            : "#15803d",
+            ? "#b85014"
+            : "#2e9e5d",
       }}
     >
       STATUS: {String(transaction.level).toUpperCase()}
@@ -1309,7 +1313,7 @@ handleAction(
 
 >
 
-⚠ Escalate Investigation
+Escalate Investigation
 
 </button>
 

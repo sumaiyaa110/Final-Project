@@ -38,13 +38,13 @@ export default function RiskDistribution() {
               textposition: "inside",
 
               textfont: {
-                color: "#e2e8f0",
+                color: "#272a2f",
                 size: 11,
               },
 
               marker: {
                 line: {
-                  color: "#0b1728",
+                  color: "#ffffff",
                   width: 3,
                 },
               },
@@ -67,9 +67,9 @@ export default function RiskDistribution() {
               b: 10,
             },
 
-            paper_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(245, 246, 248, 0)",
 
-            plot_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(245, 246, 248, 0)",
 
             showlegend: true,
 
@@ -85,11 +85,11 @@ export default function RiskDistribution() {
               yanchor: "top",
 
               font: {
-                color: "#718198",
+                color: "#606776",
                 size: 9,
               },
 
-              bgcolor: "rgba(0,0,0,0)",
+              bgcolor: "rgba(245, 246, 248, 0)",
             },
 
             annotations: [
@@ -107,7 +107,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#f8fafc",
+                  color: "#1b1d20",
 
                   size: 23,
                 },
@@ -127,7 +127,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#53647a",
+                  color: "#6c7484",
 
                   size: 9,
                 },
@@ -135,12 +135,12 @@ export default function RiskDistribution() {
             ],
 
             hoverlabel: {
-              bgcolor: "#0c1729",
+              bgcolor: "#ffffff",
 
-              bordercolor: "#334155",
+              bordercolor: "#dfe1e5",
 
               font: {
-                color: "#e2e8f0",
+                color: "#272a2f",
 
                 size: 10,
               },

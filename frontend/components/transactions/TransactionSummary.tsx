@@ -11,6 +11,12 @@ import {
 getTransactionSummary
 }
 from "@/services/api";
+import {
+  LuBanknote,
+  LuFileText,
+  LuPercent,
+  LuTriangleAlert,
+} from "react-icons/lu";
 
 
 
@@ -115,7 +121,7 @@ summary.total_transactions.toLocaleString()
 
 description:"Total Transactions",
 
-icon:"▤",
+icon:LuFileText,
 
 type:"blue"
 
@@ -144,7 +150,7 @@ summary.high_risk_transactions.toLocaleString()
 
 description:"High Risk Transactions",
 
-icon:"⚠",
+icon:LuTriangleAlert,
 
 type:"red"
 
@@ -175,7 +181,7 @@ summary
 
 description:"Fraud Rate",
 
-icon:"↗",
+icon:LuPercent,
 
 type:"purple"
 
@@ -206,7 +212,7 @@ summary
 
 description:"Total Amount",
 
-icon:"◉",
+icon:LuBanknote,
 
 type:"green"
 
@@ -249,7 +255,7 @@ key={item.title}
 
 <div className="transaction-summary-icon">
 
-{item.icon}
+<item.icon aria-hidden="true" />
 
 </div>
 

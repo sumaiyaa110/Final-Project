@@ -7,6 +7,13 @@ import Link from "next/link";
 import AdminLayout from "@/components/layout/AdminLayout";
 
 import { getAlerts, getAlertSummary, resolveAlert } from "@/services/api";
+import {
+  LuBell,
+  LuClock,
+  LuSearch,
+  LuShieldAlert,
+  LuTriangleAlert,
+} from "react-icons/lu";
 
 type AlertStatus = "Pending" | "Investigating" | "Resolved";
 
@@ -194,7 +201,7 @@ export default function FraudAlertsPage() {
             <div className="fraud-alert-summary-top">
               <span>Total Alerts</span>
 
-              <div className="fraud-alert-summary-icon blue">◉</div>
+              <div className="fraud-alert-summary-icon blue"><LuBell aria-hidden="true" /></div>
             </div>
 
             <strong>{summary ? summary.total_alerts : "Loading..."}</strong>
@@ -210,7 +217,7 @@ export default function FraudAlertsPage() {
             <div className="fraud-alert-summary-top">
               <span>Critical</span>
 
-              <div className="fraud-alert-summary-icon red">!</div>
+              <div className="fraud-alert-summary-icon red"><LuShieldAlert aria-hidden="true" /></div>
             </div>
 
             <strong>{summary ? summary.critical : 0}</strong>
@@ -222,7 +229,7 @@ export default function FraudAlertsPage() {
             <div className="fraud-alert-summary-top">
               <span>High Risk</span>
 
-              <div className="fraud-alert-summary-icon orange">▲</div>
+              <div className="fraud-alert-summary-icon orange"><LuTriangleAlert aria-hidden="true" /></div>
             </div>
 
             <strong>{summary ? summary.high_risk : 0}</strong>
@@ -234,7 +241,7 @@ export default function FraudAlertsPage() {
             <div className="fraud-alert-summary-top">
               <span>Pending Review</span>
 
-              <div className="fraud-alert-summary-icon yellow">◷</div>
+              <div className="fraud-alert-summary-icon yellow"><LuClock aria-hidden="true" /></div>
             </div>
 
             <strong>{summary ? summary.pending : 0}</strong>
@@ -247,7 +254,7 @@ export default function FraudAlertsPage() {
 
         <div className="fraud-alert-filters">
           <div className="fraud-alert-search">
-            <span>⌕</span>
+            <span><LuSearch aria-hidden="true" /></span>
 
             <input
               value={search}

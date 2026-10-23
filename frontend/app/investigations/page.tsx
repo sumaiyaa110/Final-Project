@@ -8,6 +8,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getDevices, getInvestigations } from "@/services/api";
 import { API_URL } from "@/services/api";
+import {
+  LuSearch,
+} from "react-icons/lu";
+import Pagination from "@/components/ui/Pagination";
+
+const PAGE_SIZE = 25;
 
 // =====================================================
 // TYPES
@@ -254,6 +260,24 @@ function InvestigationsContent() {
     });
   }, [investigations, search, riskFilter, statusFilter]);
 
+
+  const [page, setPage] = useState(1);
+
+
+  const totalPages = Math.max(1, Math.ceil(filteredInvestigations.length / PAGE_SIZE));
+
+
+  const safePage = Math.min(page, totalPages);
+
+
+  const pagedInvestigations = filteredInvestigations.slice(
+
+    (safePage - 1) * PAGE_SIZE,
+
+    safePage * PAGE_SIZE,
+
+  );
+
   // =====================================================
   // RESET FILTERS
   // =====================================================
@@ -377,7 +401,7 @@ function InvestigationsContent() {
 
           <div className="investigations-filter-card">
             <div className="investigations-search">
-              <span>⌕</span>
+              <span><LuSearch aria-hidden="true" /></span>
 
               <input
                 placeholder="Search investigation or device..."
@@ -470,7 +494,7 @@ function InvestigationsContent() {
                       </td>
                     </tr>
                   ) : (
-                    filteredInvestigations.map((item) => (
+                    pagedInvestigations.map((item) => (
                       <tr key={item.id}>
                         <td className="investigation-id">{item.id}</td>
 
@@ -523,10 +547,21 @@ function InvestigationsContent() {
               </table>
             </div>
 
-            <div className="investigations-pagination">
+            <div className="investigations-pagination list-footer">
               <span>
-                Showing {filteredInvestigations.length} investigations
+                Showing{" "}
+                {filteredInvestigations.length === 0
+                  ? 0
+                  : (safePage - 1) * PAGE_SIZE + 1}
+                –{Math.min(safePage * PAGE_SIZE, filteredInvestigations.length)} of{" "}
+                {filteredInvestigations.length} investigations
               </span>
+
+              <Pagination
+                page={safePage}
+                totalPages={totalPages}
+                onChange={setPage}
+              />
             </div>
           </div>
         </div>

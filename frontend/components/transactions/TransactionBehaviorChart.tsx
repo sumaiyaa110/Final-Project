@@ -5,6 +5,10 @@ import dynamic from "next/dynamic";
 
 import { getCustomerBehavior } from "@/services/api";
 import { API_URL } from "@/services/api";
+import {
+  LuActivity,
+  LuLightbulb,
+} from "react-icons/lu";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -98,18 +102,18 @@ export default function TransactionBehaviorChart({
 
   const colors = transactions.map((transaction) => {
     if (transaction.riskLevel === "Critical") {
-      return "#ef4444";
+      return "#c22e29";
     }
 
     if (transaction.riskLevel === "High") {
-      return "#f97316";
+      return "#d35c17";
     }
 
     if (transaction.riskLevel === "Medium") {
-      return "#eab308";
+      return "#d38e17";
     }
 
-    return "#22c55e";
+    return "#35b66b";
   });
 
   // =====================================================
@@ -169,7 +173,7 @@ export default function TransactionBehaviorChart({
                 name: "Amount",
 
                 line: {
-                  color: "#2385c8",
+                  color: "#2e599e",
                   width: 2.5,
                 },
 
@@ -199,7 +203,7 @@ export default function TransactionBehaviorChart({
                 name: "Average",
 
                 line: {
-                  color: "#f59e0b",
+                  color: "#b85014",
                   width: 2,
                   dash: "dash",
                 },
@@ -219,13 +223,13 @@ export default function TransactionBehaviorChart({
                 b: 65,
               },
 
-              paper_bgcolor: "rgba(0,0,0,0)",
+              paper_bgcolor: "rgba(245, 246, 248, 0)",
 
-              plot_bgcolor: "rgba(0,0,0,0)",
+              plot_bgcolor: "rgba(245, 246, 248, 0)",
 
               font: {
                 family: "Inter, Arial, sans-serif",
-                color: "#7188a3",
+                color: "#5e6573",
                 size: 10,
               },
 
@@ -235,7 +239,7 @@ export default function TransactionBehaviorChart({
                 zeroline: false,
 
                 tickfont: {
-                  color: "#647b96",
+                  color: "#636b79",
                   size: 9,
                 },
 
@@ -249,19 +253,19 @@ export default function TransactionBehaviorChart({
                   text: "Amount (BDT)",
 
                   font: {
-                    color: "#7188a3",
+                    color: "#5e6573",
                     size: 10,
                   },
                 },
 
                 showgrid: true,
 
-                gridcolor: "rgba(93,116,142,0.22)",
+                gridcolor: "rgba(102, 110, 125, 0.22)",
 
                 zeroline: false,
 
                 tickfont: {
-                  color: "#647b96",
+                  color: "#636b79",
                   size: 9,
                 },
 
@@ -283,19 +287,19 @@ export default function TransactionBehaviorChart({
 
                 font: {
                   size: 9,
-                  color: "#7890aa",
+                  color: "#5b626f",
                 },
 
-                bgcolor: "rgba(0,0,0,0)",
+                bgcolor: "rgba(245, 246, 248, 0)",
               },
 
               hoverlabel: {
-                bgcolor: "#102238",
+                bgcolor: "#ffffff",
 
-                bordercolor: "#2b4764",
+                bordercolor: "#dfe1e5",
 
                 font: {
-                  color: "#e5edf7",
+                  color: "#23262b",
                   size: 10,
                 },
               },
@@ -324,7 +328,7 @@ export default function TransactionBehaviorChart({
               <p>Current transaction compared with normal activity</p>
             </div>
 
-            <span className="risk-summary-icon">◉</span>
+            <span className="risk-summary-icon"><LuActivity aria-hidden="true" /></span>
           </div>
 
           {/* =================================================
@@ -379,10 +383,10 @@ export default function TransactionBehaviorChart({
           ================================================= */}
 
           <div className="account-risk-insight">
-            <div className="account-risk-insight-icon">💡</div>
+            <div className="account-risk-insight-icon"><LuLightbulb aria-hidden="true" /></div>
 
             <div>
-              <span>AI Insight</span>
+              <span>Insight</span>
 
               <p>
                 This transaction is <strong>{formattedIncrease}×</strong> higher

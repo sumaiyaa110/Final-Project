@@ -470,6 +470,15 @@ export default function NetworkAnalysisPage() {
 
               </span>
 
+
+              <span>
+
+                <i className="network-dot agent" />
+
+                Agent
+
+              </span>
+
             </div>
 
           </div>
@@ -534,16 +543,16 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: "#343840",
                     },
 
                     marker: {
                       size: 18,
-                      color: "#3b82f6",
+                      color: "#2e599e",
 
                       line: {
                         width: 2,
-                        color: "#8db8ff",
+                        color: "#40454e",
                       },
                     },
 
@@ -579,19 +588,19 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: "#343840",
                     },
 
                     marker: {
                       size: 22,
 
-                      color: "#a855f7",
+                      color: "#535965",
 
                       symbol: "diamond",
 
                       line: {
                         width: 2,
-                        color: "#d8a8ff",
+                        color: "#363a42",
                       },
                     },
 
@@ -627,19 +636,19 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: "#343840",
                     },
 
                     marker: {
                       size: 18,
 
-                      color: "#f59e0b",
+                      color: "#b85014",
 
                       symbol: "square",
 
                       line: {
                         width: 2,
-                        color: "#fcd34d",
+                        color: "#b87c14",
                       },
                     },
 

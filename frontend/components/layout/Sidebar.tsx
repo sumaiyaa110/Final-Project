@@ -2,52 +2,64 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  LuArrowLeftRight,
+  LuFileText,
+  LuLayoutDashboard,
+  LuSearch,
+  LuSettings,
+  LuShare2,
+  LuSmartphone,
+  LuTriangleAlert,
+  LuUserCheck,
+  LuUsers,
+} from "react-icons/lu";
 
 const menuItems = [
   {
     name: "Dashboard",
     href: "/dashboard",
-    icon: "▦",
+    icon: LuLayoutDashboard,
   },
   {
     name: "Transactions",
     href: "/transactions",
-    icon: "≡",
+    icon: LuArrowLeftRight,
   },
   {
     name: "Fraud Alerts",
     href: "/alerts",
-    icon: "⚠",
+    icon: LuTriangleAlert,
   },
   {
     name: "Customers",
     href: "/customers",
-    icon: "♙",
+    icon: LuUsers,
   },
   {
     name: "Devices",
     href: "/devices",
-    icon: "▣",
+    icon: LuSmartphone,
   },
   {
     name: "Agents",
     href: "/agents",
-    icon: "♙",
+    icon: LuUserCheck,
   },
   {
     name: "Network Analysis",
     href: "/network",
-    icon: "⌘",
+    icon: LuShare2,
   },
   {
     name: "Investigations",
     href: "/investigations",
-    icon: "◎",
+    icon: LuSearch,
   },
   {
     name: "Reports",
     href: "/reports",
-    icon: "▤",
+    icon: LuFileText,
   },
 ];
 
@@ -55,7 +67,7 @@ const bottomItems = [
   {
     name: "Settings",
     href: "/settings",
-    icon: "⚙",
+    icon: LuSettings,
   },
 ];
 
@@ -73,13 +85,13 @@ export default function Sidebar() {
             Anomaly<span>X</span>
           </div>
 
-          <div className="sidebar-brand-subtitle">ADMIN MONITORING</div>
+          <div className="sidebar-brand-subtitle">Fraud monitoring</div>
         </div>
       </div>
 
       {/* Main Navigation */}
       <nav className="sidebar-navigation">
-        <div className="sidebar-section-title">MONITORING</div>
+        <div className="sidebar-section-title">Monitoring</div>
 
         {menuItems.map((item) => {
           const isActive =
@@ -93,14 +105,16 @@ export default function Sidebar() {
                 isActive ? "sidebar-item-active" : ""
               }`}
             >
-              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-icon">
+                <item.icon aria-hidden="true" />
+              </span>
 
               <span>{item.name}</span>
             </Link>
           );
         })}
 
-        <div className="sidebar-section-title bottom-section">SYSTEM</div>
+        <div className="sidebar-section-title bottom-section">System</div>
 
         {bottomItems.map((item) => {
           const isActive = pathname === item.href;
@@ -113,7 +127,9 @@ export default function Sidebar() {
                 isActive ? "sidebar-item-active" : ""
               }`}
             >
-              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-icon">
+                <item.icon aria-hidden="true" />
+              </span>
 
               <span>{item.name}</span>
             </Link>
@@ -121,18 +137,6 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom Admin Status */}
-      <div className="sidebar-footer">
-        <div className="system-status">
-          <span className="status-dot"></span>
-
-          <div>
-            <div className="status-title">System Operational</div>
-
-            <div className="status-subtitle">All services running</div>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 }
