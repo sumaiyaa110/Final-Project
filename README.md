@@ -52,15 +52,20 @@ The platform consists of an interactive admin dashboard frontend connected with 
 
 ## Explainable AI
 
-- SHAP-based model explanation
+- TreeSHAP feature contributions (XGBoost's built-in `pred_contribs`)
 - Feature-level fraud contribution analysis
-- Human-readable fraud reasoning
+- Human-readable fraud reasoning and customer behavioral signals
 
 ## Risk Assessment
 
 - Multi-model risk fusion engine
 - Combined fraud probability and anomaly scoring
-- Transaction risk classification:
+- Transaction risk classification: LOW / MEDIUM / HIGH / CRITICAL
+
+The fusion score (0-100) is driven by XGBoost: probabilities below the tuned
+fraud threshold (0.85) map to 0-60 and above it to 60-100. An Isolation Forest
+score above its tuned threshold adds up to 15 points.
+Levels: CRITICAL >= 85, HIGH >= 60, MEDIUM >= 30, otherwise LOW.
 
 ---
 
@@ -82,8 +87,7 @@ The platform consists of an interactive admin dashboard frontend connected with 
 
 - Python
 - Scikit-learn
-- XGBoost
-- SHAP
+- XGBoost (incl. TreeSHAP contributions)
 
 ## Data Processing
 
@@ -138,11 +142,13 @@ The platform consists of an interactive admin dashboard frontend connected with 
         ↓                             ↓
 
    Risk Category              Explainable AI
- LOW/MEDIUM/HIGH/CRITICAL      (SHAP)
+ LOW/MEDIUM/HIGH/CRITICAL      (TreeSHAP)
 
                        ↓
 
               Admin Monitoring Dashboard
+```
+
 ---
 
 # Frontend Application
@@ -176,7 +182,64 @@ The frontend provides:
 
 ---
 
-# AI Pipeline
+# Running Locally
+
+The transaction dataset is stored with Git LFS:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+## Backend
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+On first start the working database `backend/database/anomalyx.db` is created
+from the committed seed `backend/database/anomalyx_seed.db` (the working copy
+is git-ignored). A background simulator then scores a new transaction from
+`backend/data/transactions_v4.csv` every 5 seconds. If the dataset is missing,
+the API still runs and the simulator stays off.
+
+Configuration (see `backend/.env.example`):
+
+- `ALLOWED_ORIGINS`: comma-separated frontend origins for CORS (default `http://localhost:3000`)
+- `ANOMALYX_DB_PATH`: working database location
+- `ANOMALYX_SIMULATOR=0`: disable the live simulator
+
+Tests:
+
+```bash
+pip install -r requirements-dev.txt
+pytest tests
+```
+
+## Frontend
+
+```bash
+cd frontend
+cp .env.local.example .env.local   # set NEXT_PUBLIC_API_URL
+npm install
+npm run dev
+```
+
+Demo admin login: `admin@anomalyx.com` / `admin12345`.
+
+## Deployment
+
+`render.yaml` (repository root) deploys the backend from `backend/` on Render.
+Set `ALLOWED_ORIGINS` to the deployed frontend URL, and set
+`NEXT_PUBLIC_API_URL` on the frontend to the backend URL. Render must fetch the
+Git LFS dataset for the simulator to run; without it the API serves the seed data.
+
+The `models/` folder holds training outputs (metrics, feature importance);
+the models the API loads live in `backend/models/`.
 
 ---
 
@@ -189,12 +252,12 @@ Implemented:
 ✅ XGBoost fraud detection  
 ✅ Isolation Forest anomaly detection  
 ✅ Risk fusion engine  
-✅ Explainable AI preparation  
-✅ Frontend dashboard structure  
+✅ Explainable AI (TreeSHAP contributions)  
+✅ FastAPI backend with real-time transaction scoring simulator  
+✅ Live fraud alerts and investigation workflow  
+✅ Admin dashboard frontend  
 
 Planned:
 
-- FastAPI deployment
-- Real-time transaction scoring API
-- Live fraud alert system
 - Advanced graph fraud analytics
+- Real authentication for the admin dashboard and API
