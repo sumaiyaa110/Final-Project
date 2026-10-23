@@ -1,4 +1,4 @@
-const API_URL =
+export const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 // ================================
 // Dashboard Summary
@@ -43,6 +43,36 @@ export async function getDevices() {
 
   if (!response.ok) {
     throw new Error("Device API failed");
+  }
+
+  return response.json();
+}
+
+export async function getDeviceDetail(deviceId: string) {
+  const response = await fetch(
+    `${API_URL}/device/${encodeURIComponent(deviceId)}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Device detail API failed");
+  }
+
+  return response.json();
+}
+
+export async function getDeviceTransactions(deviceId: string) {
+  const response = await fetch(
+    `${API_URL}/device/${encodeURIComponent(deviceId)}/transactions`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Device transactions API failed");
   }
 
   return response.json();
@@ -160,7 +190,13 @@ export async function getReports() {
 }
 
 export async function getCustomers() {
-  const response = await fetch(`${API_URL}/customers`);
+  const response = await fetch(`${API_URL}/customers`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Customers API failed");
+  }
 
   return response.json();
 }
@@ -185,19 +221,14 @@ export async function resolveAlert(alertId: string) {
   return response.json();
 }
 
-export async function getInvestigations(){
+export async function getInvestigations() {
+  const response = await fetch(`${API_URL}/investigations`, {
+    cache: "no-store",
+  });
 
-    const response = await fetch(
+  if (!response.ok) {
+    throw new Error("Investigations API failed");
+  }
 
-        "http://localhost:8000/investigations",
-
-        {
-            cache:"no-store"
-        }
-
-    );
-
-
-    return await response.json();
-
+  return response.json();
 }

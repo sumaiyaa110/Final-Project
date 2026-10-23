@@ -16,6 +16,7 @@ import {
 import AdminLayout from "@/components/layout/AdminLayout";
 
 import TransactionBehaviorChart from "@/components/transactions/TransactionBehaviorChart";
+import { API_URL } from "@/services/api";
 
 
 
@@ -45,8 +46,8 @@ useEffect(() => {
     try {
       const realId = transactionId.replace("TXN-", "");
       const [txRes, expRes] = await Promise.all([
-        fetch(`http://localhost:8000/transaction/${realId}`, { cache: "no-store" }),
-        fetch(`http://localhost:8000/transaction/${realId}/explanation`, { cache: "no-store" }),
+        fetch(`${API_URL}/transaction/${realId}`, { cache: "no-store" }),
+        fetch(`${API_URL}/transaction/${realId}/explanation`, { cache: "no-store" }),
       ]);
 
       if (txRes.ok) {
@@ -113,7 +114,7 @@ async function handleAction(
     const targetStatus = apiStatusMap[status] || status;
     const realId = transactionId.replace("TXN-", "");
 
-    await fetch(`http://localhost:8000/investigation-action/${realId}`, {
+    await fetch(`${API_URL}/investigation-action/${realId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

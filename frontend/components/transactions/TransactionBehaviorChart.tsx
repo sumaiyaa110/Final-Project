@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 import { getCustomerBehavior } from "@/services/api";
+import { API_URL } from "@/services/api";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -33,7 +34,7 @@ export default function TransactionBehaviorChart({
     async function load() {
       try {
         const queryParam = transactionId ? `?transaction_id=${transactionId}&t=${Date.now()}` : `?t=${Date.now()}`;
-        const res = await fetch(`http://localhost:8000/customer-behavior/${customerId}${queryParam}`, {
+        const res = await fetch(`${API_URL}/customer-behavior/${customerId}${queryParam}`, {
           cache: "no-store",
         });
         if (res.ok) {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import AdminLayout from "@/components/layout/AdminLayout";
+import { API_URL } from "@/services/api";
 
 export default function InvestigationDetailPage(){
 
@@ -41,7 +42,7 @@ export default function InvestigationDetailPage(){
 
                 const response = await fetch(
 
-                    `http://localhost:8000/transaction/${id}`,
+                    `${API_URL}/transaction/${id}`,
 
                     {
                         cache:"no-store"
@@ -93,7 +94,7 @@ export default function InvestigationDetailPage(){
     async function updateStatus(status:string){
         try{
             const response = await fetch(
-                `http://localhost:8000/investigation-action/${transaction.id}`,
+                `${API_URL}/investigation-action/${transaction.id}`,
 
                 {
 

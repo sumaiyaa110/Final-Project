@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/services/api";
 
 export default function InvestigationQueue(){
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function InvestigationQueue(){
             try{
 
                 const response = await fetch(
-                    "http://localhost:8000/high-risk",
+                    `${API_URL}/high-risk`,
                     {
                         cache:"no-store"
                     }

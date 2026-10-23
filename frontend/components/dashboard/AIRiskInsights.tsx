@@ -10,6 +10,7 @@ import {
 import {
   useRouter
 } from "next/navigation";
+import { API_URL } from "@/services/api";
 
 
 
@@ -59,7 +60,7 @@ export default function AIRiskInsights() {
         const response =
         await fetch(
 
-          "http://localhost:8000/insights",
+          `${API_URL}/insights`,
 
           {
             cache:"no-store"

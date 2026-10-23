@@ -10,6 +10,7 @@ import {
 import {
   useRouter
 } from "next/navigation";
+import { API_URL } from "@/services/api";
 
 
 
@@ -58,7 +59,7 @@ export default function RecentHighRisk() {
         const response =
         await fetch(
 
-          "http://localhost:8000/high-risk",
+          `${API_URL}/high-risk`,
 
           {
             cache:"no-store"
