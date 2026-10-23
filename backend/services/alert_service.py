@@ -32,7 +32,7 @@ def get_fraud_alerts():
 
             alert_status
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level IN ('HIGH', 'CRITICAL')
 
@@ -164,7 +164,7 @@ def get_alert_summary():
         """
         SELECT COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level IN ('HIGH', 'CRITICAL')
 
@@ -188,7 +188,7 @@ def get_alert_summary():
         """
         SELECT COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level = 'HIGH'
 
@@ -212,7 +212,7 @@ def get_alert_summary():
         """
         SELECT COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level = 'CRITICAL'
 
@@ -229,20 +229,20 @@ def get_alert_summary():
 
 
     # =============================================
-    # PENDING ALERTS
+    # PENDING ALERTS (not yet picked up)
     # =============================================
 
     cursor.execute(
         """
         SELECT COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level IN ('HIGH', 'CRITICAL')
 
         AND (
             alert_status IS NULL
-            OR alert_status != 'Resolved'
+            OR alert_status = 'Pending'
         )
 
         """
@@ -314,7 +314,7 @@ def resolve_alert(alert_id: str):
 
             alert_status
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE id = ?
 

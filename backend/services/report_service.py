@@ -19,7 +19,7 @@ def get_reports():
     cursor.execute(
         """
         SELECT COUNT(*)
-        FROM transactions
+        FROM transactions_clean
         """
     )
 
@@ -34,7 +34,7 @@ def get_reports():
     cursor.execute(
         """
         SELECT COUNT(*)
-        FROM transactions
+        FROM transactions_clean
         WHERE UPPER(risk_level)
         IN ('HIGH','CRITICAL')
         """
@@ -51,7 +51,7 @@ def get_reports():
     cursor.execute(
         """
         SELECT COUNT(*)
-        FROM transactions
+        FROM transactions_clean
         WHERE UPPER(risk_level)
         = 'MEDIUM'
         """
@@ -85,7 +85,7 @@ def get_reports():
     cursor.execute(
         """
         SELECT COUNT(DISTINCT customer_id)
-        FROM transactions
+        FROM transactions_clean
         WHERE customer_id IS NOT NULL
         """
     )

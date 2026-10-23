@@ -1,3 +1,13 @@
+"""
+Offline seeding script (not used by the API).
+
+Imports devices_v4.csv and edges.csv from backend/data into the devices
+and network_edges tables. Those CSVs are not part of the repository; the
+committed database/anomalyx_seed.db already contains their data.
+
+Usage (from the backend folder): python -m services.database_initializer
+"""
+
 import pandas as pd
 from pathlib import Path
 

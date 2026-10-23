@@ -1,4 +1,5 @@
 from services.database import get_connection
+from services.model_loader import anomaly_threshold
 
 
 def get_dashboard_summary():
@@ -138,10 +139,11 @@ def get_dashboard_summary():
             SUM(CASE WHEN new_device_flag = 1 THEN 1 ELSE 0 END),
             SUM(CASE WHEN amount > 50000 THEN 1 ELSE 0 END),
             SUM(CASE WHEN txn_hour < 6 THEN 1 ELSE 0 END),
-            SUM(CASE WHEN anomaly_score > 0.4 THEN 1 ELSE 0 END)
+            SUM(CASE WHEN anomaly_score >= ? THEN 1 ELSE 0 END)
         FROM transactions_clean
         WHERE risk_level IN ('HIGH','CRITICAL')
-        """
+        """,
+        (anomaly_threshold,)
     )
     sig_row = cursor.fetchone()
     if sig_row and any(v and v > 0 for v in sig_row):
@@ -149,7 +151,7 @@ def get_dashboard_summary():
             ("New Device Flag", sig_row[0] or 0),
             ("High Transfer Amount (>৳50k)", sig_row[1] or 0),
             ("Off-Hours Activity (00-05h)", sig_row[2] or 0),
-            ("High Anomaly Score (>0.40)", sig_row[3] or 0),
+            (f"High Anomaly Score (>={anomaly_threshold:.2f})", sig_row[3] or 0),
         ]
         sigs.sort(key=lambda x: x[1], reverse=True)
         top_signal = f"{sigs[0][0]} ({sigs[0][1]} occurrences)"

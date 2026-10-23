@@ -1,502 +1,215 @@
-import pandas as pd
-
 from services.database import get_connection
 
 
+TOP_ENTITIES = 20
+MAX_GRAPH_EDGES = 80
+SUSPICIOUS_DEGREE = 20
+
+
+# Degree of every node (edges where it is source + edges where it is target)
+DEGREE_SQL = """
+    SELECT
+        node_id,
+        SUM(outgoing) AS outgoing,
+        SUM(incoming) AS incoming,
+        SUM(outgoing) + SUM(incoming) AS degree
+    FROM (
+        SELECT source AS node_id, COUNT(*) AS outgoing, 0 AS incoming
+        FROM network_edges
+        GROUP BY source
+
+        UNION ALL
+
+        SELECT target AS node_id, 0 AS outgoing, COUNT(*) AS incoming
+        FROM network_edges
+        GROUP BY target
+    )
+    GROUP BY node_id
+"""
+
+
+def node_type(node_id):
+
+    if node_id.startswith("DEV"):
+        return "Device"
+
+    if node_id.startswith("AGT"):
+        return "Agent"
+
+    return "Customer"
+
+
+def degree_risk(degree):
+
+    if degree >= 100:
+        return "Critical"
+
+    if degree >= 50:
+        return "High"
+
+    if degree >= SUSPICIOUS_DEGREE:
+        return "Medium"
+
+    return "Low"
 
 
 def get_network_data():
 
-
     conn = get_connection()
-
     cursor = conn.cursor()
 
+    cursor.execute("SELECT COUNT(*) FROM network_edges")
+
+    connections = cursor.fetchone()[0]
+
+    if connections == 0:
+
+        conn.close()
+
+        return {
+            "summary": {},
+            "nodes": [],
+            "edges": [],
+            "suspicious_network_list": []
+        }
 
 
     # ==========================================
-    # LOAD NETWORK EDGES FROM SQLITE
+    # SUMMARY
     # ==========================================
 
     cursor.execute(
-
-    """
-
-    SELECT
-
-        source,
-
-        target,
-
-        amount,
-
-        transaction_count
-
-
-    FROM network_edges
-
-    """
-
+        f"""
+        SELECT
+            COUNT(*),
+            SUM(CASE WHEN node_id LIKE 'DEV%' AND degree > 1 THEN 1 ELSE 0 END),
+            SUM(CASE WHEN degree >= ? THEN 1 ELSE 0 END)
+        FROM ({DEGREE_SQL})
+        """,
+        (SUSPICIOUS_DEGREE,)
     )
 
-
-    rows = cursor.fetchall()
-
-
-    conn.close()
-
-
-
-    if len(rows) == 0:
-
-        return {
-
-            "summary": {},
-
-            "nodes": [],
-
-            "edges": [],
-
-            "suspicious_network_list": []
-
-        }
-
-
-
-
-
-    edges_df = pd.DataFrame(
-
-        rows,
-
-        columns=[
-
-            "source",
-
-            "target",
-
-            "amount",
-
-            "transaction_count"
-
-        ]
-
-    )
-
-
-
-
-
-
-    # ==========================================
-    # BASIC SUMMARY
-    # ==========================================
-
-
-    connections = len(edges_df)
-
-
-
-    all_nodes = set(
-
-        edges_df["source"].astype(str)
-
-    ) | set(
-
-        edges_df["target"].astype(str)
-
-    )
-
-
-
-    total_entities = len(all_nodes)
-
-
-
-
-
-
-
-    # ==========================================
-    # DEGREE CALCULATION
-    # ==========================================
-
-
-    source_counts = edges_df["source"].value_counts()
-
-    target_counts = edges_df["target"].value_counts()
-
-
-
-    degree_data = []
-
-
-
-    for node_id in all_nodes:
-
-
-        outgoing = int(
-
-            source_counts.get(node_id,0)
-
-        )
-
-
-        incoming = int(
-
-            target_counts.get(node_id,0)
-
-        )
-
-
-        degree_data.append(
-
-        {
-
-            "node_id":node_id,
-
-            "degree":outgoing+incoming,
-
-            "incoming":incoming,
-
-            "outgoing":outgoing
-
-        }
-
-        )
-
-
-
-
-    degree_df = pd.DataFrame(degree_data)
-
-
-
-
-
-
-
-    # ==========================================
-    # SHARED DEVICES
-    # ==========================================
-
-    device_nodes = degree_df[
-
-        degree_df["node_id"].str.startswith("DEV")
-
-    ]
-
-
-
-    shared_devices = int(
-
-        (device_nodes["degree"] > 1).sum()
-
-    )
-
-
-
-
-
+    total_entities, shared_devices, suspicious_count = cursor.fetchone()
 
 
     # ==========================================
     # TOP SUSPICIOUS ENTITIES
     # ==========================================
 
-
-    suspicious = degree_df.sort_values(
-
-        "degree",
-
-        ascending=False
-
-    ).head(20)
-
-
-
-
-
-    suspicious_ids = set(
-
-        suspicious["node_id"]
-
+    cursor.execute(
+        f"""
+        SELECT node_id, degree
+        FROM ({DEGREE_SQL})
+        ORDER BY degree DESC
+        LIMIT ?
+        """,
+        (TOP_ENTITIES,)
     )
 
+    suspicious = cursor.fetchall()
+
+    suspicious_ids = [str(row[0]) for row in suspicious]
 
 
+    # ==========================================
+    # GRAPH EDGES (around the top entities)
+    # ==========================================
 
+    placeholders = ",".join("?" for _ in suspicious_ids)
 
+    cursor.execute(
+        f"""
+        SELECT source, target, amount, transaction_count
+        FROM network_edges
+        WHERE source IN ({placeholders})
 
-    # Filter graph edges
+        UNION ALL
 
-    graph_edges = edges_df[
+        SELECT source, target, amount, transaction_count
+        FROM network_edges
+        WHERE target IN ({placeholders})
+          AND source NOT IN ({placeholders})
 
-        edges_df["source"].isin(suspicious_ids)
+        ORDER BY transaction_count DESC, amount DESC
+        LIMIT ?
+        """,
+        suspicious_ids * 3 + [MAX_GRAPH_EDGES]
+    )
 
-        |
-
-        edges_df["target"].isin(suspicious_ids)
-
+    graph_edges = [
+        {
+            "source": str(source),
+            "target": str(target),
+            "amount": float(amount or 0),
+            "transaction_count": int(transaction_count or 0)
+        }
+        for source, target, amount, transaction_count in cursor.fetchall()
     ]
 
-
-
-
-
-    graph_edges = graph_edges.sort_values(
-
-        [
-
-            "transaction_count",
-
-            "amount"
-
-        ],
-
-        ascending=False
-
-    ).head(80)
-
-
-
-
-
+    conn.close()
 
 
     # ==========================================
     # GRAPH NODES
     # ==========================================
 
-
-    graph_node_ids = set(
-
-        graph_edges["source"]
-
-    ) | set(
-
-        graph_edges["target"]
-
+    graph_node_ids = (
+        {edge["source"] for edge in graph_edges}
+        | {edge["target"] for edge in graph_edges}
     )
 
-
-
-    graph_nodes = []
-
-
-
-    for node_id in graph_node_ids:
-
-
-        node_type = (
-
-            "Device"
-
-            if str(node_id).startswith("DEV")
-
-            else "Customer"
-
-        )
-
-
-        graph_nodes.append(
-
+    graph_nodes = [
         {
-
-            "id":str(node_id),
-
-            "label":str(node_id),
-
-            "type":node_type
-
+            "id": node_id,
+            "label": node_id,
+            "type": node_type(node_id)
         }
-
-        )
-
-
-
-
-
-
-
-    # ==========================================
-    # GRAPH EDGES
-    # ==========================================
-
-
-    graph_edge_list = []
-
-
-
-    for _, row in graph_edges.iterrows():
-
-
-        graph_edge_list.append(
-
-        {
-
-            "source":str(row["source"]),
-
-            "target":str(row["target"]),
-
-            "amount":float(row["amount"]),
-
-            "transaction_count":int(
-
-                row["transaction_count"]
-
-            )
-
-        }
-
-        )
-
-
-
-
-
+        for node_id in graph_node_ids
+    ]
 
 
     # ==========================================
     # SUSPICIOUS NETWORK TABLE
     # ==========================================
 
-
     suspicious_networks = []
 
+    for index, (node_id, degree) in enumerate(suspicious[:10], start=1):
 
+        degree = int(degree)
 
-    for index, (_,row) in enumerate(
+        risk = degree_risk(degree)
 
-        suspicious.head(10).iterrows(),
-
-        start=1
-
-    ):
-
-
-        degree = int(row["degree"])
-
-
-
-        if degree >= 100:
-
-            risk="Critical"
-
-
-        elif degree >=50:
-
-            risk="High"
-
-
-        elif degree>=20:
-
-            risk="Medium"
-
-
+        if risk == "Critical":
+            status = "Investigating"
+        elif risk == "High":
+            status = "Pending"
         else:
+            status = "Reviewed"
 
-            risk="Low"
-
-
-
-
-
-        status = (
-
-            "Investigating"
-
-            if risk=="Critical"
-
-            else
-
-            "Pending"
-
-            if risk=="High"
-
-            else
-
-            "Reviewed"
-
-        )
-
-
-
-
-        suspicious_networks.append(
-
-        {
-
-            "id":f"NET-{index:03d}",
-
-            "entity_id":str(row["node_id"]),
-
-            "entities":degree+1,
-
-            "connections":degree,
-
-            "risk":risk,
-
-            "status":status
-
-        }
-
-        )
-
-
-
-
-
-
-
-    suspicious_count = int(
-
-        len(
-
-            degree_df[
-
-                degree_df["degree"]>=20
-
-            ]
-
-        )
-
-    )
-
-
-
-
-
+        suspicious_networks.append({
+            "id": f"NET-{index:03d}",
+            "entity_id": str(node_id),
+            "entities": degree + 1,
+            "connections": degree,
+            "risk": risk,
+            "status": status
+        })
 
 
     return {
 
-
-        "summary":{
-
-
-            "total_entities":total_entities,
-
-
-            "connections":connections,
-
-
-            "shared_devices":shared_devices,
-
-
-            "suspicious_networks":suspicious_count
-
-
+        "summary": {
+            "total_entities": int(total_entities or 0),
+            "connections": int(connections),
+            "shared_devices": int(shared_devices or 0),
+            "suspicious_networks": int(suspicious_count or 0)
         },
 
+        "nodes": graph_nodes,
 
-        "nodes":graph_nodes,
+        "edges": graph_edges,
 
-
-        "edges":graph_edge_list,
-
-
-        "suspicious_network_list":suspicious_networks
-
+        "suspicious_network_list": suspicious_networks
 
     }
