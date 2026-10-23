@@ -33,3 +33,7 @@ frontend/tsconfig.tsbuildinfo
 # Dependencies and build output
 frontend/node_modules/
 frontend/.next/
+
+# Working SQLite database (created from database/anomalyx_seed.db)
+backend/database/anomalyx.db
+backend/database/anomalyx.db-journal
