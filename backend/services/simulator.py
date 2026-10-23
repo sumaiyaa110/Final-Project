@@ -72,31 +72,21 @@ def get_existing_customers():
     conn = get_connection()
     cursor = conn.cursor()
 
-
     cursor.execute(
         """
         SELECT DISTINCT customer_id
-
-        FROM transactions
-
-        WHERE customer_id IS NOT NULL
-
+        FROM transactions_clean
+        WHERE customer_id LIKE 'CUST-%'
         LIMIT 5000
         """
     )
 
-
     customers = [
-
         row[0]
-
         for row in cursor.fetchall()
-
     ]
 
-
     conn.close()
-
 
     return customers
 
@@ -429,39 +419,17 @@ def generate_transaction():
     # =================================================
 
     cursor.execute(
-
         """
-        SELECT
-
-            linked_accounts,
-
-            transaction_count
-
-        FROM devices
-
+        SELECT COUNT(DISTINCT customer_id), COUNT(*)
+        FROM transactions_clean
         WHERE device_id = ?
-
         """,
-
         (device_id,)
-
     )
 
-
-    existing = cursor.fetchone()
-
-
-    if existing:
-
-        accounts = existing[0] + 1
-
-        transactions = existing[1] + 1
-
-    else:
-
-        accounts = 1
-
-        transactions = 1
+    dev_stats = cursor.fetchone()
+    accounts = max(int(dev_stats[0] or 0), 1)
+    transactions = int(dev_stats[1] or 0) + 1
 
 
     # =================================================

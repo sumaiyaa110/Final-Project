@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const ADMIN_EMAIL = "admin@anomaly";
+const VALID_EMAILS = ["admin@anomaly", "admin@anomalyx.com"];
 const ADMIN_PASSWORD = "admin12345";
 
 export async function POST(request: Request) {
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+    if (!VALID_EMAILS.includes(email.toLowerCase().trim()) || password !== ADMIN_PASSWORD) {
       return NextResponse.json(
         {
           success: false,

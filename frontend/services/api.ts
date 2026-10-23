@@ -189,7 +189,7 @@ export async function getInvestigations(){
 
     const response = await fetch(
 
-        `${API_URL}/investigations`,
+        "http://localhost:8000/investigations",
 
         {
             cache:"no-store"

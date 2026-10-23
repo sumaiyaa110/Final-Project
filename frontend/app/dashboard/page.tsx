@@ -218,6 +218,125 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* =====================================================
+            FEATURE 8: CURRENT THREAT OVERVIEW
+        ===================================================== */}
+        {dashboard?.threat_overview && (
+          <div className="dashboard-threat-overview-card">
+            <div className="dashboard-threat-header">
+              <div>
+                <h2>Current Threat Overview</h2>
+                <p>
+                  Live operational threat posture across transactions, entities, and devices.
+                </p>
+              </div>
+
+              <span
+                className={`dashboard-threat-badge ${String(
+                  dashboard.threat_overview.threat_level
+                ).toLowerCase()}`}
+              >
+                SYSTEM POSTURE: {dashboard.threat_overview.threat_level}
+              </span>
+            </div>
+
+            <div className="dashboard-threat-grid">
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">AVG SYSTEM RISK</span>
+                <strong className="metric-value">
+                  {dashboard.threat_overview.average_system_risk}/100
+                </strong>
+              </div>
+
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">ACTIVE CASES</span>
+                <strong className="metric-value">
+                  {dashboard.threat_overview.active_investigations}
+                </strong>
+              </div>
+
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">HIGH-RISK TXNS</span>
+                <strong className="metric-value highlight-red">
+                  {dashboard.threat_overview.high_risk_transactions}
+                </strong>
+              </div>
+
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">CRITICAL ALERTS</span>
+                <strong className="metric-value">
+                  {dashboard.threat_overview.critical_alerts}
+                </strong>
+              </div>
+
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">SUSPICIOUS DEVICES</span>
+                <strong className="metric-value">
+                  {dashboard.threat_overview.suspicious_devices}
+                </strong>
+              </div>
+
+              <div className="dashboard-threat-metric">
+                <span className="metric-label">RECENT RISK TREND</span>
+                <strong className="metric-value highlight-green">
+                  {dashboard.threat_overview.recent_risk_change}
+                </strong>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* =====================================================
+            FEATURE 5: FRAUD PATTERN INSIGHTS
+        ===================================================== */}
+        {dashboard?.fraud_patterns && (
+          <div className="dashboard-fraud-patterns-card">
+            <div className="dashboard-fraud-header">
+              <div>
+                <h2>Fraud Pattern Insights</h2>
+                <p>Database-wide patterns and high-frequency anomaly vectors.</p>
+              </div>
+            </div>
+
+            <div className="dashboard-fraud-grid">
+              <div className="dashboard-fraud-metric">
+                <span className="metric-label">MOST COMMON RISK SIGNAL</span>
+                <strong className="metric-value">
+                  {dashboard.fraud_patterns.most_common_risk_signal}
+                </strong>
+              </div>
+
+              <div className="dashboard-fraud-metric">
+                <span className="metric-label">HIGHEST-RISK CHANNEL</span>
+                <strong className="metric-value">
+                  {dashboard.fraud_patterns.highest_risk_channel}
+                </strong>
+              </div>
+
+              <div className="dashboard-fraud-metric">
+                <span className="metric-label">MOST SUSPICIOUS DEVICE</span>
+                <strong className="metric-value">
+                  {dashboard.fraud_patterns.most_suspicious_device}
+                </strong>
+              </div>
+
+              <div className="dashboard-fraud-metric">
+                <span className="metric-label">MOST AFFECTED CUSTOMER</span>
+                <strong className="metric-value">
+                  {dashboard.fraud_patterns.most_affected_customer}
+                </strong>
+              </div>
+
+              <div className="dashboard-fraud-metric">
+                <span className="metric-label">MOST COMMON ANOMALY PATTERN</span>
+                <strong className="metric-value">
+                  {dashboard.fraud_patterns.most_common_anomaly_pattern}
+                </strong>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ================================
             ANALYTICS
         ================================= */}

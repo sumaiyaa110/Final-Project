@@ -1,99 +1,73 @@
 from services.database import get_connection
-
+from services.customer_profile_service import (
+    fetch_customer_transactions,
+    classify_customer_risk,
+    build_behavior_profile,
+    is_suspicious,
+)
 
 
 def get_customer_detail(customer_id):
+    """
+    Customer summary computed from the customer's real transactions.
+    Returns None when the customer has no transactions.
+    """
 
     conn = get_connection()
     cursor = conn.cursor()
 
+    txns = fetch_customer_transactions(cursor, customer_id)
 
-    # Extract numeric id
-    real_id = customer_id.replace("CUST-", "")
+    conn.close()
 
+    if not txns:
+        return None
 
-    cursor.execute(
-        """
-        SELECT
+    real_id = txns[-1]["customer_id"]
 
-            COUNT(*),
-            SUM(amount),
-            MAX(timestamp),
-            AVG(risk_score),
-            SUM(
-                CASE 
-                WHEN risk_level='HIGH'
-                THEN 1
-                ELSE 0
-                END
-            )
+    total_amount = sum(t["amount"] for t in txns)
+    scores = [t["risk_score"] for t in txns]
+    max_score = max(scores)
+    avg_score = sum(scores) / len(scores)
+    suspicious = sum(1 for t in txns if is_suspicious(t))
 
-        FROM transactions
+    level, basis = classify_customer_risk(max_score, suspicious)
 
-        WHERE id LIKE ?
-
-        """,
-        (f"%{real_id}",)
-    )
-
-
-    result = cursor.fetchone()
-
-
-
-    if not result:
-
-        return {
-            "error":"Customer not found"
-        }
-
-
-
-    total_transactions = result[0] or 0
-
-    total_amount = result[1] or 0
-
-    last_activity = result[2]
-
-    risk_score = round(result[3] or 0)
-
-    fraud_alerts = result[4] or 0
-
-
-
-    if risk_score >=80:
-        risk="High"
-
-    elif risk_score >=50:
-        risk="Medium"
-
-    else:
-        risk="Low"
-
-
+    first_ts = txns[0]["timestamp"] or ""
 
     return {
 
-        "id":customer_id,
+        "id": real_id,
 
-        "name":f"Customer {customer_id}",
+        "name": f"Customer {real_id}",
 
-        "phone":"+880 **********",
+        "phone": "+880 **********",
 
-        "risk":risk,
+        "risk": level,
 
-        "riskScore":risk_score,
+        "riskScore": round(max_score),
 
-        "status":"Active",
+        "averageRiskScore": round(avg_score, 1),
 
-        "totalTransactions":total_transactions,
+        "riskBasis": basis,
 
-        "totalAmount":total_amount,
+        "status": "Active",
 
-        "fraudAlerts":fraud_alerts,
+        "totalTransactions": len(txns),
 
-        "lastActivity":last_activity,
+        "totalAmount": total_amount,
 
-        "customerSince":"2026"
+        "fraudAlerts": suspicious,
+
+        "lastActivity": txns[-1]["timestamp"],
+
+        "customerSince": first_ts[:10] if first_ts else "Unknown",
+
+        "latestSuspiciousTransactionId": next(
+            (f"TXN-{t['id']}" for t in reversed(txns) if is_suspicious(t)),
+            None
+        ),
+
+        "behavior": build_behavior_profile(txns),
 
     }

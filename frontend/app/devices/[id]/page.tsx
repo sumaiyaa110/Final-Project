@@ -2,229 +2,9 @@
 
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import AdminLayout from "@/components/layout/AdminLayout";
-
-type DeviceData = {
-  id: string;
-  type: "Android" | "iOS";
-  model: string;
-  risk: "Critical" | "High" | "Medium" | "Low";
-  riskScore: number;
-  status: "Active" | "Blocked" | "Inactive";
-  accounts: number;
-  transactions: number;
-  firstSeen: string;
-  lastActivity: string;
-  location: string;
-};
-
-const devices: DeviceData[] = [
-  {
-    id: "DEV-77891",
-    type: "Android",
-    model: "Samsung Galaxy A54",
-    risk: "High",
-    riskScore: 87,
-    status: "Active",
-    accounts: 4,
-    transactions: 23,
-    firstSeen: "January 2025",
-    lastActivity: "2 min ago",
-    location: "Dhaka",
-  },
-  {
-    id: "DEV-66543",
-    type: "Android",
-    model: "Xiaomi Redmi Note 12",
-    risk: "High",
-    riskScore: 82,
-    status: "Active",
-    accounts: 3,
-    transactions: 18,
-    firstSeen: "March 2025",
-    lastActivity: "8 min ago",
-    location: "Dhaka",
-  },
-  {
-    id: "DEV-99211",
-    type: "iOS",
-    model: "iPhone 13",
-    risk: "Medium",
-    riskScore: 64,
-    status: "Active",
-    accounts: 2,
-    transactions: 31,
-    firstSeen: "February 2025",
-    lastActivity: "14 min ago",
-    location: "Chattogram",
-  },
-  {
-    id: "DEV-44321",
-    type: "Android",
-    model: "Samsung Galaxy M33",
-    risk: "High",
-    riskScore: 79,
-    status: "Active",
-    accounts: 5,
-    transactions: 42,
-    firstSeen: "December 2024",
-    lastActivity: "21 min ago",
-    location: "Dhaka",
-  },
-  {
-    id: "DEV-77122",
-    type: "Android",
-    model: "Realme 11 Pro",
-    risk: "Medium",
-    riskScore: 58,
-    status: "Active",
-    accounts: 2,
-    transactions: 16,
-    firstSeen: "April 2025",
-    lastActivity: "35 min ago",
-    location: "Sylhet",
-  },
-  {
-    id: "DEV-33411",
-    type: "Android",
-    model: "Vivo Y36",
-    risk: "Medium",
-    riskScore: 61,
-    status: "Active",
-    accounts: 2,
-    transactions: 27,
-    firstSeen: "May 2025",
-    lastActivity: "1 hour ago",
-    location: "Dhaka",
-  },
-  {
-    id: "DEV-88776",
-    type: "Android",
-    model: "Oppo Reno 8",
-    risk: "Low",
-    riskScore: 24,
-    status: "Active",
-    accounts: 1,
-    transactions: 14,
-    firstSeen: "June 2025",
-    lastActivity: "2 hours ago",
-    location: "Rajshahi",
-  },
-  {
-    id: "DEV-10022",
-    type: "iOS",
-    model: "iPhone 12",
-    risk: "Low",
-    riskScore: 18,
-    status: "Active",
-    accounts: 1,
-    transactions: 9,
-    firstSeen: "July 2025",
-    lastActivity: "3 hours ago",
-    location: "Dhaka",
-  },
-  {
-    id: "DEV-55110",
-    type: "Android",
-    model: "Samsung Galaxy A24",
-    risk: "Low",
-    riskScore: 15,
-    status: "Inactive",
-    accounts: 1,
-    transactions: 7,
-    firstSeen: "August 2025",
-    lastActivity: "5 hours ago",
-    location: "Khulna",
-  },
-  {
-    id: "DEV-33221",
-    type: "Android",
-    model: "Tecno Camon 20",
-    risk: "Critical",
-    riskScore: 96,
-    status: "Blocked",
-    accounts: 6,
-    transactions: 57,
-    firstSeen: "November 2024",
-    lastActivity: "12 min ago",
-    location: "Dhaka",
-  },
-];
-
-const recentTransactions = [
-  {
-    id: "TXN-92831",
-    customer: "CUST0012",
-    type: "Cash Out",
-    amount: "৳85,000",
-    risk: 98,
-    status: "Investigate",
-    time: "2 min ago",
-  },
-  {
-    id: "TXN-92784",
-    customer: "CUST0492",
-    type: "Transfer",
-    amount: "৳42,500",
-    risk: 94,
-    status: "Review",
-    time: "8 min ago",
-  },
-  {
-    id: "TXN-92691",
-    customer: "CUST0781",
-    type: "Cash Out",
-    amount: "৳31,200",
-    risk: 91,
-    status: "Review",
-    time: "14 min ago",
-  },
-  {
-    id: "TXN-92577",
-    customer: "CUST0034",
-    type: "Payment",
-    amount: "৳18,750",
-    risk: 87,
-    status: "Review",
-    time: "21 min ago",
-  },
-  {
-    id: "TXN-92463",
-    customer: "CUST0567",
-    type: "Transfer",
-    amount: "৳12,400",
-    risk: 84,
-    status: "Monitoring",
-    time: "35 min ago",
-  },
-];
-
-const associatedCustomers = [
-  {
-    id: "CUST0012",
-    name: "Tanvir Ahmed",
-    risk: "High",
-    transactions: 248,
-  },
-  {
-    id: "CUST0492",
-    name: "Sadia Rahman",
-    risk: "High",
-    transactions: 126,
-  },
-  {
-    id: "CUST0781",
-    name: "Mehedi Hasan",
-    risk: "Medium",
-    transactions: 89,
-  },
-  {
-    id: "CUST0987",
-    name: "Tariqul Islam",
-    risk: "High",
-    transactions: 201,
-  },
-];
+import { getDeviceDetail, getDeviceTransactions } from "@/services/api";
 
 export default function DeviceDetailsPage() {
   const params = useParams();
@@ -232,20 +12,64 @@ export default function DeviceDetailsPage() {
 
   const deviceId = typeof params?.id === "string" ? params.id : "";
 
-  const device = devices.find((item) => item.id === deviceId);
+  const [device, setDevice] = useState<any>(null);
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!deviceId) return;
+
+    async function loadData() {
+      try {
+        const [devRes, txRes] = await Promise.all([
+          getDeviceDetail(deviceId),
+          getDeviceTransactions(deviceId),
+        ]);
+
+        if (devRes && devRes.device) {
+          setDevice(devRes.device);
+        } else if (devRes && !devRes.device && devRes.id) {
+          setDevice(devRes);
+        } else {
+          setDevice(null);
+        }
+
+        if (txRes && txRes.transactions) {
+          setTransactions(txRes.transactions);
+        } else if (Array.isArray(txRes)) {
+          setTransactions(txRes);
+        }
+      } catch (err) {
+        console.error("Device details fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+    const interval = setInterval(loadData, 5000);
+    return () => clearInterval(interval);
+  }, [deviceId]);
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div style={{ padding: "40px", textAlign: "center" }}>
+          Loading device intelligence...
+        </div>
+      </AdminLayout>
+    );
+  }
 
   if (!device) {
     return (
       <AdminLayout>
         <div className="device-details-not-found">
           <div className="device-not-found-icon">!</div>
-
           <h1>Device Not Found</h1>
-
           <p>
-            The device <strong>{deviceId}</strong> could not be found.
+            The device <strong>{deviceId}</strong> could not be found in active records.
           </p>
-
           <button type="button" onClick={() => router.push("/devices")}>
             ← Back to Devices
           </button>
@@ -254,44 +78,30 @@ export default function DeviceDetailsPage() {
     );
   }
 
+  const linkedCustomers = device.linkedCustomers || [];
+  const riskScore = device.riskScore ?? 0;
+  const accountsCount = device.customerCount ?? device.accounts ?? 0;
+  const transactionsCount = device.actualTransactions ?? device.transactions ?? 0;
+  const status = device.status || "Active";
+  const riskLevel = device.risk || (riskScore >= 70 ? "Critical" : riskScore >= 40 ? "High" : "Low");
+
   return (
     <AdminLayout>
-      <div className="device-details-page">
+      <div className="device-details-container">
         {/* =====================================================
             HEADER
             ===================================================== */}
-
         <div className="device-details-header">
           <div>
-            <button
-              type="button"
-              className="device-back-button"
-              onClick={() => router.push("/devices")}
-            >
-              ← Back to Devices
-            </button>
-
-            <div className="device-title-row">
-              <div className="device-large-icon">
-                {device.type === "iOS" ? "" : "▣"}
-              </div>
-
-              <div>
-                <div className="device-heading-line">
-                  <h1>{device.id}</h1>
-
-                  <span
-                    className={`device-risk-badge-large ${device.risk.toLowerCase()}`}
-                  >
-                    {device.risk}
-                  </span>
-                </div>
-
-                <p>
-                  {device.model} · {device.type}
-                </p>
-              </div>
+            <div className="device-header-breadcrumb">
+              <Link href="/devices">Devices</Link> / <span>{device.id}</span>
             </div>
+
+            <h1>Device Investigation</h1>
+
+            <p>
+              Detailed risk profile, associated customer accounts, and activity telemetry.
+            </p>
           </div>
 
           <div className="device-header-actions">
@@ -316,16 +126,13 @@ export default function DeviceDetailsPage() {
         {/* =====================================================
             RISK SUMMARY
             ===================================================== */}
-
         <div className="device-risk-overview">
           <div className="device-risk-card">
             <div className="device-risk-card-icon">⚠</div>
-
             <div>
               <span>Device Risk Score</span>
-
               <strong>
-                {device.riskScore}
+                {riskScore}
                 <small>/100</small>
               </strong>
             </div>
@@ -333,175 +140,168 @@ export default function DeviceDetailsPage() {
 
           <div className="device-risk-card">
             <div className="device-risk-card-icon blue">◉</div>
-
             <div>
               <span>Associated Accounts</span>
-
-              <strong>{device.accounts}</strong>
+              <strong>{accountsCount}</strong>
             </div>
           </div>
 
           <div className="device-risk-card">
             <div className="device-risk-card-icon purple">▤</div>
-
             <div>
               <span>Total Transactions</span>
-
-              <strong>{device.transactions}</strong>
+              <strong>{transactionsCount}</strong>
             </div>
           </div>
 
           <div className="device-risk-card">
             <div className="device-risk-card-icon green">●</div>
-
             <div>
               <span>Current Status</span>
-
-              <strong
-                className={`device-summary-status ${device.status.toLowerCase()}`}
-              >
-                {device.status}
+              <strong className={`device-summary-status ${String(status).toLowerCase()}`}>
+                {status}
               </strong>
             </div>
           </div>
         </div>
 
         {/* =====================================================
-            DEVICE INFORMATION
+            DEVICE INFORMATION & SIGNALS
             ===================================================== */}
-
         <div className="device-details-grid">
           <section className="device-details-card">
             <div className="device-card-header">
               <div>
                 <h2>Device Information</h2>
-
-                <p>Registered device information and activity metadata.</p>
+                <p>Registered device metadata and activity telemetry.</p>
               </div>
-
               <span>DEVICE</span>
             </div>
 
             <div className="device-info-grid">
               <div>
                 <label>Device ID</label>
-
                 <strong>{device.id}</strong>
               </div>
 
               <div>
                 <label>Device Type</label>
-
-                <strong>{device.type}</strong>
+                <strong>{device.type || "Android"}</strong>
               </div>
 
               <div>
                 <label>Device Model</label>
-
-                <strong>{device.model}</strong>
+                <strong>{device.model || "Mobile Client"}</strong>
               </div>
 
               <div>
-                <label>Location</label>
-
-                <strong>{device.location}</strong>
+                <label>Total Transacted</label>
+                <strong>৳{Number(device.totalAmount || 0).toLocaleString()}</strong>
               </div>
 
               <div>
                 <label>First Seen</label>
-
-                <strong>{device.firstSeen}</strong>
+                <strong>{device.firstSeen || "Recorded in history"}</strong>
               </div>
 
               <div>
                 <label>Last Activity</label>
-
-                <strong>{device.lastActivity}</strong>
+                <strong>{device.lastActivity || device.lastTransactionAt || "Just now"}</strong>
               </div>
             </div>
           </section>
 
-          {/* ===================================================
-              AI DEVICE RISK
-              =================================================== */}
-
+          {/* FEATURE 3: DEVICE RISK ASSESSMENT */}
           <section className="device-details-card">
             <div className="device-card-header">
               <div>
-                <h2>Device Risk Analysis</h2>
-
-                <p>Detected device-related risk signals.</p>
+                <h2>Device Risk Assessment</h2>
+                <p>Multi-account associations & suspicious device sharing telemetry.</p>
               </div>
-
-              <span>AI</span>
+              <span
+                style={{
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  fontSize: "0.8rem",
+                  fontWeight: 600,
+                  background:
+                    riskScore >= 70
+                      ? "#fee2e2"
+                      : riskScore >= 40
+                      ? "#fef3c7"
+                      : "#dcfce7",
+                  color:
+                    riskScore >= 70
+                      ? "#b91c1c"
+                      : riskScore >= 40
+                      ? "#b45309"
+                      : "#15803d",
+                }}
+              >
+                {riskLevel.toUpperCase()} RISK
+              </span>
             </div>
+
+            {/* Sharing Highlight */}
+            {accountsCount >= 2 && (
+              <div
+                style={{
+                  padding: "10px 14px",
+                  marginBottom: "12px",
+                  borderRadius: "6px",
+                  background: accountsCount >= 3 ? "#fff1f2" : "#fffbeb",
+                  border: `1px solid ${accountsCount >= 3 ? "#fecdd3" : "#fef3c7"}`,
+                  fontSize: "0.88rem",
+                }}
+              >
+                <strong style={{ color: accountsCount >= 3 ? "#be123c" : "#b45309" }}>
+                  ⚠ Device Sharing Alert:
+                </strong>{" "}
+                This device is associated with <strong>{accountsCount}</strong> distinct customer accounts{" "}
+                and <strong>{device.suspiciousTransactions ?? 0}</strong> suspicious transactions.
+              </div>
+            )}
 
             <div className="device-risk-signals">
-              <div className="device-risk-signal">
-                <span className="device-signal-dot high" />
-
-                <div>
-                  <h3>Multiple Account Association</h3>
-
-                  <p>
-                    This device is associated with {device.accounts} customer
-                    accounts.
-                  </p>
+              {device.signals && device.signals.length > 0 ? (
+                device.signals.map((sig: any, idx: number) => (
+                  <div key={idx} className="device-risk-signal">
+                    <span className={`device-signal-dot ${sig.severity || "high"}`} />
+                    <div>
+                      <h3>{sig.severity === "critical" ? "Critical Risk Factor" : "Risk Indicator"}</h3>
+                      <p>{sig.text}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="device-risk-signal">
+                  <span className="device-signal-dot low" />
+                  <div>
+                    <h3>Standard Operating Profile</h3>
+                    <p>No abnormal device sharing or high-risk cluster patterns detected.</p>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="device-risk-signal">
-                <span className="device-signal-dot medium" />
-
-                <div>
-                  <h3>Transaction Activity</h3>
-
-                  <p>
-                    {device.transactions} recent transactions were detected from
-                    this device.
-                  </p>
+              {device.unavailable && device.unavailable.length > 0 && (
+                <div style={{ marginTop: "12px", fontSize: "0.82rem", color: "#64748b" }}>
+                  * {device.unavailable.join(" | ")}
                 </div>
-              </div>
-
-              <div className="device-risk-signal">
-                <span className="device-signal-dot high" />
-
-                <div>
-                  <h3>Device Risk Assessment</h3>
-
-                  <p>Current device risk score is {device.riskScore}/100.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="device-ai-note">
-              <span>✦</span>
-
-              <div>
-                <strong>AI Insight</strong>
-
-                <p>
-                  Device behavior should be reviewed against associated customer
-                  activity.
-                </p>
-              </div>
+              )}
             </div>
           </section>
         </div>
 
         {/* =====================================================
-            ASSOCIATED CUSTOMERS
+            LINKED CUSTOMER ACCOUNTS
             ===================================================== */}
-
         <section className="device-details-card device-full-card">
           <div className="device-card-header">
             <div>
-              <h2>Associated Customers</h2>
-
-              <p>Customer accounts linked to this device.</p>
+              <h2>Associated Customer Accounts</h2>
+              <p>Real distinct customer accounts linked to this device in transaction history.</p>
             </div>
-
-            <span>{device.accounts} ACCOUNTS</span>
+            <span>{accountsCount} ACCOUNTS</span>
           </div>
 
           <div className="device-customers-table-wrapper">
@@ -509,64 +309,58 @@ export default function DeviceDetailsPage() {
               <thead>
                 <tr>
                   <th>CUSTOMER ID</th>
-
-                  <th>NAME</th>
-
                   <th>RISK LEVEL</th>
-
                   <th>TRANSACTIONS</th>
-
+                  <th>AVG AMOUNT</th>
+                  <th>SUSPICIOUS TXNS</th>
                   <th>ACTION</th>
                 </tr>
               </thead>
 
               <tbody>
-                {associatedCustomers
-                  .slice(
-                    0,
-                    Math.min(device.accounts, associatedCustomers.length),
-                  )
-                  .map((customer) => (
-                    <tr key={customer.id}>
+                {linkedCustomers.length > 0 ? (
+                  linkedCustomers.map((cust: any) => (
+                    <tr key={cust.id}>
                       <td>
-                        <Link
-                          href={`/customers/${customer.id}`}
-                          className="device-customer-id"
-                        >
-                          {customer.id}
+                        <Link href={`/customers/${cust.id}`} className="device-customer-id">
+                          {cust.id}
                         </Link>
                       </td>
 
                       <td>
-                        <span className="device-customer-name">
-                          {customer.name}
-                        </span>
-                      </td>
-
-                      <td>
-                        <span
-                          className={`device-risk-badge ${customer.risk.toLowerCase()}`}
-                        >
-                          {customer.risk}
+                        <span className={`device-risk-badge ${String(cust.riskLevel || "low").toLowerCase()}`}>
+                          {cust.riskLevel}
                         </span>
                       </td>
 
                       <td>
                         <span className="device-customer-transactions">
-                          {customer.transactions}
+                          {cust.transactions}
+                        </span>
+                      </td>
+
+                      <td>৳{Number(cust.avgAmount || 0).toLocaleString()}</td>
+
+                      <td>
+                        <span style={{ color: cust.suspicious > 0 ? "#ef4444" : "#10b981", fontWeight: 600 }}>
+                          {cust.suspicious}
                         </span>
                       </td>
 
                       <td>
-                        <Link
-                          href={`/customers/${customer.id}`}
-                          className="device-view-link"
-                        >
+                        <Link href={`/customers/${cust.id}`} className="device-view-link">
                           View Customer →
                         </Link>
                       </td>
                     </tr>
-                  ))}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                      No customer transactions recorded for this device.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -575,19 +369,13 @@ export default function DeviceDetailsPage() {
         {/* =====================================================
             RECENT TRANSACTIONS
             ===================================================== */}
-
         <section className="device-details-card device-full-card">
           <div className="device-card-header">
             <div>
               <h2>Recent Transactions</h2>
-
-              <p>Recent transaction activity from this device.</p>
+              <p>Real recent transactions originated from this device.</p>
             </div>
-
-            <Link
-              href={`/transactions?device=${device.id}`}
-              className="device-view-all"
-            >
+            <Link href={`/transactions?device=${device.id}`} className="device-view-all">
               View All →
             </Link>
           </div>
@@ -597,70 +385,57 @@ export default function DeviceDetailsPage() {
               <thead>
                 <tr>
                   <th>TRANSACTION ID</th>
-
                   <th>CUSTOMER</th>
-
                   <th>TYPE</th>
-
                   <th>AMOUNT</th>
-
                   <th>RISK SCORE</th>
-
                   <th>STATUS</th>
-
                   <th>TIME</th>
                 </tr>
               </thead>
 
               <tbody>
-                {recentTransactions.map((transaction) => (
-                  <tr key={transaction.id}>
-                    <td>
-                      <Link
-                        href={`/transactions/${transaction.id}`}
-                        className="device-customer-id"
-                      >
-                        {transaction.id}
-                      </Link>
+                {transactions.length > 0 ? (
+                  transactions.slice(0, 15).map((t: any) => (
+                    <tr key={t.id}>
+                      <td>
+                        <Link href={`/transactions/${t.id}`} className="device-customer-id">
+                          {t.id}
+                        </Link>
+                      </td>
+                      <td>{t.customer}</td>
+                      <td>{t.type}</td>
+                      <td>
+                        <strong className="device-transaction-amount">
+                          ৳{Number(t.amount || 0).toLocaleString()}
+                        </strong>
+                      </td>
+                      <td>
+                        <span
+                          className={`device-transaction-risk ${
+                            t.score >= 80 ? "critical" : t.score >= 50 ? "high" : "medium"
+                          }`}
+                        >
+                          {t.score}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`device-transaction-status ${String(t.level || "low").toLowerCase()}`}
+                        >
+                          {t.level}
+                        </span>
+                      </td>
+                      <td>{t.time}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                      No recent transactions recorded for this device.
                     </td>
-
-                    <td>{transaction.customer}</td>
-
-                    <td>{transaction.type}</td>
-
-                    <td>
-                      <strong className="device-transaction-amount">
-                        {transaction.amount}
-                      </strong>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`device-transaction-risk ${
-                          transaction.risk >= 85
-                            ? "critical"
-                            : transaction.risk >= 60
-                              ? "high"
-                              : "medium"
-                        }`}
-                      >
-                        {transaction.risk}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`device-transaction-status ${transaction.status
-                          .toLowerCase()
-                          .replace(" ", "-")}`}
-                      >
-                        {transaction.status}
-                      </span>
-                    </td>
-
-                    <td>{transaction.time}</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

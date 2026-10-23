@@ -91,7 +91,8 @@ from services.analytics_service import (
 )
 
 from services.investigation_action_service import (
-    update_investigation_status
+    update_investigation_status,
+    get_investigation_history
 )
 
 from services.ai_explanation_service import (
@@ -399,18 +400,39 @@ def investigations():
 
 
 # ------------------------------------------
-# INVESTIGATION ACTION
+# INVESTIGATION ACTION & HISTORY
 # ------------------------------------------
+
+@app.get("/investigation-action/{transaction_id}")
+def investigation_history(transaction_id: str):
+    res = get_investigation_history(transaction_id)
+    if not res:
+        return {
+            "success": False,
+            "message": "Transaction not found"
+        }
+    return {
+        "success": True,
+        **res
+    }
+
 
 @app.post("/investigation-action/{transaction_id}")
 def investigation_action(
     transaction_id: str,
     data: dict
 ):
+    status = data.get("status")
+    notes = data.get("notes")
+    decision = data.get("decision")
+    investigator = data.get("investigator") or data.get("investigator_id") or "admin"
 
     return update_investigation_status(
-        transaction_id,
-        data["status"]
+        transaction_id=transaction_id,
+        status=status,
+        notes=notes,
+        decision=decision,
+        investigator_id=investigator
     )
 
 

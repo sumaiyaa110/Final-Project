@@ -9,21 +9,37 @@ const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
 });
 
-export default function TransactionBehaviorChart() {
-  const [transactions, setTransactions] = useState<any[]>([]);
+interface TransactionBehaviorChartProps {
+  customerId?: string;
+  transactionId?: string;
+}
 
-  const customerId = "CUSTOMER-1";
+export default function TransactionBehaviorChart({
+  customerId,
+  transactionId,
+}: TransactionBehaviorChartProps) {
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   // =====================================================
   // REALTIME CUSTOMER BEHAVIOR
   // =====================================================
 
   useEffect(() => {
+    if (!customerId || customerId === "Unknown") {
+      setTransactions([]);
+      return;
+    }
+
     async function load() {
       try {
-        const data = await getCustomerBehavior(customerId);
-
-        setTransactions(data);
+        const queryParam = transactionId ? `?transaction_id=${transactionId}&t=${Date.now()}` : `?t=${Date.now()}`;
+        const res = await fetch(`http://localhost:8000/customer-behavior/${customerId}${queryParam}`, {
+          cache: "no-store",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setTransactions(Array.isArray(data) ? data : []);
+        }
       } catch (error) {
         console.log("Customer behavior error:", error);
       }
@@ -31,10 +47,10 @@ export default function TransactionBehaviorChart() {
 
     load();
 
-    const interval = setInterval(load, 3000);
+    const interval = setInterval(load, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [customerId, transactionId]);
 
   // =====================================================
   // LOADING

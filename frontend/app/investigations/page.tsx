@@ -2,12 +2,10 @@
 
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { useEffect, useMemo, useState } from "react";
-
 import { useRouter, useSearchParams } from "next/navigation";
-
 import AdminLayout from "@/components/layout/AdminLayout";
-
 import { getDevices, getInvestigations } from "@/services/api";
 
 // =====================================================
@@ -15,7 +13,6 @@ import { getDevices, getInvestigations } from "@/services/api";
 // =====================================================
 
 type DeviceRisk = "Critical" | "High" | "Medium" | "Low";
-
 type DeviceStatus = "Active" | "Inactive" | "Blocked";
 
 type Device = {
@@ -54,10 +51,10 @@ type Investigation = {
 };
 
 // =====================================================
-// PAGE
+// PAGE CONTENT
 // =====================================================
 
-export default function InvestigationsPage() {
+function InvestigationsContent() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -782,5 +779,13 @@ export default function InvestigationsPage() {
         )}
       </div>
     </AdminLayout>
+  );
+}
+
+export default function InvestigationsPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 30 }}>Loading investigations...</div>}>
+      <InvestigationsContent />
+    </Suspense>
   );
 }
