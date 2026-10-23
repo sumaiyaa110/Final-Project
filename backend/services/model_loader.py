@@ -3,7 +3,10 @@ import os
 import time
 
 
-MODEL_PATH = "models"
+MODEL_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "models"
+)
 
 
 start = time.time()
@@ -77,20 +80,20 @@ model_features = joblib.load(
 
 
 
-fraud_threshold = joblib.load(
+fraud_threshold = float(joblib.load(
     os.path.join(
         MODEL_PATH,
         "fraud_threshold.pkl"
     )
-)
+))
 
 
-anomaly_threshold = joblib.load(
+anomaly_threshold = float(joblib.load(
     os.path.join(
         MODEL_PATH,
         "anomaly_threshold.pkl"
     )
-)
+))
 
 
 print(

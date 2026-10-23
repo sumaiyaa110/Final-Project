@@ -42,7 +42,7 @@ def get_customer_investigation(customer_id: str):
 
 
 
-        FROM transactions
+        FROM transactions_clean
 
 
 
@@ -283,7 +283,7 @@ def get_investigations():
     investigations = []
 
 
-    for index,row in enumerate(rows):
+    for row in rows:
 
 
         risk = row[1].capitalize()
@@ -302,7 +302,7 @@ def get_investigations():
         investigations.append({
 
             "id":
-                f"INV-{str(index+1).zfill(3)}",
+                f"INV-{row[0]}",
 
 
             "device":

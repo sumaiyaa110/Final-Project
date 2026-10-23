@@ -32,7 +32,7 @@ def get_investigation_queue():
             timestamp
 
 
-        FROM transactions
+        FROM transactions_clean
 
 
         WHERE risk_level IN ('HIGH','CRITICAL')

@@ -1,12 +1,39 @@
+import os
+import shutil
 import sqlite3
+from pathlib import Path
 
 
-DATABASE_PATH = "database/anomalyx.db"
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# The committed seed database is copied to the working database on first
+# start, so the simulator's writes never show up as changes in git.
+SEED_DATABASE_PATH = BASE_DIR / "database" / "anomalyx_seed.db"
+
+# Relative paths are resolved against the backend folder
+DATABASE_PATH = BASE_DIR / os.getenv(
+    "ANOMALYX_DB_PATH",
+    "database/anomalyx.db"
+)
 
 
 # =====================================================
 # DATABASE CONNECTION
 # =====================================================
+
+def ensure_database():
+
+    if DATABASE_PATH.exists():
+        return
+
+    DATABASE_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    if SEED_DATABASE_PATH.exists():
+
+        shutil.copyfile(SEED_DATABASE_PATH, DATABASE_PATH)
+
+        print("Working database created from seed")
+
 
 def get_connection():
 
@@ -23,6 +50,8 @@ def get_connection():
 # =====================================================
 
 def create_tables():
+
+    ensure_database()
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -120,6 +149,19 @@ def create_tables():
     )
 
 
+    # Model input features (JSON) for transactions scored by the
+    # simulator, used to compute TreeSHAP explanations later.
+    if "features" not in columns:
+
+        cursor.execute(
+            """
+            ALTER TABLE transactions
+
+            ADD COLUMN features TEXT
+            """
+        )
+
+
     # ==========================================
     # DEVICES TABLE
     # ==========================================
@@ -172,6 +214,17 @@ def create_tables():
     )
 
 
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_network_edges_source "
+        "ON network_edges(source)"
+    )
+
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_network_edges_target "
+        "ON network_edges(target)"
+    )
+
+
     # ==========================================
     # AGENTS TABLE
     # ==========================================
@@ -208,13 +261,21 @@ def create_tables():
     cursor.execute("PRAGMA table_info(agents)")
     agent_cols = [row[1] for row in cursor.fetchall()]
     for col, col_type, default_val in [
-        ("name", "TEXT", "'Analyst'"),
-        ("email", "TEXT", "'analyst@anomalyx.com'"),
+        ("name", "TEXT", None),
+        ("email", "TEXT", None),
         ("location", "TEXT", "'Dhaka HQ'"),
         ("rating", "REAL", "4.8"),
     ]:
         if col not in agent_cols:
-            cursor.execute(f"ALTER TABLE agents ADD COLUMN {col} {col_type} DEFAULT {default_val}")
+            default_sql = f" DEFAULT {default_val}" if default_val else ""
+            cursor.execute(f"ALTER TABLE agents ADD COLUMN {col} {col_type}{default_sql}")
+
+    # Older migrations filled every agent with the same placeholder
+    # name/email; clear them so the API falls back to the agent ID.
+    cursor.execute("UPDATE agents SET name = NULL WHERE name = 'Analyst'")
+    cursor.execute(
+        "UPDATE agents SET email = NULL WHERE email = 'analyst@anomalyx.com'"
+    )
 
     # Seed default agents if none exist
     cursor.execute("SELECT COUNT(*) FROM agents")

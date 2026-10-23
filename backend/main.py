@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+import os
+
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
@@ -43,7 +45,7 @@ from services.transaction_detail_service import (
     get_transaction_detail
 )
 
-from services.agent_dashboard_service import (
+from services.agent_service import (
     get_agents
 )
 
@@ -122,8 +124,6 @@ async def lifespan(app: FastAPI):
 
     start_background_simulator()
 
-    print("Background simulator started")
-
     yield
 
     print("AnomalyX shutdown")
@@ -142,13 +142,22 @@ app = FastAPI(
 # ==========================================
 # CORS
 # ==========================================
+# Comma-separated list of frontend origins, e.g.
+# ALLOWED_ORIGINS=https://anomalyx.vercel.app,http://localhost:3000
+
+ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:3000"
+    ).split(",")
+    if origin.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
 
-    allow_origins=[
-        "http://localhost:3000"
-    ],
+    allow_origins=ALLOWED_ORIGINS,
 
     allow_credentials=True,
 
@@ -352,9 +361,15 @@ def transaction_summary():
 # ==========================================
 
 @app.get("/customer-behavior/{customer_id}")
-def customer_behavior(customer_id: str):
+def customer_behavior(
+    customer_id: str,
+    transaction_id: str | None = None
+):
 
-    return get_customer_behavior(customer_id)
+    return get_customer_behavior(
+        customer_id,
+        transaction_id
+    )
 
 
 # ==========================================
@@ -455,18 +470,15 @@ def reports():
 
     return get_reports()
 
-@app.get(
-    "/transaction/{transaction_id}/explanation"
-)
-def transaction_explanation(
-    transaction_id:str
-):
+@app.get("/transaction/{transaction_id}/explanation")
+def transaction_explanation(transaction_id: str):
 
-    transaction = get_transaction_detail(
-        transaction_id
-    )
+    explanation = generate_risk_explanation(transaction_id)
 
+    if explanation is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Transaction not found"
+        )
 
-    return generate_risk_explanation(
-        transaction
-    )
+    return explanation
