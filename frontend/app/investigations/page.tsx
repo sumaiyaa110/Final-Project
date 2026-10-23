@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getDevices, getInvestigations } from "@/services/api";
+import { API_URL } from "@/services/api";
 
 // =====================================================
 // TYPES
@@ -122,7 +123,7 @@ function InvestigationsContent() {
           // ===============================================
 
           const deviceResponse = await fetch(
-            `http://localhost:8000/device/${encodeURIComponent(deviceId)}`,
+            `${API_URL}/device/${encodeURIComponent(deviceId)}`,
             {
               cache: "no-store",
             },
@@ -151,7 +152,7 @@ function InvestigationsContent() {
           // ===============================================
 
           const transactionResponse = await fetch(
-            `http://localhost:8000/device/${encodeURIComponent(
+            `${API_URL}/device/${encodeURIComponent(
               deviceId,
             )}/transactions`,
             {

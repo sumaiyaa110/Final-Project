@@ -14,6 +14,7 @@ import {
 
 
 import AdminLayout from "@/components/layout/AdminLayout";
+import { API_URL } from "@/services/api";
 
 
 
@@ -200,7 +201,7 @@ try{
 const response =
 await fetch(
 
-`http://localhost:8000/customer/${customerId}`,
+`${API_URL}/customer/${customerId}`,
 
 {
 
@@ -274,7 +275,7 @@ try{
 const response =
 await fetch(
 
-`http://localhost:8000/customer/${customerId}/transactions`,
+`${API_URL}/customer/${customerId}/transactions`,
 
 {
 

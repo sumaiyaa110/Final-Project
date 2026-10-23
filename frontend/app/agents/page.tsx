@@ -8,6 +8,8 @@ import {
 } from "react";
 
 
+import Link from "next/link";
+
 import AdminLayout from "@/components/layout/AdminLayout";
 
 
@@ -602,7 +604,9 @@ export default function AgentsPage(){
 
 
                         <strong>
-                            {agent.name}
+                            <Link href={`/agents/${encodeURIComponent(agent.id)}`}>
+                                {agent.name}
+                            </Link>
                         </strong>
 
 

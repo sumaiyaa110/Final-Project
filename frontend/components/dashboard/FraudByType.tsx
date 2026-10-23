@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { API_URL } from "@/services/api";
 
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -34,7 +35,7 @@ export default function FraudByType(){
 
         const response = await fetch(
 
-          "http://localhost:8000/fraud-types",
+          `${API_URL}/fraud-types`,
 
           {
             cache:"no-store"

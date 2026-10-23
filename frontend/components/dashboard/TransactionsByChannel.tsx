@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { API_URL } from "@/services/api";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -30,7 +31,7 @@ export default function TransactionsByChannel() {
 
         const response = await fetch(
 
-          "http://localhost:8000/channel-distribution",
+          `${API_URL}/channel-distribution`,
 
           {
             cache:"no-store"
