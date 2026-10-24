@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { getAlertSummary } from "@/services/api";
+import {
+  LuBell,
+} from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -106,6 +110,10 @@ export default function Header() {
           <span>System Online</span>
         </div>
 
+        {/* THEME */}
+
+        <ThemeToggle className="header-icon-button" />
+
         {/* NOTIFICATIONS */}
 
         <button
@@ -116,7 +124,7 @@ export default function Header() {
           aria-label={`Pending fraud alerts: ${fraudAlerts}`}
           title="View fraud alerts"
         >
-          ♢
+          <LuBell aria-hidden="true" />
           {fraudAlerts > 0 && (
             <span className="notification-badge">
               {fraudAlerts > 99 ? "99+" : fraudAlerts}

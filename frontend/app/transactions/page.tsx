@@ -18,6 +18,9 @@ import TransactionSummary from "@/components/transactions/TransactionSummary";
 import {
     getTransactions
 } from "@/services/api";
+import {
+  LuSearch,
+} from "react-icons/lu";
 
 
 
@@ -622,7 +625,7 @@ isLive
 
 ?
 
-"Live Updating"
+"Live"
 
 :
 
@@ -782,7 +785,7 @@ Clear Filter ×
 
 
 <span>
-⌕
+<LuSearch aria-hidden="true" />
 </span>
 
 

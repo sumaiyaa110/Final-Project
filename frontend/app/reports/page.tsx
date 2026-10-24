@@ -8,6 +8,9 @@ import { getReports, getDashboardData } from "@/services/api";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import {
+  LuSearch,
+} from "react-icons/lu";
 
 // =====================================================
 // TYPES
@@ -1117,7 +1120,7 @@ export default function ReportsPage() {
 
         <div className="reports-filter-card">
           <div className="reports-search">
-            <span>⌕</span>
+            <span><LuSearch aria-hidden="true" /></span>
 
             <input
               placeholder="Search reports..."

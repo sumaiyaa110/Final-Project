@@ -1,12 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
 });
 
 export default function RiskDistribution() {
+
+  const chart = chartColors(useTheme());
+
   return (
     <div className="risk-chart-card">
       {/* Header */}
@@ -38,13 +43,13 @@ export default function RiskDistribution() {
               textposition: "inside",
 
               textfont: {
-                color: "#e2e8f0",
+                color: chart.text,
                 size: 11,
               },
 
               marker: {
                 line: {
-                  color: "#0b1728",
+                  color: chart.separator,
                   width: 3,
                 },
               },
@@ -67,9 +72,9 @@ export default function RiskDistribution() {
               b: 10,
             },
 
-            paper_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(245, 246, 248, 0)",
 
-            plot_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(245, 246, 248, 0)",
 
             showlegend: true,
 
@@ -85,11 +90,11 @@ export default function RiskDistribution() {
               yanchor: "top",
 
               font: {
-                color: "#718198",
+                color: chart.muted,
                 size: 9,
               },
 
-              bgcolor: "rgba(0,0,0,0)",
+              bgcolor: "rgba(245, 246, 248, 0)",
             },
 
             annotations: [
@@ -107,7 +112,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#f8fafc",
+                  color: chart.text,
 
                   size: 23,
                 },
@@ -127,7 +132,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#53647a",
+                  color: chart.muted,
 
                   size: 9,
                 },
@@ -135,12 +140,12 @@ export default function RiskDistribution() {
             ],
 
             hoverlabel: {
-              bgcolor: "#0c1729",
+              bgcolor: chart.hoverBg,
 
-              bordercolor: "#334155",
+              bordercolor: chart.hoverBorder,
 
               font: {
-                color: "#e2e8f0",
+                color: chart.text,
 
                 size: 10,
               },

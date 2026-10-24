@@ -16,6 +16,11 @@ import {
 import AdminLayout from "@/components/layout/AdminLayout";
 
 import TransactionBehaviorChart from "@/components/transactions/TransactionBehaviorChart";
+import { API_URL } from "@/services/api";
+import {
+  LuSmartphone,
+  LuTriangleAlert,
+} from "react-icons/lu";
 
 
 
@@ -45,8 +50,8 @@ useEffect(() => {
     try {
       const realId = transactionId.replace("TXN-", "");
       const [txRes, expRes] = await Promise.all([
-        fetch(`http://localhost:8000/transaction/${realId}`, { cache: "no-store" }),
-        fetch(`http://localhost:8000/transaction/${realId}/explanation`, { cache: "no-store" }),
+        fetch(`${API_URL}/transaction/${realId}`, { cache: "no-store" }),
+        fetch(`${API_URL}/transaction/${realId}/explanation`, { cache: "no-store" }),
       ]);
 
       if (txRes.ok) {
@@ -113,7 +118,7 @@ async function handleAction(
     const targetStatus = apiStatusMap[status] || status;
     const realId = transactionId.replace("TXN-", "");
 
-    await fetch(`http://localhost:8000/investigation-action/${realId}`, {
+    await fetch(`${API_URL}/investigation-action/${realId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -450,7 +455,7 @@ transaction.score >=80
 
 <div className="risk-status-icon">
 
-⚠
+<LuTriangleAlert aria-hidden="true" />
 
 </div>
 
@@ -834,7 +839,7 @@ DEVICE
 
 <div className="device-icon">
 
-◉
+<LuSmartphone aria-hidden="true" />
 
 </div>
 
@@ -948,16 +953,16 @@ transaction.new_device
           fontSize: "0.85rem",
           background:
             transaction.score >= 70
-              ? "#fee2e2"
+              ? "var(--c-bg-fee2e2)"
               : transaction.score >= 40
-              ? "#fef3c7"
-              : "#dcfce7",
+              ? "var(--c-bg-fef3c7)"
+              : "var(--c-bg-dcfce7)",
           color:
             transaction.score >= 70
-              ? "#b91c1c"
+              ? "var(--c-text-a82824)"
               : transaction.score >= 40
-              ? "#b45309"
-              : "#15803d",
+              ? "var(--c-text-b85014)"
+              : "var(--c-text-2e9e5d)",
         }}
       >
         OVERALL: {String(transaction.level).toUpperCase()} ({transaction.score}/100)
@@ -1001,7 +1006,7 @@ transaction.new_device
                 </span>
                 <strong
                   style={{
-                    color: item.contribution > 0 ? "#ef4444" : "#10b981",
+                    color: item.contribution > 0 ? "var(--c-text-a82824)" : "var(--c-text-2e9e5d)",
                   }}
                 >
                   {item.contribution > 0 ? "+" : ""}
@@ -1059,7 +1064,7 @@ transaction.new_device
 <div className="transaction-info-card" style={{ marginTop: "20px" }}>
   <div className="transaction-info-header">
     <h2>Risk Signal Strength</h2>
-    <span style={{ fontSize: "0.85rem", color: "#64748b" }}>
+    <span style={{ fontSize: "0.85rem", color: "var(--c-text-64748b)" }}>
       Relative magnitude derived from model scores and transaction context
     </span>
   </div>
@@ -1113,12 +1118,12 @@ transaction.new_device
           }}
         >
           <strong>{item.name}</strong>
-          <span style={{ color: "#64748b" }}>{item.label}</span>
+          <span style={{ color: "var(--c-text-64748b)" }}>{item.label}</span>
         </div>
         <div
           style={{
             height: "8px",
-            background: "#e2e8f0",
+            background: "var(--c-bg-e2e8f0)",
             borderRadius: "4px",
             overflow: "hidden",
           }}
@@ -1129,10 +1134,10 @@ transaction.new_device
               width: `${item.value}%`,
               background:
                 item.value >= 70
-                  ? "#ef4444"
+                  ? "var(--c-bg-a82824)"
                   : item.value >= 40
-                  ? "#f59e0b"
-                  : "#10b981",
+                  ? "var(--c-bg-b85014)"
+                  : "var(--c-bg-2e9e5d)",
               borderRadius: "4px",
             }}
           />
@@ -1149,10 +1154,10 @@ transaction.new_device
     marginTop: "20px",
     borderLeft: `4px solid ${
       transaction.score >= 70
-        ? "#ef4444"
+        ? "var(--c-border-a82824)"
         : transaction.score >= 40
-        ? "#f59e0b"
-        : "#10b981"
+        ? "var(--c-border-b85014)"
+        : "var(--c-border-2e9e5d)"
     }`,
   }}
 >
@@ -1163,10 +1168,10 @@ transaction.new_device
         fontWeight: 600,
         color:
           transaction.score >= 70
-            ? "#b91c1c"
+            ? "var(--c-text-a82824)"
             : transaction.score >= 40
-            ? "#b45309"
-            : "#15803d",
+            ? "var(--c-text-b85014)"
+            : "var(--c-text-2e9e5d)",
       }}
     >
       STATUS: {String(transaction.level).toUpperCase()}
@@ -1194,9 +1199,9 @@ transaction.new_device
       style={{
         marginTop: "12px",
         padding: "10px 14px",
-        background: "#f8fafc",
+        background: "var(--c-bg-f8fafc)",
         borderRadius: "6px",
-        border: "1px solid #e2e8f0",
+        border: "1px solid var(--c-border-e2e8f0)",
       }}
     >
       <strong>Recommended Action: </strong>
@@ -1308,7 +1313,7 @@ handleAction(
 
 >
 
-⚠ Escalate Investigation
+Escalate Investigation
 
 </button>
 

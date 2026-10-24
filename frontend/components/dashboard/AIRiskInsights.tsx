@@ -10,6 +10,7 @@ import {
 import {
   useRouter
 } from "next/navigation";
+import { API_URL } from "@/services/api";
 
 
 
@@ -59,7 +60,7 @@ export default function AIRiskInsights() {
         const response =
         await fetch(
 
-          "http://localhost:8000/insights",
+          `${API_URL}/insights`,
 
           {
             cache:"no-store"
@@ -192,22 +193,9 @@ export default function AIRiskInsights() {
 
 
 
-      <div className="ai-insight-strip-icon">
-
-        ✦
-
-      </div>
-
-
-
-
-
-
-
-
       <div className="ai-insight-strip-label">
 
-        AI Insight
+        Summary
 
       </div>
 
@@ -285,32 +273,6 @@ export default function AIRiskInsights() {
 
 
       </button>
-
-
-
-
-
-
-
-
-
-      <div className="ai-insight-system">
-
-
-
-        <span className="ai-status-dot" />
-
-
-
-        <span>
-
-          System Online
-
-        </span>
-
-
-
-      </div>
 
 
 

@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getNetworkData } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 
 const Plot = dynamic(
@@ -62,6 +64,9 @@ type PositionedNode = NetworkNode & {
 
 
 export default function NetworkAnalysisPage() {
+
+  const chart = chartColors(useTheme());
+
 
   const [networkData, setNetworkData] =
     useState<NetworkData | null>(null);
@@ -470,6 +475,15 @@ export default function NetworkAnalysisPage() {
 
               </span>
 
+
+              <span>
+
+                <i className="network-dot agent" />
+
+                Agent
+
+              </span>
+
             </div>
 
           </div>
@@ -534,16 +548,16 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: chart.text,
                     },
 
                     marker: {
                       size: 18,
-                      color: "#3b82f6",
+                      color: "#2e599e",
 
                       line: {
                         width: 2,
-                        color: "#8db8ff",
+                        color: chart.text,
                       },
                     },
 
@@ -579,19 +593,19 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: chart.text,
                     },
 
                     marker: {
                       size: 22,
 
-                      color: "#a855f7",
+                      color: chart.muted,
 
                       symbol: "diamond",
 
                       line: {
                         width: 2,
-                        color: "#d8a8ff",
+                        color: chart.text,
                       },
                     },
 
@@ -627,19 +641,19 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#cbd5e1",
+                      color: chart.text,
                     },
 
                     marker: {
                       size: 18,
 
-                      color: "#f59e0b",
+                      color: "#b85014",
 
                       symbol: "square",
 
                       line: {
                         width: 2,
-                        color: "#fcd34d",
+                        color: "#b87c14",
                       },
                     },
 

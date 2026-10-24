@@ -4,6 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getDevices } from "@/services/api";
+import {
+  LuCircleCheck,
+  LuSearch,
+  LuShare2,
+  LuSmartphone,
+  LuTriangleAlert,
+} from "react-icons/lu";
+import Pagination from "@/components/ui/Pagination";
 
 type Device = {
   id: string;
@@ -240,7 +248,7 @@ export default function DevicesPage() {
               <span>Total Devices</span>
 
               <div className="devices-summary-icon blue">
-                ◉
+                <LuSmartphone aria-hidden="true" />
               </div>
             </div>
 
@@ -258,7 +266,7 @@ export default function DevicesPage() {
               <span>High Risk Devices</span>
 
               <div className="devices-summary-icon red">
-                ⚠
+                <LuTriangleAlert aria-hidden="true" />
               </div>
             </div>
 
@@ -276,7 +284,7 @@ export default function DevicesPage() {
               <span>Shared Devices</span>
 
               <div className="devices-summary-icon orange">
-                ◇
+                <LuShare2 aria-hidden="true" />
               </div>
             </div>
 
@@ -294,7 +302,7 @@ export default function DevicesPage() {
               <span>Active Devices</span>
 
               <div className="devices-summary-icon green">
-                ●
+                <LuCircleCheck aria-hidden="true" />
               </div>
             </div>
 
@@ -327,7 +335,7 @@ export default function DevicesPage() {
           onClick={(event) => event.stopPropagation()}
         >
           <div className="devices-search">
-            <span>⌕</span>
+            <span><LuSearch aria-hidden="true" /></span>
 
             <input
               type="text"
@@ -499,10 +507,7 @@ export default function DevicesPage() {
                       <td>
                         <div className="device-table-device">
                           <div className="device-table-icon">
-                            {device.type.toLowerCase() ===
-                            "ios"
-                              ? ""
-                              : "▣"}
+                            <LuSmartphone aria-hidden="true" />
                           </div>
 
                           <div>
@@ -684,60 +689,11 @@ export default function DevicesPage() {
               devices
             </span>
 
-            <div className="devices-pagination-controls">
-              <button
-                type="button"
-                className="devices-pagination-button"
-                disabled={safeCurrentPage === 1}
-                onClick={() =>
-                  setCurrentPage((page) =>
-                    Math.max(1, page - 1),
-                  )
-                }
-              >
-                ←
-              </button>
-
-              {Array.from(
-                {
-                  length: totalPages,
-                },
-                (_, index) => index + 1,
-              ).map((page) => (
-                <button
-                  type="button"
-                  key={page}
-                  className={`devices-pagination-button ${
-                    safeCurrentPage === page
-                      ? "active"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setCurrentPage(page)
-                  }
-                >
-                  {page}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                className="devices-pagination-button"
-                disabled={
-                  safeCurrentPage === totalPages
-                }
-                onClick={() =>
-                  setCurrentPage((page) =>
-                    Math.min(
-                      totalPages,
-                      page + 1,
-                    ),
-                  )
-                }
-              >
-                →
-              </button>
-            </div>
+            <Pagination
+              page={safeCurrentPage}
+              totalPages={totalPages}
+              onChange={setCurrentPage}
+            />
           </div>
         </div>
       </div>

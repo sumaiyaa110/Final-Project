@@ -1,4 +1,5 @@
 from services.database import get_connection
+from services.model_loader import anomaly_threshold
 
 
 def get_transaction_detail(transaction_id):
@@ -66,7 +67,7 @@ def get_transaction_detail(transaction_id):
         reasons.append("Unusually high transaction amount")
     if channel in ["Cash-Out", "Transfer"]:
         reasons.append("High risk transaction channel")
-    if anomaly_score > 0.4:
+    if anomaly_score >= anomaly_threshold:
         reasons.append("Abnormal transaction behaviour detected")
     if len(reasons) == 0:
         reasons.append("No major suspicious pattern detected")

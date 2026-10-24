@@ -3,6 +3,12 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  LuLock,
+  LuShieldCheck,
+  LuTriangleAlert,
+} from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -52,6 +58,8 @@ export default function LoginPage() {
 
   return (
     <main className="login-page">
+      <ThemeToggle className="login-theme-toggle" />
+
       {/* Back to Home */}
       <Link href="/" className="login-back">
         ← Back to Home
@@ -70,7 +78,7 @@ export default function LoginPage() {
         {/* Card */}
         <div className="login-card">
           <div className="login-header">
-            <div className="security-icon">◈</div>
+            <div className="security-icon"><LuShieldCheck aria-hidden="true" /></div>
 
             <h1>Admin Login</h1>
 
@@ -109,7 +117,7 @@ export default function LoginPage() {
             {/* Error */}
             {error && (
               <div className="login-error">
-                <span>⚠</span>
+                <LuTriangleAlert aria-hidden="true" />
                 {error}
               </div>
             )}
@@ -132,7 +140,7 @@ export default function LoginPage() {
 
           {/* Security notice */}
           <div className="security-notice">
-            <span>♢</span>
+            <LuLock aria-hidden="true" />
 
             <div>
               <strong>Authorized Access Only</strong>

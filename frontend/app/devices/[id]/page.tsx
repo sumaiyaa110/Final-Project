@@ -5,6 +5,12 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getDeviceDetail, getDeviceTransactions } from "@/services/api";
+import {
+  LuArrowLeftRight,
+  LuCircleCheck,
+  LuTriangleAlert,
+  LuUsers,
+} from "react-icons/lu";
 
 export default function DeviceDetailsPage() {
   const params = useParams();
@@ -124,11 +130,11 @@ export default function DeviceDetailsPage() {
         </div>
 
         {/* =====================================================
-            RISK SUMMARY
+            Risk summary
             ===================================================== */}
         <div className="device-risk-overview">
           <div className="device-risk-card">
-            <div className="device-risk-card-icon">⚠</div>
+            <div className="device-risk-card-icon"><LuTriangleAlert aria-hidden="true" /></div>
             <div>
               <span>Device Risk Score</span>
               <strong>
@@ -139,7 +145,7 @@ export default function DeviceDetailsPage() {
           </div>
 
           <div className="device-risk-card">
-            <div className="device-risk-card-icon blue">◉</div>
+            <div className="device-risk-card-icon blue"><LuUsers aria-hidden="true" /></div>
             <div>
               <span>Associated Accounts</span>
               <strong>{accountsCount}</strong>
@@ -147,7 +153,7 @@ export default function DeviceDetailsPage() {
           </div>
 
           <div className="device-risk-card">
-            <div className="device-risk-card-icon purple">▤</div>
+            <div className="device-risk-card-icon purple"><LuArrowLeftRight aria-hidden="true" /></div>
             <div>
               <span>Total Transactions</span>
               <strong>{transactionsCount}</strong>
@@ -155,7 +161,7 @@ export default function DeviceDetailsPage() {
           </div>
 
           <div className="device-risk-card">
-            <div className="device-risk-card-icon green">●</div>
+            <div className="device-risk-card-icon green"><LuCircleCheck aria-hidden="true" /></div>
             <div>
               <span>Current Status</span>
               <strong className={`device-summary-status ${String(status).toLowerCase()}`}>
@@ -225,20 +231,20 @@ export default function DeviceDetailsPage() {
                   fontSize: "0.8rem",
                   fontWeight: 600,
                   background:
-                    riskScore >= 70
-                      ? "#fee2e2"
-                      : riskScore >= 40
-                      ? "#fef3c7"
-                      : "#dcfce7",
+                    ["Critical", "High"].includes(riskLevel)
+                      ? "var(--c-bg-fee2e2)"
+                      : riskLevel === "Medium"
+                      ? "var(--c-bg-fef3c7)"
+                      : "var(--c-bg-dcfce7)",
                   color:
-                    riskScore >= 70
-                      ? "#b91c1c"
-                      : riskScore >= 40
-                      ? "#b45309"
-                      : "#15803d",
+                    ["Critical", "High"].includes(riskLevel)
+                      ? "var(--c-text-a82824)"
+                      : riskLevel === "Medium"
+                      ? "var(--c-text-b85014)"
+                      : "var(--c-text-2e9e5d)",
                 }}
               >
-                {riskLevel.toUpperCase()} RISK
+                {riskLevel} risk
               </span>
             </div>
 
@@ -249,13 +255,13 @@ export default function DeviceDetailsPage() {
                   padding: "10px 14px",
                   marginBottom: "12px",
                   borderRadius: "6px",
-                  background: accountsCount >= 3 ? "#fff1f2" : "#fffbeb",
-                  border: `1px solid ${accountsCount >= 3 ? "#fecdd3" : "#fef3c7"}`,
+                  background: accountsCount >= 3 ? "var(--c-bg-fff1f2)" : "var(--c-bg-fffbeb)",
+                  border: `1px solid ${accountsCount >= 3 ? "var(--c-border-fecdd3)" : "var(--c-border-fef3c7)"}`,
                   fontSize: "0.88rem",
                 }}
               >
-                <strong style={{ color: accountsCount >= 3 ? "#be123c" : "#b45309" }}>
-                  ⚠ Device Sharing Alert:
+                <strong style={{ color: accountsCount >= 3 ? "var(--c-text-a82824)" : "var(--c-text-b85014)" }}>
+                  Device Sharing Alert:
                 </strong>{" "}
                 This device is associated with <strong>{accountsCount}</strong> distinct customer accounts{" "}
                 and <strong>{device.suspiciousTransactions ?? 0}</strong> suspicious transactions.
@@ -284,7 +290,7 @@ export default function DeviceDetailsPage() {
               )}
 
               {device.unavailable && device.unavailable.length > 0 && (
-                <div style={{ marginTop: "12px", fontSize: "0.82rem", color: "#64748b" }}>
+                <div style={{ marginTop: "12px", fontSize: "0.82rem", color: "var(--c-text-64748b)" }}>
                   * {device.unavailable.join(" | ")}
                 </div>
               )}
@@ -342,7 +348,7 @@ export default function DeviceDetailsPage() {
                       <td>৳{Number(cust.avgAmount || 0).toLocaleString()}</td>
 
                       <td>
-                        <span style={{ color: cust.suspicious > 0 ? "#ef4444" : "#10b981", fontWeight: 600 }}>
+                        <span style={{ color: cust.suspicious > 0 ? "var(--c-text-a82824)" : "var(--c-text-2e9e5d)", fontWeight: 600 }}>
                           {cust.suspicious}
                         </span>
                       </td>
@@ -356,7 +362,7 @@ export default function DeviceDetailsPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                    <td colSpan={6} style={{ textAlign: "center", padding: "20px", color: "var(--c-text-64748b)" }}>
                       No customer transactions recorded for this device.
                     </td>
                   </tr>
@@ -431,7 +437,7 @@ export default function DeviceDetailsPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                    <td colSpan={7} style={{ textAlign: "center", padding: "20px", color: "var(--c-text-64748b)" }}>
                       No recent transactions recorded for this device.
                     </td>
                   </tr>

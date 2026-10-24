@@ -1,4 +1,20 @@
 import Link from "next/link";
+import {
+  LuActivity,
+  LuArrowLeftRight,
+  LuBell,
+  LuFileText,
+  LuLayoutDashboard,
+  LuLock,
+  LuSearch,
+  LuShare2,
+  LuShieldAlert,
+  LuSmartphone,
+  LuTriangleAlert,
+  LuUserCheck,
+  LuUsers,
+} from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 function Logo() {
   return (
@@ -22,12 +38,12 @@ function DashboardPreview() {
         </div>
 
         <div className="preview-search">
-          <span>⌕</span>
+          <LuSearch aria-hidden="true" />
           Search transactions, customers, devices...
         </div>
 
         <div className="preview-admin">
-          <span>♧</span>
+          <LuBell aria-hidden="true" />
           <div className="admin-avatar">A</div>
           <span>Admin</span>
           <span>⌄</span>
@@ -39,42 +55,42 @@ function DashboardPreview() {
         {/* Sidebar */}
         <aside className="preview-sidebar">
           <div className="preview-nav active">
-            <span>⌂</span>
+            <span><LuLayoutDashboard aria-hidden="true" /></span>
             Dashboard
           </div>
 
           <div className="preview-nav">
-            <span>≡</span>
+            <span><LuArrowLeftRight aria-hidden="true" /></span>
             Transactions
           </div>
 
           <div className="preview-nav">
-            <span>⚠</span>
+            <span><LuTriangleAlert aria-hidden="true" /></span>
             Fraud Alerts
           </div>
 
           <div className="preview-nav">
-            <span>♙</span>
+            <span><LuUsers aria-hidden="true" /></span>
             Customers
           </div>
 
           <div className="preview-nav">
-            <span>▣</span>
+            <span><LuSmartphone aria-hidden="true" /></span>
             Devices
           </div>
 
           <div className="preview-nav">
-            <span>♙</span>
+            <span><LuUserCheck aria-hidden="true" /></span>
             Agents
           </div>
 
           <div className="preview-nav">
-            <span>⌘</span>
+            <span><LuShare2 aria-hidden="true" /></span>
             Network
           </div>
 
           <div className="preview-nav">
-            <span>▤</span>
+            <span><LuFileText aria-hidden="true" /></span>
             Reports
           </div>
         </aside>
@@ -141,8 +157,8 @@ function DashboardPreview() {
                       x2="1"
                       y2="0"
                     >
-                      <stop offset="0%" stopColor="#4f8cff" />
-                      <stop offset="100%" stopColor="#a855f7" />
+                      <stop offset="0%" stopColor="#3566b6" />
+                      <stop offset="100%" stopColor="#3566b6" />
                     </linearGradient>
                   </defs>
 
@@ -260,9 +276,13 @@ export default function Home() {
       <nav className="home-nav">
         <Logo />
 
-        <div className="admin-access">
-          <span>♢</span>
-          Admin Access Only
+        <div className="home-nav-actions">
+          <div className="admin-access">
+            <LuLock aria-hidden="true" />
+            Admin access only
+          </div>
+
+          <ThemeToggle />
         </div>
       </nav>
 
@@ -271,7 +291,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-label">
             <span></span>
-            MONITOR. DETECT. PREVENT.
+            Monitor. Detect. Prevent.
           </div>
 
           <h1>
@@ -289,13 +309,12 @@ export default function Home() {
           </p>
 
           <Link href="/login" className="login-button">
-            <span>▣</span>
-            Login to Admin Dashboard
+            Log in to dashboard
             <span>→</span>
           </Link>
 
           <div className="access-note">
-            <span>▣</span>
+            <LuLock aria-hidden="true" />
             This system is accessible only to authorized administrators.
           </div>
         </div>
@@ -309,7 +328,7 @@ export default function Home() {
       {/* Capabilities */}
       <section className="capabilities">
         <div className="section-heading">
-          <span>KEY CAPABILITIES</span>
+          <span>Capabilities</span>
 
           <h2>
             Everything an <strong>Admin</strong> Needs
@@ -322,7 +341,7 @@ export default function Home() {
 
         <div className="capability-grid">
           <div className="capability-card">
-            <div className="capability-icon purple">⌕</div>
+            <div className="capability-icon purple"><LuActivity aria-hidden="true" /></div>
 
             <h3>Real-time Monitoring</h3>
 
@@ -332,7 +351,7 @@ export default function Home() {
           </div>
 
           <div className="capability-card">
-            <div className="capability-icon red">⚠</div>
+            <div className="capability-icon red"><LuShieldAlert aria-hidden="true" /></div>
 
             <h3>Fraud Detection</h3>
 
@@ -340,7 +359,7 @@ export default function Home() {
           </div>
 
           <div className="capability-card">
-            <div className="capability-icon green">⌘</div>
+            <div className="capability-icon green"><LuShare2 aria-hidden="true" /></div>
 
             <h3>Network Analysis</h3>
 
@@ -348,7 +367,7 @@ export default function Home() {
           </div>
 
           <div className="capability-card">
-            <div className="capability-icon blue">▥</div>
+            <div className="capability-icon blue"><LuFileText aria-hidden="true" /></div>
 
             <h3>Actionable Insights</h3>
 
@@ -367,9 +386,9 @@ export default function Home() {
         <p>Securing Mobile Financial Services for a Better Tomorrow.</p>
 
         <div className="footer-items">
-          <span>▣ Private & Secure</span>
-          <span>♢ Admin Only</span>
-          <span>▥ Data-Driven Decisions</span>
+          <span>Private & secure</span>
+          <span>Admin only</span>
+          <span>Data-driven decisions</span>
         </div>
       </footer>
     </main>

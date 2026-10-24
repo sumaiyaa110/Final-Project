@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { API_URL } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -9,6 +12,9 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 
 
 export default function TransactionsByChannel() {
+
+  const chart = chartColors(useTheme());
+
 
 
   const [channels, setChannels] = useState<any[]>([]);
@@ -30,7 +36,7 @@ export default function TransactionsByChannel() {
 
         const response = await fetch(
 
-          "http://localhost:8000/channel-distribution",
+          `${API_URL}/channel-distribution`,
 
           {
             cache:"no-store"
@@ -209,7 +215,7 @@ export default function TransactionsByChannel() {
 
               textfont:{
 
-                color:"#e2e8f0",
+                color:chart.text,
 
                 size:11
 
@@ -222,15 +228,15 @@ export default function TransactionsByChannel() {
 
                 colors:[
 
-                  "#3b82f6",
+                  "#3d5a80",
 
-                  "#8b5cf6",
+                  "#6b9ac4",
 
-                  "#ec4899",
+                  "#c8963e",
 
-                  "#22d3ee",
+                  "#5a8f73",
 
-                  "#94a3b8"
+                  "#9aa3b2"
 
                 ],
 
@@ -238,7 +244,7 @@ export default function TransactionsByChannel() {
 
                 line:{
 
-                  color:"#0b1728",
+                  color:chart.separator,
 
                   width:2
 
@@ -292,11 +298,11 @@ export default function TransactionsByChannel() {
 
 
 
-            paper_bgcolor:"rgba(0,0,0,0)",
+            paper_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
-            plot_bgcolor:"rgba(0,0,0,0)",
+            plot_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
@@ -325,14 +331,14 @@ export default function TransactionsByChannel() {
 
               font:{
 
-                color:"#94a3b8",
+                color:chart.muted,
 
                 size:10
 
               },
 
 
-              bgcolor:"rgba(0,0,0,0)"
+              bgcolor:"rgba(245, 246, 248, 0)"
 
 
             },
@@ -369,7 +375,7 @@ export default function TransactionsByChannel() {
 
                 font:{
 
-                  color:"#f8fafc",
+                  color:chart.text,
 
                   size:18
 
@@ -406,7 +412,7 @@ export default function TransactionsByChannel() {
 
                 font:{
 
-                  color:"#718198",
+                  color:chart.muted,
 
                   size:10
 
@@ -425,15 +431,15 @@ export default function TransactionsByChannel() {
             hoverlabel:{
 
 
-              bgcolor:"#0c1729",
+              bgcolor:chart.hoverBg,
 
 
-              bordercolor:"#334155",
+              bordercolor:chart.hoverBorder,
 
 
               font:{
 
-                color:"#e2e8f0",
+                color:chart.text,
 
                 size:10
 

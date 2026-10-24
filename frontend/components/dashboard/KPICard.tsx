@@ -1,6 +1,7 @@
 "use client";
 
 import CountUp from "react-countup";
+import type { IconType } from "react-icons";
 
 
 type KPICardProps = {
@@ -8,7 +9,7 @@ type KPICardProps = {
   value: number | string;
   change: string;
   description: string;
-  icon: string;
+  icon: IconType;
   trend: "up" | "down";
   variant: "blue" | "red" | "yellow" | "green";
 };
@@ -21,7 +22,7 @@ export default function KPICard({
   value,
   change,
   description,
-  icon,
+  icon: Icon,
   trend,
   variant,
 
@@ -94,9 +95,7 @@ export default function KPICard({
 
 
         <div className="kpi-icon">
-
-          {icon}
-
+          <Icon aria-hidden="true" />
         </div>
 
 
@@ -114,7 +113,7 @@ export default function KPICard({
 
         <span className={`kpi-change kpi-change-${trend}`}>
 
-          {trend === "up" ? "↗" : "↘"} {change}
+          {change}
 
         </span>
 

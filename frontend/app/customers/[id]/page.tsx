@@ -14,6 +14,7 @@ import {
 
 
 import AdminLayout from "@/components/layout/AdminLayout";
+import { API_URL } from "@/services/api";
 
 
 
@@ -200,7 +201,7 @@ try{
 const response =
 await fetch(
 
-`http://localhost:8000/customer/${customerId}`,
+`${API_URL}/customer/${customerId}`,
 
 {
 
@@ -274,7 +275,7 @@ try{
 const response =
 await fetch(
 
-`http://localhost:8000/customer/${customerId}/transactions`,
+`${API_URL}/customer/${customerId}/transactions`,
 
 {
 
@@ -819,7 +820,7 @@ Risk Score
   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
     <div>
       <h2 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700 }}>Customer Risk Profile & Behavioral Baseline</h2>
-      <p style={{ margin: "4px 0 0 0", color: "#64748b", fontSize: "0.85rem" }}>
+      <p style={{ margin: "4px 0 0 0", color: "var(--c-text-64748b)", fontSize: "0.85rem" }}>
         Comparing historical baseline habits with current activity telemetry.
       </p>
     </div>
@@ -830,9 +831,9 @@ Risk Score
         fontSize: "0.8rem",
         fontWeight: 600,
         background:
-          customer.risk === "High" ? "#fee2e2" : customer.risk === "Medium" ? "#fef3c7" : "#dcfce7",
+          customer.risk === "High" ? "var(--c-bg-fee2e2)" : customer.risk === "Medium" ? "var(--c-bg-fef3c7)" : "var(--c-bg-dcfce7)",
         color:
-          customer.risk === "High" ? "#991b1b" : customer.risk === "Medium" ? "#92400e" : "#166534",
+          customer.risk === "High" ? "var(--c-text-a82824)" : customer.risk === "Medium" ? "var(--c-text-b85014)" : "var(--c-text-2e9e5d)",
       }}
     >
       {customer.risk.toUpperCase()} RISK PROFILE
@@ -848,33 +849,33 @@ Risk Score
       marginBottom: "20px",
     }}
   >
-    <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>AVERAGE TRANSACTION</span>
+    <div style={{ background: "var(--c-bg-f8fafc)", padding: "12px", borderRadius: "6px", border: "1px solid var(--c-border-e2e8f0)" }}>
+      <span style={{ fontSize: "0.78rem", color: "var(--c-text-64748b)", display: "block" }}>Average transaction</span>
       <strong style={{ fontSize: "1.1rem" }}>
         ৳{((customer as any).behavior?.amount?.average || (customer.totalTransactions > 0 ? (customer.totalAmount / customer.totalTransactions).toFixed(0) : 0)).toLocaleString()}
       </strong>
     </div>
 
-    <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>COMMON CHANNEL</span>
+    <div style={{ background: "var(--c-bg-f8fafc)", padding: "12px", borderRadius: "6px", border: "1px solid var(--c-border-e2e8f0)" }}>
+      <span style={{ fontSize: "0.78rem", color: "var(--c-text-64748b)", display: "block" }}>Common channel</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.channels?.usual?.[0] || "P2P")}
       </strong>
     </div>
 
-    <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>TYPICAL TIME WINDOW</span>
+    <div style={{ background: "var(--c-bg-f8fafc)", padding: "12px", borderRadius: "6px", border: "1px solid var(--c-border-e2e8f0)" }}>
+      <span style={{ fontSize: "0.78rem", color: "var(--c-text-64748b)", display: "block" }}>Typical time window</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.timeOfDay?.usual?.[0] || "Afternoon (12-17)")}
       </strong>
     </div>
 
-    <div style={{ background: "#f8fafc", padding: "12px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
-      <span style={{ fontSize: "0.78rem", color: "#64748b", display: "block" }}>TRUSTED DEVICES</span>
+    <div style={{ background: "var(--c-bg-f8fafc)", padding: "12px", borderRadius: "6px", border: "1px solid var(--c-border-e2e8f0)" }}>
+      <span style={{ fontSize: "0.78rem", color: "var(--c-text-64748b)", display: "block" }}>Trusted devices</span>
       <strong style={{ fontSize: "1.1rem" }}>
         {((customer as any).behavior?.devices?.trusted?.length ?? 0)} Verified
       </strong>
-      <span style={{ fontSize: "0.72rem", color: "#94a3b8", display: "block" }}>
+      <span style={{ fontSize: "0.72rem", color: "var(--c-text-94a3b8)", display: "block" }}>
         {((customer as any).behavior?.devices?.distinct ?? 1)} total used
       </span>
     </div>
@@ -886,8 +887,8 @@ Risk Score
       style={{
         padding: "16px",
         borderRadius: "8px",
-        background: "#ffffff",
-        border: "1px solid #cbd5e1",
+        background: "var(--c-bg-ffffff)",
+        border: "1px solid var(--c-border-cbd5e1)",
       }}
     >
       <h3 style={{ margin: "0 0 12px 0", fontSize: "0.95rem" }}>
@@ -896,8 +897,8 @@ Risk Score
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
         {/* Normal */}
-        <div style={{ padding: "12px", background: "#f8fafc", borderRadius: "6px" }}>
-          <span style={{ fontSize: "0.8rem", color: "#475569", fontWeight: 700, display: "block", marginBottom: "8px" }}>
+        <div style={{ padding: "12px", background: "var(--c-bg-f8fafc)", borderRadius: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "var(--c-text-475569)", fontWeight: 700, display: "block", marginBottom: "8px" }}>
             NORMAL HISTORICAL BEHAVIOR
           </span>
           <div style={{ fontSize: "0.85rem", lineHeight: "1.8" }}>
@@ -914,23 +915,23 @@ Risk Score
             padding: "12px",
             background:
               (customer as any).behavior?.amount?.ratioToAverage >= 2.5
-                ? "#fff1f2"
-                : "#f0fdf4",
+                ? "var(--c-bg-fff1f2)"
+                : "var(--c-bg-f0fdf4)",
             borderRadius: "6px",
             border:
               (customer as any).behavior?.amount?.ratioToAverage >= 2.5
-                ? "1px solid #fecdd3"
-                : "1px solid #bbf7d0",
+                ? "1px solid var(--c-border-fecdd3)"
+                : "1px solid var(--c-border-bbf7d0)",
           }}
         >
-          <span style={{ fontSize: "0.8rem", color: "#475569", fontWeight: 700, display: "block", marginBottom: "8px" }}>
+          <span style={{ fontSize: "0.8rem", color: "var(--c-text-475569)", fontWeight: 700, display: "block", marginBottom: "8px" }}>
             CURRENT TRANSACTION ACTIVITY ({(customer as any).behavior?.current?.id})
           </span>
           <div style={{ fontSize: "0.85rem", lineHeight: "1.8" }}>
             <div>
               Current Amount: <strong>৳{Number((customer as any).behavior?.current?.amount || 0).toLocaleString()}</strong>
               {(customer as any).behavior?.amount?.ratioToAverage ? (
-                <span style={{ color: "#e11d48", fontWeight: 700, marginLeft: "6px" }}>
+                <span style={{ color: "var(--c-text-a82824)", fontWeight: 700, marginLeft: "6px" }}>
                   ({(customer as any).behavior?.amount?.ratioToAverage}× normal)
                 </span>
               ) : null}
@@ -1316,7 +1317,7 @@ Risk Profile
 
 <p>
 
-AI-generated customer risk assessment.
+Based on this customer's transaction history.
 
 </p>
 
@@ -1487,21 +1488,12 @@ customer.status==="Active"
 
 
 
-<div className="customer-ai-icon">
-
-✦
-
-</div>
-
-
-
-
 <div>
 
 
 <h2>
 
-AI Customer Insight
+Assessment
 
 </h2>
 
@@ -1618,7 +1610,7 @@ onClick={() => {
   }
 }}
 >
-⚠ Investigate Customer
+Investigate Customer
 </button>
 
 

@@ -28,7 +28,7 @@ def get_transaction_trend():
             ) as suspicious
 
 
-        FROM transactions
+        FROM transactions_clean
 
         GROUP BY DATE(timestamp)
 
@@ -83,7 +83,7 @@ def get_channel_distribution():
             COUNT(*) as count
 
 
-        FROM transactions
+        FROM transactions_clean
 
 
         GROUP BY channel
@@ -130,7 +130,7 @@ def get_fraud_types():
             COUNT(*) as count
 
 
-        FROM transactions
+        FROM transactions_clean
 
 
         WHERE risk_level IN ('HIGH','CRITICAL')
@@ -180,7 +180,7 @@ def get_ai_insights():
 
         SELECT COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         WHERE risk_level IN ('HIGH','CRITICAL')
 
@@ -204,7 +204,7 @@ def get_ai_insights():
 
         SELECT channel, COUNT(*)
 
-        FROM transactions
+        FROM transactions_clean
 
         GROUP BY channel
 

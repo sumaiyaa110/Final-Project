@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { API_URL } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -11,6 +14,9 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 
 
 export default function FraudByType(){
+
+  const chart = chartColors(useTheme());
+
 
 
   const [fraudTypes,setFraudTypes] = useState<any[]>([]);
@@ -34,7 +40,7 @@ export default function FraudByType(){
 
         const response = await fetch(
 
-          "http://localhost:8000/fraud-types",
+          `${API_URL}/fraud-types`,
 
           {
             cache:"no-store"
@@ -200,7 +206,7 @@ export default function FraudByType(){
               textfont:{
 
 
-                color:"#f1f5f9",
+                color:chart.text,
 
                 size:11
 
@@ -212,17 +218,7 @@ export default function FraudByType(){
               marker:{
 
 
-                color:[
-
-                  "#ef476f",
-
-                  "#8b5cf6",
-
-                  "#3b82f6",
-
-                  "#22d3ee"
-
-                ],
+                color:chart.bar,
 
 
 
@@ -283,11 +279,11 @@ export default function FraudByType(){
 
 
 
-            paper_bgcolor:"rgba(0,0,0,0)",
+            paper_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
-            plot_bgcolor:"rgba(0,0,0,0)",
+            plot_bgcolor:"rgba(245, 246, 248, 0)",
 
 
 
@@ -309,7 +305,7 @@ export default function FraudByType(){
 
 
 
-              gridcolor:"#17263a",
+              gridcolor:chart.grid,
 
 
 
@@ -320,7 +316,7 @@ export default function FraudByType(){
               tickfont:{
 
 
-                color:"#718198",
+                color:chart.muted,
 
                 size:10
 
@@ -360,7 +356,7 @@ export default function FraudByType(){
               tickfont:{
 
 
-                color:"#718198",
+                color:chart.muted,
 
                 size:10
 
@@ -379,18 +375,18 @@ export default function FraudByType(){
 
 
 
-              bgcolor:"#0c1729",
+              bgcolor:chart.hoverBg,
 
 
 
-              bordercolor:"#334155",
+              bordercolor:chart.hoverBorder,
 
 
 
               font:{
 
 
-                color:"#e2e8f0",
+                color:chart.text,
 
                 size:10
 

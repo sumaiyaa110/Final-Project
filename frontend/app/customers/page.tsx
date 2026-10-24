@@ -7,6 +7,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import AdminLayout from "@/components/layout/AdminLayout";
 
 import { getCustomers } from "@/services/api";
+import {
+  LuSearch,
+} from "react-icons/lu";
+import Pagination from "@/components/ui/Pagination";
+
+const PAGE_SIZE = 25;
 
 
 type RiskLevel = "High" | "Medium" | "Low";
@@ -232,6 +238,38 @@ function CustomersContent() {
 
 
 
+  const [page, setPage] = useState(1);
+
+
+
+
+  const totalPages = Math.max(1, Math.ceil(filteredCustomers.length / PAGE_SIZE));
+
+
+
+
+  const safePage = Math.min(page, totalPages);
+
+
+
+
+  const pagedCustomers = filteredCustomers.slice(
+
+
+
+    (safePage - 1) * PAGE_SIZE,
+
+
+
+    safePage * PAGE_SIZE,
+
+
+
+  );
+
+
+
+
 
   function resetFilters() {
 
@@ -352,7 +390,7 @@ function CustomersContent() {
 
 
             <span className="customer-search-icon">
-              ⌕
+              <LuSearch aria-hidden="true" />
             </span>
 
 
@@ -605,7 +643,7 @@ function CustomersContent() {
               ) : (
 
 
-                filteredCustomers.map((customer) => (
+                pagedCustomers.map((customer) => (
 
 
                   <tr key={customer.id}>
@@ -823,22 +861,21 @@ function CustomersContent() {
 
 
 
-          <div className="customers-pagination">
+          <div className="customers-pagination list-footer">
+            <span>
+              Showing{" "}
+              {filteredCustomers.length === 0
+                ? 0
+                : (safePage - 1) * PAGE_SIZE + 1}
+              –{Math.min(safePage * PAGE_SIZE, filteredCustomers.length)} of{" "}
+              {filteredCustomers.length} customers
+            </span>
 
-
-            Showing
-
-            <strong>
-
-              &nbsp;
-              {filteredCustomers.length}
-              &nbsp;
-
-            </strong>
-
-            customers
-
-
+            <Pagination
+              page={safePage}
+              totalPages={totalPages}
+              onChange={setPage}
+            />
           </div>
 
 

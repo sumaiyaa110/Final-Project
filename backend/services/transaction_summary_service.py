@@ -16,7 +16,7 @@ def get_transaction_summary():
     cursor.execute(
     """
     SELECT COUNT(*)
-    FROM transactions
+    FROM transactions_clean
     """
     )
 
@@ -30,10 +30,10 @@ def get_transaction_summary():
     cursor.execute(
     """
     SELECT COUNT(*)
-    FROM transactions
+    FROM transactions_clean
 
     WHERE risk_level IN
-    ('HIGH','High','Critical')
+    ('HIGH','CRITICAL')
 
     """
     )
@@ -49,7 +49,7 @@ def get_transaction_summary():
     cursor.execute(
     """
     SELECT SUM(amount)
-    FROM transactions
+    FROM transactions_clean
     """
     )
 

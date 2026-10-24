@@ -2,6 +2,9 @@
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import { useRouter } from "next/navigation";
+import {
+  LuLock,
+} from "react-icons/lu";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,7 +25,7 @@ export default function ProfilePage() {
             className="profile-settings-button"
             onClick={() => router.push("/settings")}
           >
-            ⚙ Settings
+            Settings
           </button>
         </div>
 
@@ -162,7 +165,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="security-item">
-            <div className="security-icon">🔒</div>
+            <div className="security-icon"><LuLock aria-hidden="true" /></div>
 
             <div className="security-info">
               <h3>Password</h3>
