@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import { getNetworkData } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 
 const Plot = dynamic(
@@ -62,6 +64,9 @@ type PositionedNode = NetworkNode & {
 
 
 export default function NetworkAnalysisPage() {
+
+  const chart = chartColors(useTheme());
+
 
   const [networkData, setNetworkData] =
     useState<NetworkData | null>(null);
@@ -543,7 +548,7 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#343840",
+                      color: chart.text,
                     },
 
                     marker: {
@@ -552,7 +557,7 @@ export default function NetworkAnalysisPage() {
 
                       line: {
                         width: 2,
-                        color: "#40454e",
+                        color: chart.text,
                       },
                     },
 
@@ -588,19 +593,19 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#343840",
+                      color: chart.text,
                     },
 
                     marker: {
                       size: 22,
 
-                      color: "#535965",
+                      color: chart.muted,
 
                       symbol: "diamond",
 
                       line: {
                         width: 2,
-                        color: "#363a42",
+                        color: chart.text,
                       },
                     },
 
@@ -636,7 +641,7 @@ export default function NetworkAnalysisPage() {
 
                     textfont: {
                       size: 9,
-                      color: "#343840",
+                      color: chart.text,
                     },
 
                     marker: {
