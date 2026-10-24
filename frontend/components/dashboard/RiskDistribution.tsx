@@ -1,12 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
 });
 
 export default function RiskDistribution() {
+
+  const chart = chartColors(useTheme());
+
   return (
     <div className="risk-chart-card">
       {/* Header */}
@@ -38,13 +43,13 @@ export default function RiskDistribution() {
               textposition: "inside",
 
               textfont: {
-                color: "#272a2f",
+                color: chart.text,
                 size: 11,
               },
 
               marker: {
                 line: {
-                  color: "#ffffff",
+                  color: chart.separator,
                   width: 3,
                 },
               },
@@ -85,7 +90,7 @@ export default function RiskDistribution() {
               yanchor: "top",
 
               font: {
-                color: "#606776",
+                color: chart.muted,
                 size: 9,
               },
 
@@ -107,7 +112,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#1b1d20",
+                  color: chart.text,
 
                   size: 23,
                 },
@@ -127,7 +132,7 @@ export default function RiskDistribution() {
                 showarrow: false,
 
                 font: {
-                  color: "#6c7484",
+                  color: chart.muted,
 
                   size: 9,
                 },
@@ -135,12 +140,12 @@ export default function RiskDistribution() {
             ],
 
             hoverlabel: {
-              bgcolor: "#ffffff",
+              bgcolor: chart.hoverBg,
 
-              bordercolor: "#dfe1e5",
+              bordercolor: chart.hoverBorder,
 
               font: {
-                color: "#272a2f",
+                color: chart.text,
 
                 size: 10,
               },

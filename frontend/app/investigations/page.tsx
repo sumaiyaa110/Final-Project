@@ -726,7 +726,7 @@ function InvestigationsContent() {
 
                 <div
                   style={{
-                    color: "#7187a3",
+                    color: "var(--c-text-7187a3)",
                     fontSize: "11px",
                     fontWeight: 600,
                   }}

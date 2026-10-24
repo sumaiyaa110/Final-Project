@@ -232,16 +232,16 @@ export default function DeviceDetailsPage() {
                   fontWeight: 600,
                   background:
                     ["Critical", "High"].includes(riskLevel)
-                      ? "#fee2e2"
+                      ? "var(--c-bg-fee2e2)"
                       : riskLevel === "Medium"
-                      ? "#fef3c7"
-                      : "#dcfce7",
+                      ? "var(--c-bg-fef3c7)"
+                      : "var(--c-bg-dcfce7)",
                   color:
                     ["Critical", "High"].includes(riskLevel)
-                      ? "#a82824"
+                      ? "var(--c-text-a82824)"
                       : riskLevel === "Medium"
-                      ? "#b85014"
-                      : "#2e9e5d",
+                      ? "var(--c-text-b85014)"
+                      : "var(--c-text-2e9e5d)",
                 }}
               >
                 {riskLevel} risk
@@ -255,12 +255,12 @@ export default function DeviceDetailsPage() {
                   padding: "10px 14px",
                   marginBottom: "12px",
                   borderRadius: "6px",
-                  background: accountsCount >= 3 ? "#fff1f2" : "#fffbeb",
-                  border: `1px solid ${accountsCount >= 3 ? "#fecdd3" : "#fef3c7"}`,
+                  background: accountsCount >= 3 ? "var(--c-bg-fff1f2)" : "var(--c-bg-fffbeb)",
+                  border: `1px solid ${accountsCount >= 3 ? "var(--c-border-fecdd3)" : "var(--c-border-fef3c7)"}`,
                   fontSize: "0.88rem",
                 }}
               >
-                <strong style={{ color: accountsCount >= 3 ? "#a82824" : "#b85014" }}>
+                <strong style={{ color: accountsCount >= 3 ? "var(--c-text-a82824)" : "var(--c-text-b85014)" }}>
                   Device Sharing Alert:
                 </strong>{" "}
                 This device is associated with <strong>{accountsCount}</strong> distinct customer accounts{" "}
@@ -290,7 +290,7 @@ export default function DeviceDetailsPage() {
               )}
 
               {device.unavailable && device.unavailable.length > 0 && (
-                <div style={{ marginTop: "12px", fontSize: "0.82rem", color: "#64748b" }}>
+                <div style={{ marginTop: "12px", fontSize: "0.82rem", color: "var(--c-text-64748b)" }}>
                   * {device.unavailable.join(" | ")}
                 </div>
               )}
@@ -348,7 +348,7 @@ export default function DeviceDetailsPage() {
                       <td>৳{Number(cust.avgAmount || 0).toLocaleString()}</td>
 
                       <td>
-                        <span style={{ color: cust.suspicious > 0 ? "#a82824" : "#2e9e5d", fontWeight: 600 }}>
+                        <span style={{ color: cust.suspicious > 0 ? "var(--c-text-a82824)" : "var(--c-text-2e9e5d)", fontWeight: 600 }}>
                           {cust.suspicious}
                         </span>
                       </td>
@@ -362,7 +362,7 @@ export default function DeviceDetailsPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                    <td colSpan={6} style={{ textAlign: "center", padding: "20px", color: "var(--c-text-64748b)" }}>
                       No customer transactions recorded for this device.
                     </td>
                   </tr>
@@ -437,7 +437,7 @@ export default function DeviceDetailsPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} style={{ textAlign: "center", padding: "20px", color: "#64748b" }}>
+                    <td colSpan={7} style={{ textAlign: "center", padding: "20px", color: "var(--c-text-64748b)" }}>
                       No recent transactions recorded for this device.
                     </td>
                   </tr>

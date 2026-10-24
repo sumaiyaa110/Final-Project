@@ -953,16 +953,16 @@ transaction.new_device
           fontSize: "0.85rem",
           background:
             transaction.score >= 70
-              ? "#fee2e2"
+              ? "var(--c-bg-fee2e2)"
               : transaction.score >= 40
-              ? "#fef3c7"
-              : "#dcfce7",
+              ? "var(--c-bg-fef3c7)"
+              : "var(--c-bg-dcfce7)",
           color:
             transaction.score >= 70
-              ? "#a82824"
+              ? "var(--c-text-a82824)"
               : transaction.score >= 40
-              ? "#b85014"
-              : "#2e9e5d",
+              ? "var(--c-text-b85014)"
+              : "var(--c-text-2e9e5d)",
         }}
       >
         OVERALL: {String(transaction.level).toUpperCase()} ({transaction.score}/100)
@@ -1006,7 +1006,7 @@ transaction.new_device
                 </span>
                 <strong
                   style={{
-                    color: item.contribution > 0 ? "#a82824" : "#2e9e5d",
+                    color: item.contribution > 0 ? "var(--c-text-a82824)" : "var(--c-text-2e9e5d)",
                   }}
                 >
                   {item.contribution > 0 ? "+" : ""}
@@ -1064,7 +1064,7 @@ transaction.new_device
 <div className="transaction-info-card" style={{ marginTop: "20px" }}>
   <div className="transaction-info-header">
     <h2>Risk Signal Strength</h2>
-    <span style={{ fontSize: "0.85rem", color: "#64748b" }}>
+    <span style={{ fontSize: "0.85rem", color: "var(--c-text-64748b)" }}>
       Relative magnitude derived from model scores and transaction context
     </span>
   </div>
@@ -1118,12 +1118,12 @@ transaction.new_device
           }}
         >
           <strong>{item.name}</strong>
-          <span style={{ color: "#64748b" }}>{item.label}</span>
+          <span style={{ color: "var(--c-text-64748b)" }}>{item.label}</span>
         </div>
         <div
           style={{
             height: "8px",
-            background: "#e2e8f0",
+            background: "var(--c-bg-e2e8f0)",
             borderRadius: "4px",
             overflow: "hidden",
           }}
@@ -1134,10 +1134,10 @@ transaction.new_device
               width: `${item.value}%`,
               background:
                 item.value >= 70
-                  ? "#a82824"
+                  ? "var(--c-bg-a82824)"
                   : item.value >= 40
-                  ? "#b85014"
-                  : "#2e9e5d",
+                  ? "var(--c-bg-b85014)"
+                  : "var(--c-bg-2e9e5d)",
               borderRadius: "4px",
             }}
           />
@@ -1154,10 +1154,10 @@ transaction.new_device
     marginTop: "20px",
     borderLeft: `4px solid ${
       transaction.score >= 70
-        ? "#a82824"
+        ? "var(--c-border-a82824)"
         : transaction.score >= 40
-        ? "#b85014"
-        : "#2e9e5d"
+        ? "var(--c-border-b85014)"
+        : "var(--c-border-2e9e5d)"
     }`,
   }}
 >
@@ -1168,10 +1168,10 @@ transaction.new_device
         fontWeight: 600,
         color:
           transaction.score >= 70
-            ? "#a82824"
+            ? "var(--c-text-a82824)"
             : transaction.score >= 40
-            ? "#b85014"
-            : "#2e9e5d",
+            ? "var(--c-text-b85014)"
+            : "var(--c-text-2e9e5d)",
       }}
     >
       STATUS: {String(transaction.level).toUpperCase()}
@@ -1199,9 +1199,9 @@ transaction.new_device
       style={{
         marginTop: "12px",
         padding: "10px 14px",
-        background: "#f8fafc",
+        background: "var(--c-bg-f8fafc)",
         borderRadius: "6px",
-        border: "1px solid #e2e8f0",
+        border: "1px solid var(--c-border-e2e8f0)",
       }}
     >
       <strong>Recommended Action: </strong>

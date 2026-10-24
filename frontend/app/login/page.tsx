@@ -8,6 +8,7 @@ import {
   LuShieldCheck,
   LuTriangleAlert,
 } from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -57,6 +58,8 @@ export default function LoginPage() {
 
   return (
     <main className="login-page">
+      <ThemeToggle className="login-theme-toggle" />
+
       {/* Back to Home */}
       <Link href="/" className="login-back">
         ← Back to Home

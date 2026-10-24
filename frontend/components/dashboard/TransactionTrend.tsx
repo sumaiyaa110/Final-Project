@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -10,6 +12,9 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 
 
 export default function TransactionTrend() {
+
+  const chart = chartColors(useTheme());
+
 
 
   const [trendData, setTrendData] = useState<any[]>([]);
@@ -334,7 +339,7 @@ export default function TransactionTrend() {
 
             font:{
 
-              color:"#606776",
+              color:chart.muted,
 
               family:"Arial"
 
@@ -349,7 +354,7 @@ export default function TransactionTrend() {
               },
 
 
-              gridcolor:"#e3e5e8",
+              gridcolor:chart.grid,
 
               zeroline:false
 

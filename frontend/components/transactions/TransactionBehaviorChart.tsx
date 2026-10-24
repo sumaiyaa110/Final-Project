@@ -9,6 +9,8 @@ import {
   LuActivity,
   LuLightbulb,
 } from "react-icons/lu";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -23,6 +25,9 @@ export default function TransactionBehaviorChart({
   customerId,
   transactionId,
 }: TransactionBehaviorChartProps) {
+
+  const chart = chartColors(useTheme());
+
   const [transactions, setTransactions] = useState<any[]>([]);
 
   // =====================================================
@@ -184,7 +189,7 @@ export default function TransactionBehaviorChart({
 
                   line: {
                     width: 1,
-                    color: "#071525",
+                    color: chart.text,
                   },
                 },
 
@@ -229,7 +234,7 @@ export default function TransactionBehaviorChart({
 
               font: {
                 family: "Inter, Arial, sans-serif",
-                color: "#5e6573",
+                color: chart.muted,
                 size: 10,
               },
 
@@ -239,7 +244,7 @@ export default function TransactionBehaviorChart({
                 zeroline: false,
 
                 tickfont: {
-                  color: "#636b79",
+                  color: chart.muted,
                   size: 9,
                 },
 
@@ -253,19 +258,19 @@ export default function TransactionBehaviorChart({
                   text: "Amount (BDT)",
 
                   font: {
-                    color: "#5e6573",
+                    color: chart.muted,
                     size: 10,
                   },
                 },
 
                 showgrid: true,
 
-                gridcolor: "rgba(102, 110, 125, 0.22)",
+                gridcolor: chart.grid,
 
                 zeroline: false,
 
                 tickfont: {
-                  color: "#636b79",
+                  color: chart.muted,
                   size: 9,
                 },
 
@@ -287,19 +292,19 @@ export default function TransactionBehaviorChart({
 
                 font: {
                   size: 9,
-                  color: "#5b626f",
+                  color: chart.muted,
                 },
 
                 bgcolor: "rgba(245, 246, 248, 0)",
               },
 
               hoverlabel: {
-                bgcolor: "#ffffff",
+                bgcolor: chart.hoverBg,
 
-                bordercolor: "#dfe1e5",
+                bordercolor: chart.hoverBorder,
 
                 font: {
-                  color: "#23262b",
+                  color: chart.text,
                   size: 10,
                 },
               },

@@ -14,6 +14,7 @@ import {
   LuUserCheck,
   LuUsers,
 } from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 function Logo() {
   return (
@@ -275,9 +276,13 @@ export default function Home() {
       <nav className="home-nav">
         <Logo />
 
-        <div className="admin-access">
-          <LuLock aria-hidden="true" />
-          Admin access only
+        <div className="home-nav-actions">
+          <div className="admin-access">
+            <LuLock aria-hidden="true" />
+            Admin access only
+          </div>
+
+          <ThemeToggle />
         </div>
       </nav>
 

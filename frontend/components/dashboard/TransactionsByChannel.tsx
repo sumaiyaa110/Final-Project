@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from "@/services/api";
+import { useTheme } from "@/hooks/useTheme";
+import { chartColors } from "@/utils/chartTheme";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
   ssr: false,
@@ -10,6 +12,9 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 
 
 export default function TransactionsByChannel() {
+
+  const chart = chartColors(useTheme());
+
 
 
   const [channels, setChannels] = useState<any[]>([]);
@@ -210,7 +215,7 @@ export default function TransactionsByChannel() {
 
               textfont:{
 
-                color:"#272a2f",
+                color:chart.text,
 
                 size:11
 
@@ -239,7 +244,7 @@ export default function TransactionsByChannel() {
 
                 line:{
 
-                  color:"#ffffff",
+                  color:chart.separator,
 
                   width:2
 
@@ -326,7 +331,7 @@ export default function TransactionsByChannel() {
 
               font:{
 
-                color:"#535965",
+                color:chart.muted,
 
                 size:10
 
@@ -370,7 +375,7 @@ export default function TransactionsByChannel() {
 
                 font:{
 
-                  color:"#1b1d20",
+                  color:chart.text,
 
                   size:18
 
@@ -407,7 +412,7 @@ export default function TransactionsByChannel() {
 
                 font:{
 
-                  color:"#606776",
+                  color:chart.muted,
 
                   size:10
 
@@ -426,15 +431,15 @@ export default function TransactionsByChannel() {
             hoverlabel:{
 
 
-              bgcolor:"#ffffff",
+              bgcolor:chart.hoverBg,
 
 
-              bordercolor:"#dfe1e5",
+              bordercolor:chart.hoverBorder,
 
 
               font:{
 
-                color:"#272a2f",
+                color:chart.text,
 
                 size:10
 

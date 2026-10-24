@@ -8,6 +8,7 @@ import { getAlertSummary } from "@/services/api";
 import {
   LuBell,
 } from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -108,6 +109,10 @@ export default function Header() {
 
           <span>System Online</span>
         </div>
+
+        {/* THEME */}
+
+        <ThemeToggle className="header-icon-button" />
 
         {/* NOTIFICATIONS */}
 
